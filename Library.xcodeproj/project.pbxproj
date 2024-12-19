@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D41BD0222D13C43900306549 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0212D13C43900306549 /* InfoView.m */; };
 		D48D00022C179ED400177AD0 /* LibraryMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00012C179ED400177AD0 /* LibraryMacUITests.m */; };
 		D48D00042C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */; };
 		D48D000F2C179EDE00177AD0 /* LibraryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */; };
@@ -119,6 +120,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D41BD0212D13C43900306549 /* InfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoView.m; sourceTree = "<group>"; };
+		D41BD0232D13C44800306549 /* InfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
 		D48D00012C179ED400177AD0 /* LibraryMacUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITests.m; sourceTree = "<group>"; };
 		D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D48D00182C179EFA00177AD0 /* LibraryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,6 +338,8 @@
 		D48DFFE32C179ED300177AD0 /* LibraryMac */ = {
 			isa = PBXGroup;
 			children = (
+				D41BD0232D13C44800306549 /* InfoView.h */,
+				D41BD0212D13C43900306549 /* InfoView.m */,
 				D4E7D0C62C1BE4B700980513 /* Info.plist */,
 				D48DFFE42C179ED300177AD0 /* AppDelegate.h */,
 				D48DFFE52C179ED300177AD0 /* AppDelegate.m */,
@@ -701,6 +706,7 @@
 			files = (
 				D48DFFED2C179ED400177AD0 /* main.m in Sources */,
 				D48DFFE62C179ED300177AD0 /* AppDelegate.m in Sources */,
+				D41BD0222D13C43900306549 /* InfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
