@@ -1,14 +1,38 @@
 #import "AppDelegate.h"
 
 @import LibraryKit;
+
 #import "InfoView.h"
+#import "loaders.h"
 
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    Library *_library;
+}
+
+
+- (Library *)library;
+{
+    return _library;
+}
+
+
+- (void)setLibrary:(Library *)library;
+{
+    _library = library;
+    [_tableView reloadData];
+    [_infoView updateWithBooksCount:_library.books.count
+                   andSelectedIndex:_tableView.selectedRow];
+}
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
-    [self loadLibrary];
+    NSArray<NSString *> *dirs = @[
+        @"/Users/donmcc/Downloads",
+        @"/Users/donmcc/Dropbox/Books/Don's Library/Games",
+    ];
+    loadLibrary(dirs);
 }
 
 
@@ -20,21 +44,6 @@
 - (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app;
 {
     return YES;
-}
-
-
-- (void)loadLibrary;
-{
-    _library = [[Library alloc] initWithDirs:@[
-        @"/Users/donmcc/Downloads",
-        @"/Users/donmcc/Dropbox/Books/Don's Library/Games",
-    ]];
-    [_library scanDirsForBooks];
-    NSLog(@"%li books:", _library.books.count);
-    
-    [_tableView reloadData];
-    [_infoView updateWithBooksCount:_library.books.count
-                   andSelectedIndex:_tableView.selectedRow];
 }
 
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D41BD0222D13C43900306549 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0212D13C43900306549 /* InfoView.m */; };
+		D41BD0282D1524C600306549 /* loaders.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0272D1524C600306549 /* loaders.m */; };
 		D48D00022C179ED400177AD0 /* LibraryMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00012C179ED400177AD0 /* LibraryMacUITests.m */; };
 		D48D00042C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */; };
 		D48D000F2C179EDE00177AD0 /* LibraryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */; };
@@ -36,9 +37,9 @@
 		D48DFFED2C179ED400177AD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D48DFFEC2C179ED400177AD0 /* main.m */; };
 		D48DFFF82C179ED400177AD0 /* LibraryMacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48DFFF72C179ED400177AD0 /* LibraryMacTests.m */; };
 		D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BC2C17AA7300980513 /* BookTests.m */; };
-		D4E7D0C02C17AC7400980513 /* FileMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0BE2C17AC7400980513 /* FileMatcher.h */; };
+		D4E7D0C02C17AC7400980513 /* FileMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0BE2C17AC7400980513 /* FileMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E7D0C12C17AC7400980513 /* FileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BF2C17AC7400980513 /* FileMatcher.m */; };
-		D4E7D0C42C17ADB200980513 /* PDFFileMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0C22C17ADB200980513 /* PDFFileMatcher.h */; };
+		D4E7D0C42C17ADB200980513 /* PDFFileMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0C22C17ADB200980513 /* PDFFileMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4E7D0C52C17ADB200980513 /* PDFFileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0C32C17ADB200980513 /* PDFFileMatcher.m */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +123,8 @@
 /* Begin PBXFileReference section */
 		D41BD0212D13C43900306549 /* InfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoView.m; sourceTree = "<group>"; };
 		D41BD0232D13C44800306549 /* InfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
+		D41BD0272D1524C600306549 /* loaders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = loaders.m; sourceTree = "<group>"; };
+		D41BD0292D1524D600306549 /* loaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loaders.h; sourceTree = "<group>"; };
 		D48D00012C179ED400177AD0 /* LibraryMacUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITests.m; sourceTree = "<group>"; };
 		D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D48D00182C179EFA00177AD0 /* LibraryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,7 +151,7 @@
 		D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LibraryKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D48DFFCB2C179E8A00177AD0 /* LibraryKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibraryKit.h; sourceTree = "<group>"; };
 		D48DFFD02C179E8A00177AD0 /* LibraryKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibraryKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D48DFFE22C179ED300177AD0 /* LibraryMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D48DFFE22C179ED300177AD0 /* Library.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Library.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D48DFFE42C179ED300177AD0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D48DFFE52C179ED300177AD0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D48DFFE72C179ED400177AD0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -301,7 +304,7 @@
 			children = (
 				D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */,
 				D48DFFD02C179E8A00177AD0 /* LibraryKitTests.xctest */,
-				D48DFFE22C179ED300177AD0 /* LibraryMac.app */,
+				D48DFFE22C179ED300177AD0 /* Library.app */,
 				D48DFFF32C179ED400177AD0 /* LibraryMacTests.xctest */,
 				D48DFFFD2C179ED400177AD0 /* LibraryMacUITests.xctest */,
 				D48D00182C179EFA00177AD0 /* LibraryApp.app */,
@@ -344,9 +347,11 @@
 				D48DFFE42C179ED300177AD0 /* AppDelegate.h */,
 				D48DFFE52C179ED300177AD0 /* AppDelegate.m */,
 				D48DFFE72C179ED400177AD0 /* Assets.xcassets */,
-				D48DFFE92C179ED400177AD0 /* MainMenu.xib */,
-				D48DFFEC2C179ED400177AD0 /* main.m */,
 				D48DFFEE2C179ED400177AD0 /* LibraryMac.entitlements */,
+				D41BD0292D1524D600306549 /* loaders.h */,
+				D41BD0272D1524C600306549 /* loaders.m */,
+				D48DFFEC2C179ED400177AD0 /* main.m */,
+				D48DFFE92C179ED400177AD0 /* MainMenu.xib */,
 			);
 			path = LibraryMac;
 			sourceTree = "<group>";
@@ -368,8 +373,8 @@
 			files = (
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
-				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D4E7D0C02C17AC7400980513 /* FileMatcher.h in Headers */,
+				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D4E7D0C42C17ADB200980513 /* PDFFileMatcher.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -484,7 +489,7 @@
 			);
 			name = LibraryMac;
 			productName = LibraryMac;
-			productReference = D48DFFE22C179ED300177AD0 /* LibraryMac.app */;
+			productReference = D48DFFE22C179ED300177AD0 /* Library.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D48DFFF22C179ED400177AD0 /* LibraryMacTests */ = {
@@ -706,6 +711,7 @@
 			files = (
 				D48DFFED2C179ED400177AD0 /* main.m in Sources */,
 				D48DFFE62C179ED300177AD0 /* AppDelegate.m in Sources */,
+				D41BD0282D1524C600306549 /* loaders.m in Sources */,
 				D41BD0222D13C43900306549 /* InfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,7 +879,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.donm.LibraryMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Library;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
@@ -950,7 +956,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cc.donm.LibraryMac;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Library;
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 			};

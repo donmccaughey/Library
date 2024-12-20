@@ -1,4 +1,4 @@
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
 
 
 @class InfoView;
@@ -12,7 +12,5 @@
 @property (strong) Library *library;
 @property (weak) IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSWindow *window;
-
-- (void)loadLibrary;
 
 @end

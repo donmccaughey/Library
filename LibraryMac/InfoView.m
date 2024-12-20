@@ -4,22 +4,6 @@
 @implementation InfoView
 
 
-//- (instancetype)initWithFrame:(NSRect)frameRect;
-//{
-//    self = [super initWithFrame:frameRect];
-//    if ( ! self) return nil;
-//    
-//    _countLabel = [NSTextField labelWithString:@""];
-//    [self addSubview:_countLabel];
-//    [NSLayoutConstraint activateConstraints:@[
-//        [_countLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-8.0],
-//        [_countLabel.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-//    ]];
-//    
-//    return self;
-//}
-
-
 - (void)updateWithBooksCount:(NSInteger)count
             andSelectedIndex:(NSInteger)selectedIndex;
 {

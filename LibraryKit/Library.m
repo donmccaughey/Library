@@ -1,12 +1,11 @@
 #import "Library.h"
 
-@import Cocoa;
-
 #import "Book.h"
 #import "FileMatcher.h"
 
 
-void addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books);
+void
+addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books);
 
 
 @implementation Library
@@ -42,7 +41,8 @@ void addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutable
 @end
 
 
-bool pathMatches(NSString *path, NSArray<FileMatcher *> *matchers)
+bool
+pathMatches(NSString *path, NSArray<FileMatcher *> *matchers)
 {
     for (FileMatcher *matcher in matchers) {
         if ([matcher pathMatches:path]) return true;
@@ -51,7 +51,8 @@ bool pathMatches(NSString *path, NSArray<FileMatcher *> *matchers)
 }
 
 
-void addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books)
+void
+addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books)
 {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSDirectoryEnumerator *enumerator = [manager enumeratorAtPath:dir];
