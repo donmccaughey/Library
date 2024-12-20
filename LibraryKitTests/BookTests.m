@@ -11,8 +11,10 @@
 
 - (void)testInitWithPath
 {
-    Book *book = [[Book alloc] initWithPath:@"example/path"];
+    Book *book = [[Book alloc] initWithPath:@"example/path"
+                                andFileSize:@0];
     
+    XCTAssertEqual(book.fileSize, @0);
     XCTAssertEqual(book.path, @"example/path");
 }
 

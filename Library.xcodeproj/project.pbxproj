@@ -341,12 +341,12 @@
 		D48DFFE32C179ED300177AD0 /* LibraryMac */ = {
 			isa = PBXGroup;
 			children = (
-				D41BD0232D13C44800306549 /* InfoView.h */,
-				D41BD0212D13C43900306549 /* InfoView.m */,
-				D4E7D0C62C1BE4B700980513 /* Info.plist */,
 				D48DFFE42C179ED300177AD0 /* AppDelegate.h */,
 				D48DFFE52C179ED300177AD0 /* AppDelegate.m */,
 				D48DFFE72C179ED400177AD0 /* Assets.xcassets */,
+				D41BD0232D13C44800306549 /* InfoView.h */,
+				D41BD0212D13C43900306549 /* InfoView.m */,
+				D4E7D0C62C1BE4B700980513 /* Info.plist */,
 				D48DFFEE2C179ED400177AD0 /* LibraryMac.entitlements */,
 				D41BD0292D1524D600306549 /* loaders.h */,
 				D41BD0272D1524C600306549 /* loaders.m */,

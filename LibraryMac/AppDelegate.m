@@ -6,7 +6,8 @@
 #import "loaders.h"
 
 
-@implementation AppDelegate {
+@implementation AppDelegate
+{
     Library *_library;
 }
 
@@ -29,8 +30,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
     NSArray<NSString *> *dirs = @[
+        @"/Users/donmcc/Documents",
         @"/Users/donmcc/Downloads",
-        @"/Users/donmcc/Dropbox/Books/Don's Library/Games",
+        @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
     loadLibrary(dirs);
 }
@@ -89,7 +91,7 @@
     }
     
     Book *book = _library.books[row];
-    cellView.textField.stringValue = book.path.lastPathComponent;
+    cellView.textField.stringValue = book.title;
     
     return cellView;
 }
