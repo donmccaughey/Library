@@ -22,8 +22,11 @@
 {
     _library = library;
     [_tableView reloadData];
+    Book *book = nil;
+    if (_tableView.selectedRow >= 0) book = _library.books[_tableView.selectedRow];
     [_infoView updateWithBooksCount:_library.books.count
-                   andSelectedIndex:_tableView.selectedRow];
+                      selectedIndex:_tableView.selectedRow
+                            andBook:(Book *)book];
 }
 
 
@@ -57,8 +60,11 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;
 {
+    Book *book = nil;
+    if (_tableView.selectedRow >= 0) book = _library.books[_tableView.selectedRow];
     [_infoView updateWithBooksCount:_library.books.count
-                   andSelectedIndex:_tableView.selectedRow];
+                      selectedIndex:_tableView.selectedRow
+                            andBook:(Book *)book];
 }
 
 

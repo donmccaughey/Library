@@ -687,7 +687,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="500" height="400"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1728" height="1079"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="500" height="400"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -776,15 +776,30 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JSs-2w-KtR">
+                                <rect key="frame" x="18" y="0.0" width="204" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="udE-87-lNQ"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" id="Vqq-Lg-pnC">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="qLl-bd-Clt" secondAttribute="bottom" id="4gz-dn-X6K"/>
                             <constraint firstAttribute="trailing" secondItem="qLl-bd-Clt" secondAttribute="trailing" constant="20" symbolic="YES" id="CCE-Oa-n5i"/>
                             <constraint firstAttribute="height" constant="29" id="Glf-n8-42t"/>
+                            <constraint firstAttribute="bottom" secondItem="JSs-2w-KtR" secondAttribute="bottom" id="NaY-WU-09A"/>
+                            <constraint firstItem="JSs-2w-KtR" firstAttribute="leading" secondItem="ytE-Q0-LOa" secondAttribute="leading" constant="20" symbolic="YES" id="SRv-wB-p4p"/>
                             <constraint firstItem="qLl-bd-Clt" firstAttribute="top" secondItem="ytE-Q0-LOa" secondAttribute="top" id="aSR-mJ-qjB"/>
+                            <constraint firstItem="JSs-2w-KtR" firstAttribute="top" secondItem="ytE-Q0-LOa" secondAttribute="top" id="tHw-9f-UEX"/>
                         </constraints>
                         <connections>
                             <outlet property="countLabel" destination="qLl-bd-Clt" id="F0Y-03-5q5"/>
+                            <outlet property="sizeLabel" destination="JSs-2w-KtR" id="dPw-rg-97u"/>
                         </connections>
                     </customView>
                 </subviews>
