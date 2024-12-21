@@ -5,9 +5,6 @@
 
 
 @implementation Book
-{
-    NSString *_title;
-}
 
 
 + (NSArray<FileMatcher *> *)fileMatchers;
@@ -16,6 +13,13 @@
         [EPUBMatcher new],
         [PDFMatcher new],
     ];
+}
+
+
+- (instancetype)init;
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 
@@ -38,9 +42,18 @@
 }
 
 
-- (NSString *)title;
+- (BOOL)isEqual:(id)object;
 {
-    return _title;
+    if (self == object) return YES;
+    if ( ! [object isKindOfClass:[Book class]]) return NO;
+    Book *book = object;
+    return [self.path isEqual:book->_path];
+}
+
+
+- (NSUInteger)hash;
+{
+    return _path.hash;
 }
 
 

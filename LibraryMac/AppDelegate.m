@@ -8,7 +8,7 @@
 
 @implementation AppDelegate
 {
-    NSArray<Book *> *_books;
+    NSOrderedSet<Book *> *_books;
     NSArray<NSSortDescriptor *> *_bookSort;
     Library *_library;
 }
@@ -16,7 +16,7 @@
 
 - (void)libraryDidFinishScanningForBooks:(NSNotification *)notification;
 {
-     _books = [_library.books sortedArrayUsingDescriptors:_bookSort];
+    _books = [NSOrderedSet orderedSetWithArray:[_library.books sortedArrayUsingDescriptors:_bookSort]];
     [_tableView reloadData];
     if (_books.count) {
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
