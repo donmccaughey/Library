@@ -4,11 +4,30 @@
 #import "FileMatcher.h"
 
 
+NSNotificationName const LibraryDidFinishScanningForBooksNotification = @"LibraryDidFinishScanningForBooks";
+
+
 void
-addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books);
+addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableDictionary<NSString *, Book *> *booksByPath);
 
 
 @implementation Library
+{
+    NSMutableDictionary<NSString *, Book *> *_booksByPath;
+}
+
+
+- (NSArray<Book *> *)books;
+{
+    return _booksByPath.allValues;
+}
+
+
+- (instancetype)init;
+{
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
+}
 
 
 - (instancetype)initWithDir:(NSString *)dir;
@@ -21,20 +40,27 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray
 {
     self = [super init];
     if (self) {
-        _books = @[];
+        _booksByPath = [NSMutableDictionary new];
         _dirs = [dirs copy];
     }
     return self;
 }
 
 
-- (void)scanDirsForBooks;
+- (void)startScanningForBooks;
 {
-    NSMutableArray<Book *> *books = [NSMutableArray new];
-    for (NSString *dir in _dirs) {
-        addMatchingPaths(dir, [Book fileMatchers], books);
-    }
-    _books = books;
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        NSMutableDictionary<NSString *, Book *> *booksByPath = [NSMutableDictionary new];
+        for (NSString *dir in self->_dirs) {
+            addMatchingPaths(dir, [Book fileMatchers], booksByPath);
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->_booksByPath = booksByPath;
+            [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidFinishScanningForBooksNotification
+                                                                object:self
+                                                              userInfo:nil];
+        });
+    });
 }
 
 
@@ -52,7 +78,7 @@ pathMatches(NSString *path, NSArray<FileMatcher *> *matchers)
 
 
 void
-addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray<Book *> *books)
+addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableDictionary<NSString *, Book *> *booksByPath)
 {
     NSFileManager *manager = [NSFileManager defaultManager];
     NSDirectoryEnumerator *enumerator = [manager enumeratorAtPath:dir];
@@ -64,7 +90,7 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableArray
                 NSString *absFilePath = [dir stringByAppendingPathComponent:relFilePath];
                 Book *book = [[Book alloc] initWithPath:absFilePath
                                             andFileSize:enumerator.fileAttributes[NSFileSize]];
-                [books addObject:book];
+                booksByPath[book.path] = book;
             }
         }
     }

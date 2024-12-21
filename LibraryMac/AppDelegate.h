@@ -8,10 +8,12 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
-@property (strong) Library *library;
+@property (strong, readonly) Library *library;
 @property (weak) IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSWindow *window;
 
-- (void)bookWasSelected;
+- (void)libraryDidFinishScanningForBooks:(NSNotification *)notification;
+
+- (void)postBookSelectionDidChangeNotification;
 
 @end

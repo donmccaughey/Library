@@ -3,7 +3,6 @@
 @import LibraryKit;
 
 #import "InfoView.h"
-#import "loaders.h"
 #import "Notifications.h"
 
 
@@ -15,32 +14,30 @@
 }
 
 
-- (Library *)library;
+- (void)libraryDidFinishScanningForBooks:(NSNotification *)notification;
 {
-    return _library;
-}
-
-
-- (void)setLibrary:(Library *)library;
-{
-    _library = library;
-    _books = [library.books sortedArrayUsingDescriptors:_bookSort];
+     _books = [_library.books sortedArrayUsingDescriptors:_bookSort];
     [_tableView reloadData];
-    [self bookWasSelected];
+    if (_books.count) {
+        [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
+                byExtendingSelection:NO];
+    } else {
+        [self postBookSelectionDidChangeNotification];
+    }
 }
 
 
-- (void)bookWasSelected;
+- (void)postBookSelectionDidChangeNotification;
 {
     Book *book = _tableView.selectedRow >= 0
-            ? _library.books[_tableView.selectedRow]
+            ? _books[_tableView.selectedRow]
             : nil;
     NSDictionary *userInfo = @{
-        BookSelectedBookKey: book ?: [NSNull null],
-        BookSelectedCountKey: @(_library.books.count),
-        BookSelectedIndexKey: @(_tableView.selectedRow),
+        BookSelectionDidChangeBookKey: book ?: [NSNull null],
+        BookSelectionDidChangeCountKey: @(_books.count),
+        BookSelectionDidChangeIndexKey: @(_tableView.selectedRow),
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:BookSelectedNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:BookSelectionDidChangeNotification
                                                         object:self
                                                       userInfo:userInfo];
 }
@@ -62,17 +59,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
-    NSArray<NSString *> *dirs = @[
-        @"/Users/donmcc/Documents",
-        @"/Users/donmcc/Downloads",
-        @"/Users/donmcc/Dropbox/Books/Don's Library",
-    ];
-    loadLibrary(dirs);
-}
-
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification;
-{
+    [_library startScanningForBooks];
 }
 
 
@@ -82,15 +69,37 @@
 }
 
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification;
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(libraryDidFinishScanningForBooks:)
+                                                 name:LibraryDidFinishScanningForBooksNotification
+                                               object:nil];
+    
+    NSArray<NSString *> *dirs = @[
+        @"/Users/donmcc/Documents",
+        @"/Users/donmcc/Downloads",
+        @"/Users/donmcc/Dropbox/Books/Don's Library",
+    ];
+    _library = [[Library alloc] initWithDirs:dirs];
+}
+
+
+- (void)applicationWillTerminate:(NSNotification *)aNotification;
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 {
-    return _library.books.count;
+    return _books.count;
 }
 
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;
 {
-    [self bookWasSelected];
+    [self postBookSelectionDidChangeNotification];
 }
 
 

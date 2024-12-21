@@ -7,6 +7,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
+extern NSNotificationName const LibraryDidFinishScanningForBooksNotification;
+
+
 @interface Library : NSObject
 
 @property (copy, readonly) NSArray<Book *> *books;
@@ -16,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDirs:(NSArray<NSString *> *)dirs;
 
-- (void)scanDirsForBooks;
+- (void)startScanningForBooks;
 
 @end
 

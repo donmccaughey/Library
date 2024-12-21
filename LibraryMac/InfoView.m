@@ -8,11 +8,11 @@
 @implementation InfoView
 
 
-- (void)onBookSelected:(NSNotification *)notification;
+- (void)bookSelectionDidChange:(NSNotification *)notification;
 {
-    Book *book = notification.userInfo[BookSelectedBookKey];
-    NSNumber *count = notification.userInfo[BookSelectedCountKey];
-    NSNumber *index = notification.userInfo[BookSelectedIndexKey];
+    Book *book = notification.userInfo[BookSelectionDidChangeBookKey];
+    NSNumber *count = notification.userInfo[BookSelectionDidChangeCountKey];
+    NSNumber *index = notification.userInfo[BookSelectionDidChangeIndexKey];
     if (index.integerValue == -1) {
         _countLabel.stringValue = [NSString stringWithFormat:@"%@ books", count];
         _sizeLabel.stringValue = @"";
@@ -29,8 +29,8 @@
     [super viewDidMoveToWindow];
     if (self.window) {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(onBookSelected:)
-                                                     name:BookSelectedNotification
+                                                 selector:@selector(bookSelectionDidChange:)
+                                                     name:BookSelectionDidChangeNotification
                                                    object:nil];
     }
 }

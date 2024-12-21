@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D41BD0222D13C43900306549 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0212D13C43900306549 /* InfoView.m */; };
-		D41BD0282D1524C600306549 /* loaders.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0272D1524C600306549 /* loaders.m */; };
 		D41BD02C2D165A1500306549 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD02B2D165A1500306549 /* Notifications.m */; };
 		D41BD0312D1669A200306549 /* EPUBMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D41BD02F2D1669A200306549 /* EPUBMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D41BD0322D1669A200306549 /* EPUBMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0302D1669A200306549 /* EPUBMatcher.m */; };
@@ -126,8 +125,6 @@
 /* Begin PBXFileReference section */
 		D41BD0212D13C43900306549 /* InfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoView.m; sourceTree = "<group>"; };
 		D41BD0232D13C44800306549 /* InfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
-		D41BD0272D1524C600306549 /* loaders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = loaders.m; sourceTree = "<group>"; };
-		D41BD0292D1524D600306549 /* loaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loaders.h; sourceTree = "<group>"; };
 		D41BD02A2D1659BD00306549 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		D41BD02B2D165A1500306549 /* Notifications.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
 		D41BD02F2D1669A200306549 /* EPUBMatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPUBMatcher.h; sourceTree = "<group>"; };
@@ -357,8 +354,6 @@
 				D41BD0212D13C43900306549 /* InfoView.m */,
 				D4E7D0C62C1BE4B700980513 /* Info.plist */,
 				D48DFFEE2C179ED400177AD0 /* LibraryMac.entitlements */,
-				D41BD0292D1524D600306549 /* loaders.h */,
-				D41BD0272D1524C600306549 /* loaders.m */,
 				D48DFFEC2C179ED400177AD0 /* main.m */,
 				D48DFFE92C179ED400177AD0 /* MainMenu.xib */,
 				D41BD02A2D1659BD00306549 /* Notifications.h */,
@@ -725,7 +720,6 @@
 				D48DFFED2C179ED400177AD0 /* main.m in Sources */,
 				D41BD02C2D165A1500306549 /* Notifications.m in Sources */,
 				D48DFFE62C179ED300177AD0 /* AppDelegate.m in Sources */,
-				D41BD0282D1524C600306549 /* loaders.m in Sources */,
 				D41BD0222D13C43900306549 /* InfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
