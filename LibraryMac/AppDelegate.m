@@ -6,11 +6,19 @@
 #import "Notifications.h"
 
 
+void
+logTimeInterval(const char* label, struct timespec diff);
+
+struct timespec
+timespecDiff(struct timespec start, struct timespec end);
+
+
 @implementation AppDelegate
 {
     NSOrderedSet<Book *> *_books;
     NSArray<NSSortDescriptor *> *_bookSort;
     Library *_library;
+    struct timespec _startTime;
 }
 
 
@@ -24,6 +32,11 @@
     } else {
         [self postBookSelectionDidChangeNotification];
     }
+    
+    struct timespec endTime;
+    clock_gettime(CLOCK_UPTIME_RAW, &endTime);
+    struct timespec loadTime = timespecDiff(_startTime, endTime);
+    logTimeInterval("Load time", loadTime);
 }
 
 
@@ -59,6 +72,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
+    clock_gettime(CLOCK_UPTIME_RAW, &_startTime);
     [_library startScanningForBooks];
 }
 
@@ -139,3 +153,34 @@
 
 
 @end
+
+
+void
+logTimeInterval(const char* label, struct timespec diff)
+{
+   if (diff.tv_sec > 0) {
+       double seconds = diff.tv_sec + diff.tv_nsec / 1e9;
+       NSLog(@"%s: %.1f seconds", label, seconds);
+   } else if (diff.tv_nsec >= 1000000) {
+       double milliseconds = diff.tv_nsec / 1e6;
+       NSLog(@"%s: %.1f milliseconds", label, milliseconds);
+   } else {
+       double microseconds = diff.tv_nsec / 1e3;
+       NSLog(@"%s: %.1f microseconds", label, microseconds);
+   }
+}
+
+
+struct timespec
+timespecDiff(struct timespec start, struct timespec end)
+{
+    struct timespec diff;
+    if (end.tv_nsec < start.tv_nsec) {
+        diff.tv_sec = end.tv_sec - start.tv_sec - 1;
+        diff.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
+    } else {
+        diff.tv_sec = end.tv_sec - start.tv_sec;
+        diff.tv_nsec = end.tv_nsec - start.tv_nsec;
+    }
+    return diff;
+}
