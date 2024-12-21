@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface PDFFileMatcher : FileMatcher
+@interface EPUBMatcher : FileMatcher
 
 @end
 

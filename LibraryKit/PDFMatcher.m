@@ -1,7 +1,7 @@
-#import "PDFFileMatcher.h"
+#import "PDFMatcher.h"
 
 
-@implementation PDFFileMatcher
+@implementation PDFMatcher
 
 
 - (BOOL)pathMatches:(NSString *)path;

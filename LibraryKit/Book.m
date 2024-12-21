@@ -1,6 +1,7 @@
 #import "Book.h"
 
-#import "PDFFileMatcher.h"
+#import "EPUBMatcher.h"
+#import "PDFMatcher.h"
 
 
 @implementation Book
@@ -12,7 +13,8 @@
 + (NSArray<FileMatcher *> *)fileMatchers;
 {
     return @[
-        [PDFFileMatcher new],
+        [EPUBMatcher new],
+        [PDFMatcher new],
     ];
 }
 
