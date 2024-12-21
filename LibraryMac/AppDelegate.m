@@ -4,6 +4,7 @@
 
 #import "InfoView.h"
 #import "loaders.h"
+#import "Notifications.h"
 
 
 @implementation AppDelegate
@@ -22,11 +23,23 @@
 {
     _library = library;
     [_tableView reloadData];
-    Book *book = nil;
-    if (_tableView.selectedRow >= 0) book = _library.books[_tableView.selectedRow];
-    [_infoView updateWithBooksCount:_library.books.count
-                      selectedIndex:_tableView.selectedRow
-                            andBook:(Book *)book];
+    [self bookWasSelected];
+}
+
+
+- (void)bookWasSelected;
+{
+    Book *book = _tableView.selectedRow >= 0
+            ? _library.books[_tableView.selectedRow]
+            : nil;
+    NSDictionary *userInfo = @{
+        BookSelectedBookKey: book ?: [NSNull null],
+        BookSelectedCountKey: @(_library.books.count),
+        BookSelectedIndexKey: @(_tableView.selectedRow),
+    };
+    [[NSNotificationCenter defaultCenter] postNotificationName:BookSelectedNotification
+                                                        object:self
+                                                      userInfo:userInfo];
 }
 
 
@@ -60,11 +73,7 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;
 {
-    Book *book = nil;
-    if (_tableView.selectedRow >= 0) book = _library.books[_tableView.selectedRow];
-    [_infoView updateWithBooksCount:_library.books.count
-                      selectedIndex:_tableView.selectedRow
-                            andBook:(Book *)book];
+    [self bookWasSelected];
 }
 
 

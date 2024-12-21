@@ -12,9 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong) IBOutlet NSTextField *countLabel;
 @property (strong) IBOutlet NSTextField *sizeLabel;
 
-- (void)updateWithBooksCount:(NSInteger)count
-               selectedIndex:(NSInteger)selectedIndex
-                     andBook:(Book *)book;
+- (void)onBookSelected:(NSNotification *)notification;
 
 @end
 
