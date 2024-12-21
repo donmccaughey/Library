@@ -9,6 +9,8 @@
 
 @implementation AppDelegate
 {
+    NSArray<Book *> *_books;
+    NSArray<NSSortDescriptor *> *_bookSort;
     Library *_library;
 }
 
@@ -22,6 +24,7 @@
 - (void)setLibrary:(Library *)library;
 {
     _library = library;
+    _books = [library.books sortedArrayUsingDescriptors:_bookSort];
     [_tableView reloadData];
     [self bookWasSelected];
 }
@@ -40,6 +43,20 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:BookSelectedNotification
                                                         object:self
                                                       userInfo:userInfo];
+}
+
+
+- (instancetype)init;
+{
+    self = [super init];
+    if ( ! self) return nil;
+    
+    _bookSort = @[
+        [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
+        [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
+    ];
+    
+    return self;
 }
 
 
@@ -105,7 +122,7 @@
         ]];
     }
     
-    Book *book = _library.books[row];
+    Book *book = _books[row];
     cellView.textField.stringValue = book.title;
     
     return cellView;
