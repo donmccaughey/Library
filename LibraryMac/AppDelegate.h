@@ -6,8 +6,8 @@
 @property (weak) IBOutlet NSTableView *tableView;
 @property (strong) IBOutlet NSWindow *window;
 
-- (void)libraryDidFinishScanningForBooks:(NSNotification *)notification;
+- (void)didFinishScanningForBooks:(NSNotification *)notification;
 
-- (void)postBookSelectionDidChangeNotification;
+- (void)postDidSelectBookNotification;
 
 @end

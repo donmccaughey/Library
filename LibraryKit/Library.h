@@ -7,8 +7,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSNotificationName const LibraryWillStartScanningForBooksNotification;
-extern NSNotificationName const LibraryDidFinishScanningForBooksNotification;
+extern NSNotificationName const WillStartScanningForBooksNotification;
+extern NSNotificationName const DidFinishScanningForBooksNotification;
 
 
 @interface Library : NSObject

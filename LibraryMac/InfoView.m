@@ -10,9 +10,9 @@
 
 - (void)bookSelectionDidChange:(NSNotification *)notification;
 {
-    Book *book = notification.userInfo[BookSelectionDidChangeBookKey];
-    NSNumber *count = notification.userInfo[BookSelectionDidChangeCountKey];
-    NSNumber *index = notification.userInfo[BookSelectionDidChangeIndexKey];
+    Book *book = notification.userInfo[BookKey];
+    NSNumber *count = notification.userInfo[CountKey];
+    NSNumber *index = notification.userInfo[IndexKey];
     if (index.integerValue == -1) {
         _countLabel.stringValue = [NSString stringWithFormat:@"%@ books", count];
         _sizeLabel.stringValue = @"";
@@ -30,7 +30,7 @@
     if (self.window) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(bookSelectionDidChange:)
-                                                     name:BookSelectionDidChangeNotification
+                                                     name:DidSelectBookNotification
                                                    object:nil];
     }
 }

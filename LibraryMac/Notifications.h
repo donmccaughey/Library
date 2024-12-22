@@ -1,7 +1,7 @@
 @import Foundation;
 
 
-extern NSNotificationName const BookSelectionDidChangeNotification;
-extern NSString *const BookSelectionDidChangeBookKey;
-extern NSString *const BookSelectionDidChangeCountKey;
-extern NSString *const BookSelectionDidChangeIndexKey;
+extern NSNotificationName const DidSelectBookNotification;
+extern NSString *const BookKey;
+extern NSString *const CountKey;
+extern NSString *const IndexKey;

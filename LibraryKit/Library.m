@@ -4,8 +4,8 @@
 #import "FileMatcher.h"
 
 
-NSNotificationName const LibraryWillStartScanningForBooksNotification = @"LibraryWillStartScanningForBooks";
-NSNotificationName const LibraryDidFinishScanningForBooksNotification = @"LibraryDidFinishScanningForBooks";
+NSNotificationName const WillStartScanningForBooksNotification = @"WillStartScanningForBooks";
+NSNotificationName const DidFinishScanningForBooksNotification = @"DidFinishScanningForBooks";
 
 
 void
@@ -50,7 +50,7 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableDicti
 
 - (void)startScanningForBooks;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:LibraryWillStartScanningForBooksNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:WillStartScanningForBooksNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableDictionary<NSString *, Book *> *booksByPath = [NSMutableDictionary new];
@@ -59,7 +59,7 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableDicti
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_booksByPath = booksByPath;
-            [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidFinishScanningForBooksNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishScanningForBooksNotification
                                                                 object:self];
         });
     });

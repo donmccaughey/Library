@@ -16,7 +16,7 @@
 }
 
 
-- (void)libraryDidFinishScanningForBooks:(NSNotification *)notification;
+- (void)didFinishScanningForBooks:(NSNotification *)notification;
 {
     _books = [NSOrderedSet orderedSetWithArray:[_library.books sortedArrayUsingDescriptors:_bookSort]];
     [_tableView reloadData];
@@ -24,22 +24,22 @@
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
                 byExtendingSelection:NO];
     } else {
-        [self postBookSelectionDidChangeNotification];
+        [self postDidSelectBookNotification];
     }
 }
 
 
-- (void)postBookSelectionDidChangeNotification;
+- (void)postDidSelectBookNotification;
 {
-    Book *book = _tableView.selectedRow >= 0
+    id book = _tableView.selectedRow >= 0
             ? _books[_tableView.selectedRow]
-            : nil;
+            : [NSNull null];
     NSDictionary *userInfo = @{
-        BookSelectionDidChangeBookKey: book ?: [NSNull null],
-        BookSelectionDidChangeCountKey: @(_books.count),
-        BookSelectionDidChangeIndexKey: @(_tableView.selectedRow),
+        BookKey: book,
+        CountKey: @(_books.count),
+        IndexKey: @(_tableView.selectedRow),
     };
-    [[NSNotificationCenter defaultCenter] postNotificationName:BookSelectionDidChangeNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
                                                         object:self
                                                       userInfo:userInfo];
 }
@@ -50,6 +50,7 @@
     self = [super init];
     if ( ! self) return nil;
     
+    _books = [NSOrderedSet new];
     _bookSort = @[
         [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
@@ -75,8 +76,8 @@
 - (void)applicationWillFinishLaunching:(NSNotification *)notification;
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(libraryDidFinishScanningForBooks:)
-                                                 name:LibraryDidFinishScanningForBooksNotification
+                                             selector:@selector(didFinishScanningForBooks:)
+                                                 name:DidFinishScanningForBooksNotification
                                                object:nil];
     
     NSArray<NSString *> *dirs = @[
@@ -102,7 +103,7 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;
 {
-    [self postBookSelectionDidChangeNotification];
+    [self postDidSelectBookNotification];
 }
 
 
