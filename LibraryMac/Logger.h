@@ -10,6 +10,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 
+- (void)didSelectBook:(NSNotification *)notification;
+
 @end
 
 

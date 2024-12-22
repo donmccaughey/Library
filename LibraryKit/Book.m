@@ -4,6 +4,13 @@
 #import "PDFMatcher.h"
 
 
+BOOL
+isOneWord(NSString *const string);
+
+NSString *
+makeTitleFromPath(NSString *path);
+
+
 @implementation Book
 
 
@@ -30,7 +37,7 @@
     if (self) {
         _fileSize = fileSize;
         _path = path;
-        _title = path.lastPathComponent;
+        _title = makeTitleFromPath(path);
     }
     return self;
 }
@@ -58,3 +65,25 @@
 
 
 @end
+
+
+BOOL
+isOneWord(NSString *const string)
+{
+    NSRange range = [string rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+    return NSNotFound == range.location;
+}
+
+
+NSString *
+makeTitleFromPath(NSString *path)
+{
+    NSString *filename = path.lastPathComponent.stringByDeletingPathExtension;
+    if (isOneWord(filename)) {
+        if ([filename containsString:@"_"]) {
+            return [filename stringByReplacingOccurrencesOfString:@"_"
+                                                       withString:@" "];
+        }
+    }
+    return filename;
+}

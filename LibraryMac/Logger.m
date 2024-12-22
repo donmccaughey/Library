@@ -2,6 +2,8 @@
 
 @import LibraryKit;
 
+#import "Notifications.h"
+
 
 double const NANOS_PER_SEC = 1e9;
 double const NANOS_PER_MILLI = 1e6;
@@ -37,6 +39,18 @@ formatInterval(struct timespec elapsedTime);
 }
 
 
+- (void)didSelectBook:(NSNotification *)notification;
+{
+    id value = notification.userInfo[BookKey];
+    if ([NSNull null] == value) {
+        NSLog(@"Did deselect book");
+    } else {
+        Book *book = value;
+        NSLog(@"Did select book \"%@\"", book);
+    }
+}
+
+
 - (void)dealloc;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -55,6 +69,10 @@ formatInterval(struct timespec elapsedTime);
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didFinishScanningForBooks:)
                                                  name:DidFinishScanningForBooksNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didSelectBook:)
+                                                 name:DidSelectBookNotification
                                                object:nil];
     
     return self;
