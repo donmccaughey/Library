@@ -8,11 +8,11 @@ double const NANOS_PER_MILLI = 1e6;
 double const NANOS_PER_MICRO = 1e3;
 
 
-NSString *
-formatElapsedTime(struct timespec elapsedTime);
-
 struct timespec
-interval(struct timespec start, struct timespec end);
+calculateInterval(struct timespec start, struct timespec end);
+
+NSString *
+formatInterval(struct timespec elapsedTime);
 
 
 @implementation Logger
@@ -21,10 +21,10 @@ interval(struct timespec start, struct timespec end);
 }
 
 
-- (void)libraryDidStartScanningForBooks:(NSNotification *)notification;
+- (void)libraryWillStartScanningForBooks:(NSNotification *)notification;
 {
     clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
-    NSLog(@"Did start scanning for books.");
+    NSLog(@"Will start scanning for books.");
 }
 
 
@@ -32,9 +32,8 @@ interval(struct timespec start, struct timespec end);
 {
     struct timespec timeNow;
     clock_gettime(CLOCK_UPTIME_RAW, &timeNow);
-    struct timespec scanTime = interval(_startScanningForBooksTime, timeNow);
-
-    NSLog(@"Did finish scanning for books in %@", formatElapsedTime(scanTime));
+    struct timespec scanTime = calculateInterval(_startScanningForBooksTime, timeNow);
+    NSLog(@"Did finish scanning for books in %@", formatInterval(scanTime));
 }
 
 
@@ -50,8 +49,8 @@ interval(struct timespec start, struct timespec end);
     if ( ! self) return nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(libraryDidStartScanningForBooks:)
-                                                 name:LibraryDidStartScanningForBooksNotification
+                                             selector:@selector(libraryWillStartScanningForBooks:)
+                                                 name:LibraryWillStartScanningForBooksNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(libraryDidFinishScanningForBooks:)
@@ -65,8 +64,23 @@ interval(struct timespec start, struct timespec end);
 @end
 
 
+struct timespec
+calculateInterval(struct timespec start, struct timespec end)
+{
+    struct timespec diff;
+    if (end.tv_nsec < start.tv_nsec) {
+        diff.tv_sec = end.tv_sec - start.tv_sec - 1;
+        diff.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
+    } else {
+        diff.tv_sec = end.tv_sec - start.tv_sec;
+        diff.tv_nsec = end.tv_nsec - start.tv_nsec;
+    }
+    return diff;
+}
+
+
 NSString *
-formatElapsedTime(struct timespec elapsedTime)
+formatInterval(struct timespec elapsedTime)
 {
    if (elapsedTime.tv_sec > 0) {
        double seconds = elapsedTime.tv_sec + elapsedTime.tv_nsec / NANOS_PER_SEC;
@@ -78,19 +92,4 @@ formatElapsedTime(struct timespec elapsedTime)
        double microseconds = elapsedTime.tv_nsec / NANOS_PER_MICRO;
        return [NSString stringWithFormat:@"%.1f µs", microseconds];
    }
-}
-
-
-struct timespec
-interval(struct timespec start, struct timespec end)
-{
-    struct timespec diff;
-    if (end.tv_nsec < start.tv_nsec) {
-        diff.tv_sec = end.tv_sec - start.tv_sec - 1;
-        diff.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
-    } else {
-        diff.tv_sec = end.tv_sec - start.tv_sec;
-        diff.tv_nsec = end.tv_nsec - start.tv_nsec;
-    }
-    return diff;
 }
