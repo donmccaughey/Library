@@ -14,12 +14,20 @@
     NSNumber *count = notification.userInfo[CountKey];
     NSNumber *index = notification.userInfo[IndexKey];
     if (index.integerValue == -1) {
-        _countLabel.stringValue = [NSString stringWithFormat:@"%@ books", count];
         _sizeLabel.stringValue = @"";
+        _countLabel.stringValue = [NSString stringWithFormat:@"%@ books", count];
     } else {
+        NSString *byteCount = [NSByteCountFormatter stringFromByteCount:book.fileSize.longLongValue
+                                                             countStyle:NSByteCountFormatterCountStyleFile];
+        NSUInteger pageCount = book.pageCount;
+        if (pageCount) {
+            NSString *plural = 1 == pageCount ? @"" : @"s";
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@: %ld page%@ (%@)", book.typeName, pageCount, plural, byteCount];
+        } else {
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@: (%@)", book.typeName, byteCount];
+        }
+        
         _countLabel.stringValue = [NSString stringWithFormat:@"%ld of %@ books", index.integerValue + 1, count];
-        _sizeLabel.stringValue = [NSByteCountFormatter stringFromByteCount:book.fileSize.longLongValue
-                                                                countStyle:NSByteCountFormatterCountStyleFile];
     }
 }
 

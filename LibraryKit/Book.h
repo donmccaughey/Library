@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Book : NSObject
 
 @property (readonly) NSNumber *fileSize;
+@property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
 @property (readonly) enum BookType type;

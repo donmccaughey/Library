@@ -35,6 +35,12 @@ makeTitleFromPath(NSString *path);
 }
 
 
+- (NSUInteger)pageCount;
+{
+    return 0;
+}
+
+
 - (instancetype)init;
 {
     [self doesNotRecognizeSelector:_cmd];

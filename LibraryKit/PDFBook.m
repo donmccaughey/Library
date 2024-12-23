@@ -1,5 +1,7 @@
 #import "PDFBook.h"
 
+@import PDFKit;
+
 #import "Book-internal.h"
 
 
@@ -14,15 +16,24 @@
 
 
 @implementation PDFBook
+{
+    PDFDocument *_document;
+}
+
+
+- (NSUInteger)pageCount;
+{
+    return _document.pageCount;
+}
 
 
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
-    return [super initWithType:BookTypePDF
-                      typeName:@"PDF"
-                          path:path
-                   andFileSize:fileSize];
+    return [self initWithType:BookTypePDF
+                     typeName:@"PDF"
+                         path:path
+                  andFileSize:fileSize];
 }
 
 
@@ -36,6 +47,11 @@
                           path:path
                    andFileSize:fileSize];
     if ( ! self) return nil;
+    NSURL *url = [NSURL fileURLWithPath:path];
+    _document = [[PDFDocument alloc] initWithURL:url];
+    if ( ! _document) {
+        NSLog(@"Failed to open PDF document at '%@'", self.path);
+    }
     
     return self;
 }
