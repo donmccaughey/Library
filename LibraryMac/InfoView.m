@@ -21,10 +21,9 @@
                                                              countStyle:NSByteCountFormatterCountStyleFile];
         NSUInteger pageCount = book.pageCount;
         if (pageCount) {
-            NSString *plural = 1 == pageCount ? @"" : @"s";
-            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@: %ld page%@ (%@)", book.typeName, pageCount, plural, byteCount];
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%ld page %@ (%@)", pageCount, book.typeName, byteCount];
         } else {
-            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@: (%@)", book.typeName, byteCount];
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)", book.typeName, byteCount];
         }
         
         _countLabel.stringValue = [NSString stringWithFormat:@"%ld of %@ books", index.integerValue + 1, count];
