@@ -1,6 +1,9 @@
 #import "Book.h"
+#import "Book-internal.h"
 
+#import "EPUBBook.h"
 #import "EPUBMatcher.h"
+#import "PDFBook.h"
 #import "PDFMatcher.h"
 
 
@@ -42,11 +45,32 @@ makeTitleFromPath(NSString *path);
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
+    if ([[EPUBMatcher new] pathMatches:path]) {
+        return [[EPUBBook alloc] initWithPath:path
+                                  andFileSize:fileSize];
+    }
+    if ([[PDFMatcher new] pathMatches:path]) {
+        return [[PDFBook alloc] initWithPath:path
+                                 andFileSize:fileSize];
+    }
+    [NSException raise:@"Invalid book path"
+                format:@"The path '%@' is not a valid book format.", path];
+    return nil;
+}
+
+
+- (instancetype)initWithType:(enum BookType)type
+                    typeName:(NSString *)typeName
+                        path:(NSString *)path
+                 andFileSize:(NSNumber *)fileSize;
+{
     self = [super init];
     if (self) {
         _fileSize = fileSize;
         _path = path;
         _title = makeTitleFromPath(path);
+        _type = type;
+        _typeName = typeName;
     }
     return self;
 }

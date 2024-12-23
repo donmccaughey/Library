@@ -4,6 +4,13 @@
 @class FileMatcher;
 
 
+enum BookType : NSUInteger {
+    BookTypeUnknown,
+    BookTypeEPUB,
+    BookTypePDF,
+};
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 
@@ -12,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSNumber *fileSize;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
+@property (readonly) enum BookType type;
+@property (readonly) NSString *typeName;
 
 + (NSArray<FileMatcher *> *)fileMatchers;
 

@@ -81,12 +81,12 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
     NSFileManager *manager = [NSFileManager defaultManager];
     NSDirectoryEnumerator *enumerator = [manager enumeratorAtPath:dir];
     
-    NSString *relFilePath;
-    while ((relFilePath = [enumerator nextObject])) {
+    NSString *relPath;
+    while ((relPath = [enumerator nextObject])) {
         if (NSFileTypeRegular == enumerator.fileAttributes.fileType) {
-            if ([Book isBookFile:relFilePath]) {
-                NSString *absFilePath = [dir stringByAppendingPathComponent:relFilePath];
-                Book *book = [[Book alloc] initWithPath:absFilePath
+            if ([Book isBookFile:relPath]) {
+                NSString *absPath = [dir stringByAppendingPathComponent:relPath];
+                Book *book = [[Book alloc] initWithPath:absPath
                                             andFileSize:enumerator.fileAttributes[NSFileSize]];
                 [books addObject:book];
             }
