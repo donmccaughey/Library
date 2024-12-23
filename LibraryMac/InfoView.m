@@ -8,7 +8,7 @@
 @implementation InfoView
 
 
-- (void)bookSelectionDidChange:(NSNotification *)notification;
+- (void)didSelectBook:(NSNotification *)notification;
 {
     Book *book = notification.userInfo[BookKey];
     NSNumber *count = notification.userInfo[CountKey];
@@ -29,7 +29,7 @@
     [super viewDidMoveToWindow];
     if (self.window) {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(bookSelectionDidChange:)
+                                                 selector:@selector(didSelectBook:)
                                                      name:DidSelectBookNotification
                                                    object:nil];
     }

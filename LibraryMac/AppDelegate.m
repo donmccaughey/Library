@@ -9,7 +9,6 @@
 
 @implementation AppDelegate
 {
-    NSOrderedSet<Book *> *_books;
     NSArray<NSSortDescriptor *> *_bookSort;
     Library *_library;
     Logger *_logger;
@@ -18,9 +17,9 @@
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 {
-    _books = [NSOrderedSet orderedSetWithArray:[_library.books sortedArrayUsingDescriptors:_bookSort]];
+    [_library sortBy:_bookSort];
     [_tableView reloadData];
-    if (_books.count) {
+    if (_library.books.count) {
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
                 byExtendingSelection:NO];
     } else {
@@ -32,11 +31,11 @@
 - (void)postDidSelectBookNotification;
 {
     id book = _tableView.selectedRow >= 0
-            ? _books[_tableView.selectedRow]
+            ? _library.books[_tableView.selectedRow]
             : [NSNull null];
     NSDictionary *userInfo = @{
         BookKey: book,
-        CountKey: @(_books.count),
+        CountKey: @(_library.books.count),
         IndexKey: @(_tableView.selectedRow),
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
@@ -50,7 +49,6 @@
     self = [super init];
     if ( ! self) return nil;
     
-    _books = [NSOrderedSet new];
     _bookSort = @[
         [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
@@ -97,7 +95,7 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 {
-    return _books.count;
+    return _library.books.count;
 }
 
 
@@ -135,7 +133,7 @@
         ]];
     }
     
-    Book *book = _books[row];
+    Book *book = _library.books[row];
     cellView.textField.stringValue = book.title;
     
     return cellView;

@@ -46,7 +46,10 @@ formatInterval(struct timespec elapsedTime);
         NSLog(@"Did deselect book");
     } else {
         Book *book = value;
-        NSLog(@"Did select book \"%@\"", book);
+        NSNumber *index = notification.userInfo[IndexKey];
+        NSUInteger i = 1 + index.unsignedLongValue;
+        NSNumber *count = notification.userInfo[CountKey];
+        NSLog(@"Did select book %lu of %@: \"%@\"", i, count, book);
     }
 }
 
