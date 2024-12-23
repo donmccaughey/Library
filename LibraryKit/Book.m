@@ -20,8 +20,8 @@ makeTitleFromPath(NSString *path);
 + (NSArray<FileMatcher *> *)fileMatchers;
 {
     return @[
-        [EPUBMatcher new],
-        [PDFMatcher new],
+        [EPUBMatcher matcher],
+        [PDFMatcher matcher],
     ];
 }
 
@@ -45,11 +45,11 @@ makeTitleFromPath(NSString *path);
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
-    if ([[EPUBMatcher new] pathMatches:path]) {
+    if ([[EPUBMatcher matcher] pathMatches:path]) {
         return [[EPUBBook alloc] initWithPath:path
                                   andFileSize:fileSize];
     }
-    if ([[PDFMatcher new] pathMatches:path]) {
+    if ([[PDFMatcher matcher] pathMatches:path]) {
         return [[PDFBook alloc] initWithPath:path
                                  andFileSize:fileSize];
     }

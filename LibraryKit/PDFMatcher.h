@@ -6,6 +6,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PDFMatcher : FileMatcher
 
++ (instancetype)matcher;
+
 @end
 
 
