@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<FileMatcher *> *)fileMatchers;
 
++ (BOOL)isBookFile:(NSString *)path;
+
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 

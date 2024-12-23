@@ -23,6 +23,15 @@ makeTitleFromPath(NSString *path);
 }
 
 
++ (BOOL)isBookFile:(NSString *)path;
+{
+    for (FileMatcher *matcher in [self fileMatchers]) {
+        if ([matcher pathMatches:path]) return true;
+    }
+    return false;
+}
+
+
 - (instancetype)init;
 {
     [self doesNotRecognizeSelector:_cmd];
