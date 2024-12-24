@@ -2,14 +2,12 @@
 
 @import LibraryKit;
 
-#import "InfoView.h"
-#import "LibraryDataSource.h"
 #import "Logger.h"
-#import "Notifications.h"
 
 
 @implementation AppDelegate
 {
+    NSArray<NSString *> *_dirs;
     Logger *_logger;
 }
 
@@ -27,7 +25,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
-    // nothing to do here
+    [_library startScanningForBooksInDirs:_dirs];
 }
 
 
@@ -39,13 +37,11 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification;
 {
-    NSArray<NSString *> *dirs = @[
+    _dirs = @[
         @"/Users/donmcc/Documents",
         @"/Users/donmcc/Downloads",
         @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
-    Library *library = [[Library alloc] initWithDirs:dirs];
-    _libraryDataSource.library = library;
 }
 
 

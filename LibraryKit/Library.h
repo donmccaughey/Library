@@ -16,13 +16,9 @@ extern NSNotificationName const DidFinishScanningForBooksNotification;
 @property (copy, readonly) NSOrderedSet<Book *> *books;
 @property (copy, readonly) NSArray<NSString *> *dirs;
 
-- (instancetype)initWithDir:(NSString *)dir;
-
-- (instancetype)initWithDirs:(NSArray<NSString *> *)dirs;
-
-- (void)startScanningForBooks;
-
 - (void)sortBy:(NSArray<NSSortDescriptor *> *)descriptors;
+
+- (void)startScanningForBooksInDirs:(NSArray<NSString *> *)dirs;
 
 @end
 

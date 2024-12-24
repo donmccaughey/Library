@@ -2,21 +2,20 @@
 
 @import LibraryKit;
 
-#import "LibraryDataSource.h"
 #import "Notifications.h"
 
 
 @implementation BookListViewController
 {
-    NSArray<NSSortDescriptor *> *_bookSort;
+    NSArray<NSSortDescriptor *> *_sortDescriptors;
 }
 
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 {
-    [_libraryDataSource.library sortBy:_bookSort];
+    [_library sortBy:_sortDescriptors];
     [_tableView reloadData];
-    if (_libraryDataSource.count) {
+    if (_library.books.count) {
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
                 byExtendingSelection:NO];
     } else {
@@ -28,10 +27,10 @@
 - (void)updateSelectedBook;
 {
     if (_tableView.selectedRow >= 0) {
-        Book *book = _libraryDataSource[_tableView.selectedRow];
+        Book *book = _library.books[_tableView.selectedRow];
         NSDictionary *userInfo = @{
             BookKey: book,
-            CountKey: @(_libraryDataSource.count),
+            CountKey: @(_library.books.count),
             IndexKey: @(_tableView.selectedRow),
         };
         [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
@@ -41,7 +40,7 @@
     } else {
         NSDictionary *userInfo = @{
             BookKey: [NSNull null],
-            CountKey: @(_libraryDataSource.count),
+            CountKey: @(_library.books.count),
             IndexKey: @(_tableView.selectedRow),
         };
         [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
@@ -59,7 +58,7 @@
 
 - (void)viewDidLoad;
 {
-    _bookSort = @[
+    _sortDescriptors = @[
         [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
     ];
@@ -68,6 +67,12 @@
                                                  name:DidFinishScanningForBooksNotification
                                                object:nil];
     [super viewDidLoad];
+}
+
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
+{
+    return _library.books.count;
 }
 
 
@@ -105,7 +110,7 @@
         ]];
     }
     
-    Book *book = _libraryDataSource[row];
+    Book *book = _library.books[row];
     cellView.textField.stringValue = book.title;
     
     return cellView;

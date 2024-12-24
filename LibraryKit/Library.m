@@ -18,57 +18,45 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
 }
 
 
-- (NSOrderedSet<Book *> *)books;
-{
-    return _books;
-}
+//- (NSOrderedSet<Book *> *)books;
+//{
+//    return _books;
+//}
 
 
 - (instancetype)init;
 {
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-
-- (instancetype)initWithDir:(NSString *)dir;
-{
-    return [self initWithDirs:@[dir]];
-}
-
-
-- (instancetype)initWithDirs:(NSArray<NSString *> *)dirs;
-{
     self = [super init];
     if (self) {
         _books = [NSMutableOrderedSet new];
-        _dirs = [dirs copy];
+        _dirs = @[];
     }
     return self;
-}
-
-
-- (void)startScanningForBooks;
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:WillStartScanningForBooksNotification
-                                                        object:self];
-    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        NSMutableOrderedSet<Book *> *books = [NSMutableOrderedSet new];
-        for (NSString *dir in self->_dirs) {
-            addMatchingPaths(dir, [Book fileMatchers], books);
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self->_books = books;
-            [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishScanningForBooksNotification
-                                                                object:self];
-        });
-    });
 }
 
 
 - (void)sortBy:(NSArray<NSSortDescriptor *> *)descriptors;
 {
     [_books sortUsingDescriptors:descriptors];
+}
+
+
+- (void)startScanningForBooksInDirs:(NSArray<NSString *> *)dirs;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WillStartScanningForBooksNotification
+                                                        object:self];
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        NSMutableOrderedSet<Book *> *books = [NSMutableOrderedSet new];
+        for (NSString *dir in dirs) {
+            addMatchingPaths(dir, [Book fileMatchers], books);
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self->_books = books;
+            self->_dirs = [dirs copy];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishScanningForBooksNotification
+                                                                object:self];
+        });
+    });
 }
 
 

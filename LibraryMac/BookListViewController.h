@@ -1,15 +1,15 @@
 @import Cocoa;
 
 
-@class LibraryDataSource;
+@class Library;
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface BookListViewController : NSViewController<NSTableViewDelegate>
+@interface BookListViewController : NSViewController<NSTableViewDataSource, NSTableViewDelegate>
 
-@property (weak) IBOutlet LibraryDataSource *libraryDataSource;
+@property (weak) IBOutlet Library *library;
 @property (weak) IBOutlet NSTableView *tableView;
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;

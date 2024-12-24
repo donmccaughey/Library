@@ -1,12 +1,12 @@
 @import Cocoa;
 
 
-@class LibraryDataSource;
+@class Library;
 
 
 @interface AppDelegate : NSObject<NSApplicationDelegate>
 
-@property (weak) IBOutlet LibraryDataSource *libraryDataSource;
+@property (weak) IBOutlet Library *library;
 @property IBOutlet NSWindow *window;
 
 @end
