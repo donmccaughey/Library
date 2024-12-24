@@ -18,6 +18,7 @@
 		D46FDC7F2D18F8C9001E8362 /* PDFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC7D2D18F8C9001E8362 /* PDFBook.m */; };
 		D46FDC812D18F9C4001E8362 /* Book-internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC802D18F9B6001E8362 /* Book-internal.h */; };
 		D46FDC842D1B5AA0001E8362 /* LibraryDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC832D1B5AA0001E8362 /* LibraryDataSource.m */; };
+		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
 		D48D00022C179ED400177AD0 /* LibraryMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00012C179ED400177AD0 /* LibraryMacUITests.m */; };
 		D48D00042C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */; };
 		D48D000F2C179EDE00177AD0 /* LibraryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */; };
@@ -145,6 +146,8 @@
 		D46FDC802D18F9B6001E8362 /* Book-internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Book-internal.h"; sourceTree = "<group>"; };
 		D46FDC822D1B5AA0001E8362 /* LibraryDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LibraryDataSource.h; sourceTree = "<group>"; };
 		D46FDC832D1B5AA0001E8362 /* LibraryDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryDataSource.m; sourceTree = "<group>"; };
+		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
+		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D48D00012C179ED400177AD0 /* LibraryMacUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITests.m; sourceTree = "<group>"; };
 		D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D48D00182C179EFA00177AD0 /* LibraryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -371,6 +374,8 @@
 				D48DFFE42C179ED300177AD0 /* AppDelegate.h */,
 				D48DFFE52C179ED300177AD0 /* AppDelegate.m */,
 				D48DFFE72C179ED400177AD0 /* Assets.xcassets */,
+				D46FDC852D1B65ED001E8362 /* BookListViewController.h */,
+				D46FDC862D1B65ED001E8362 /* BookListViewController.m */,
 				D41BD0232D13C44800306549 /* InfoView.h */,
 				D41BD0212D13C43900306549 /* InfoView.m */,
 				D4E7D0C62C1BE4B700980513 /* Info.plist */,
@@ -751,6 +756,7 @@
 				D48DFFED2C179ED400177AD0 /* main.m in Sources */,
 				D41BD02C2D165A1500306549 /* Notifications.m in Sources */,
 				D48DFFE62C179ED300177AD0 /* AppDelegate.m in Sources */,
+				D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */,
 				D41BD0222D13C43900306549 /* InfoView.m in Sources */,
 				D41BD0352D17644A00306549 /* Logger.m in Sources */,
 			);

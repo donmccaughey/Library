@@ -4,14 +4,9 @@
 @class LibraryDataSource;
 
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate>
+@interface AppDelegate : NSObject<NSApplicationDelegate>
 
-@property IBOutlet LibraryDataSource *libraryDataSource;
-@property (weak) IBOutlet NSTableView *tableView;
+@property (weak) IBOutlet LibraryDataSource *libraryDataSource;
 @property IBOutlet NSWindow *window;
-
-- (void)didFinishScanningForBooks:(NSNotification *)notification;
-
-- (void)updateSelectedBook;
 
 @end

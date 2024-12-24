@@ -16,10 +16,16 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="libraryDataSource" destination="vw3-QU-rgd" id="CKd-EE-sz8"/>
-                <outlet property="tableView" destination="X3R-Lk-vYw" id="VzP-pu-qNU"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
+        <viewController id="bLG-dc-uGS" customClass="BookListViewController">
+            <connections>
+                <outlet property="libraryDataSource" destination="vw3-QU-rgd" id="ltB-3l-j7K"/>
+                <outlet property="tableView" destination="X3R-Lk-vYw" id="Kac-dB-QRW"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="NHM-mQ-Kvd"/>
+            </connections>
+        </viewController>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="vw3-QU-rgd" customClass="LibraryDataSource"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
@@ -745,7 +751,7 @@
                                     </tableColumns>
                                     <connections>
                                         <outlet property="dataSource" destination="vw3-QU-rgd" id="hDg-T8-5nn"/>
-                                        <outlet property="delegate" destination="Voe-Tx-rLC" id="fz4-Ox-3Wa"/>
+                                        <outlet property="delegate" destination="bLG-dc-uGS" id="xzC-DB-UPZ"/>
                                     </connections>
                                 </tableView>
                             </subviews>
