@@ -47,13 +47,29 @@
                           path:path
                    andFileSize:fileSize];
     if ( ! self) return nil;
-    NSURL *url = [NSURL fileURLWithPath:path];
-    _document = [[PDFDocument alloc] initWithURL:url];
-    if ( ! _document) {
-        NSLog(@"Failed to open PDF document at '%@'", self.path);
-    }
     
     return self;
+}
+
+
+- (void)open;
+{
+    NSAssert( ! self.isOpen, @"Expected book to be closed.");
+    
+    NSURL *url = [NSURL fileURLWithPath:self.path];
+    _document = [[PDFDocument alloc] initWithURL:url];
+    if (_document) {
+        [super open];
+    } else {
+        NSLog(@"Failed to open PDF document at '%@'", self.path);
+    }
+}
+
+
+- (void)close;
+{
+    _document = nil;
+    [super close];
 }
 
 

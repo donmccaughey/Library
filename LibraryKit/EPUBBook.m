@@ -41,4 +41,16 @@
 }
 
 
+- (void)open;
+{
+    [super open];
+}
+
+
+- (void)close;
+{
+    [super close];
+}
+
+
 @end

@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Book : NSObject
 
 @property (readonly) NSNumber *fileSize;
+@property (readonly) BOOL isOpen;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
@@ -29,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
+
+- (void)open;
+
+- (void)close;
 
 @end
 

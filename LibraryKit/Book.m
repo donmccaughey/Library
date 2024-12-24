@@ -73,12 +73,31 @@ makeTitleFromPath(NSString *path);
     self = [super init];
     if (self) {
         _fileSize = fileSize;
+        _isOpen = NO;
         _path = path;
         _title = makeTitleFromPath(path);
         _type = type;
         _typeName = typeName;
     }
     return self;
+}
+
+
+- (void)dealloc;
+{
+    [self close];
+}
+
+
+- (void)open;
+{
+    _isOpen = YES;
+}
+
+
+- (void)close;
+{
+    _isOpen = NO;
 }
 
 
