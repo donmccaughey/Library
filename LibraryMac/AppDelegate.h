@@ -1,10 +1,14 @@
 @import Cocoa;
 
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@class LibraryDataSource;
 
+
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSTableViewDelegate>
+
+@property IBOutlet LibraryDataSource *libraryDataSource;
 @property (weak) IBOutlet NSTableView *tableView;
-@property (strong) IBOutlet NSWindow *window;
+@property IBOutlet NSWindow *window;
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 

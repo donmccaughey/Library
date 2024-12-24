@@ -3,6 +3,7 @@
 @import LibraryKit;
 
 #import "InfoView.h"
+#import "LibraryDataSource.h"
 #import "Logger.h"
 #import "Notifications.h"
 
@@ -63,6 +64,7 @@
         [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
     ];
+    _libraryDataSource = [LibraryDataSource new];
     _logger = [Logger new];
     
     return self;
@@ -94,18 +96,13 @@
         @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
     _library = [[Library alloc] initWithDirs:dirs];
+    _libraryDataSource.library = _library;
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification;
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
-{
-    return _library.books.count;
 }
 
 
