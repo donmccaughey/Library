@@ -8,6 +8,6 @@
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 
-- (void)postDidSelectBookNotification;
+- (void)updateSelectedBook;
 
 @end

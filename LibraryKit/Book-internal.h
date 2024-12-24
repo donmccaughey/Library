@@ -10,4 +10,6 @@
                         path:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 
+- (void)openOnGlobalQueue;
+
 @end

@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didSelectBook:(NSNotification *)notification;
 
+- (void)didFinishOpeningBook:(NSNotification *)notification;
+
+- (void)updateLabels;
+
 @end
 
 

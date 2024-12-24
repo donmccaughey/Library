@@ -13,28 +13,30 @@ double const NANOS_PER_MICRO = 1e3;
 struct timespec
 calculateInterval(struct timespec start, struct timespec end);
 
+struct timespec
+calculateIntervalToNow(struct timespec start);
+
 NSString *
 formatInterval(struct timespec elapsedTime);
 
 
 @implementation Logger
 {
+    struct timespec _startOpeningBookTime;
     struct timespec _startScanningForBooksTime;
 }
 
 
 - (void)willStartScanningForBooks:(NSNotification *)notification;
 {
-    clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
     NSLog(@"Will start scanning for books.");
+    clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
 }
 
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 {
-    struct timespec timeNow;
-    clock_gettime(CLOCK_UPTIME_RAW, &timeNow);
-    struct timespec scanTime = calculateInterval(_startScanningForBooksTime, timeNow);
+    struct timespec scanTime = calculateIntervalToNow(_startScanningForBooksTime);
     NSLog(@"Did finish scanning for books in %@", formatInterval(scanTime));
 }
 
@@ -51,6 +53,22 @@ formatInterval(struct timespec elapsedTime);
         NSNumber *count = notification.userInfo[CountKey];
         NSLog(@"Did select %@ book %lu of %@: \"%@\"", book.typeName, i, count, book);
     }
+}
+
+
+- (void)willStartOpeningBook:(NSNotification *)notification;
+{
+    Book *book = notification.object;
+    NSLog(@"Will start opening book '%@'", book);
+    clock_gettime(CLOCK_UPTIME_RAW, &_startOpeningBookTime);
+}
+
+
+- (void)didFinishOpeningBook:(NSNotification *)notification;
+{
+    struct timespec openTime = calculateIntervalToNow(_startOpeningBookTime);
+    Book *book = notification.object;
+    NSLog(@"Did finish opening book '%@' in %@", book, formatInterval(openTime));
 }
 
 
@@ -77,6 +95,14 @@ formatInterval(struct timespec elapsedTime);
                                              selector:@selector(didSelectBook:)
                                                  name:DidSelectBookNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(willStartOpeningBook:)
+                                                 name:WillStartOpeningBookNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didFinishOpeningBook:)
+                                                 name:DidFinishOpeningBookNotification
+                                               object:nil];
     
     return self;
 }
@@ -97,6 +123,15 @@ calculateInterval(struct timespec start, struct timespec end)
         diff.tv_nsec = end.tv_nsec - start.tv_nsec;
     }
     return diff;
+}
+
+
+struct timespec
+calculateIntervalToNow(struct timespec start)
+{
+    struct timespec timeNow;
+    clock_gettime(CLOCK_UPTIME_RAW, &timeNow);
+    return calculateInterval(start, timeNow);
 }
 
 

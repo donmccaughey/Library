@@ -14,6 +14,10 @@ enum BookType : NSUInteger {
 NS_ASSUME_NONNULL_BEGIN
 
 
+extern NSNotificationName const WillStartOpeningBookNotification;
+extern NSNotificationName const DidFinishOpeningBookNotification;
+
+
 @interface Book : NSObject
 
 @property (readonly) NSNumber *fileSize;
@@ -31,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 
-- (void)open;
+- (void)startOpening;
 
 - (void)close;
 

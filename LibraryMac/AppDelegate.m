@@ -23,24 +23,34 @@
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
                 byExtendingSelection:NO];
     } else {
-        [self postDidSelectBookNotification];
+        [self updateSelectedBook];
     }
 }
 
 
-- (void)postDidSelectBookNotification;
+- (void)updateSelectedBook;
 {
-    id book = _tableView.selectedRow >= 0
-            ? _library.books[_tableView.selectedRow]
-            : [NSNull null];
-    NSDictionary *userInfo = @{
-        BookKey: book,
-        CountKey: @(_library.books.count),
-        IndexKey: @(_tableView.selectedRow),
-    };
-    [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
-                                                        object:self
-                                                      userInfo:userInfo];
+    if (_tableView.selectedRow >= 0) {
+        Book *book = _library.books[_tableView.selectedRow];
+        NSDictionary *userInfo = @{
+            BookKey: book,
+            CountKey: @(_library.books.count),
+            IndexKey: @(_tableView.selectedRow),
+        };
+        [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
+                                                            object:self
+                                                          userInfo:userInfo];
+        if ( ! book.isOpen) [book startOpening];
+    } else {
+        NSDictionary *userInfo = @{
+            BookKey: [NSNull null],
+            CountKey: @(_library.books.count),
+            IndexKey: @(_tableView.selectedRow),
+        };
+        [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
+                                                            object:self
+                                                          userInfo:userInfo];
+    }
 }
 
 
@@ -101,7 +111,7 @@
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification;
 {
-    [self postDidSelectBookNotification];
+    [self updateSelectedBook];
 }
 
 

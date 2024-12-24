@@ -41,9 +41,10 @@
 }
 
 
-- (void)open;
+- (void)openOnGlobalQueue;
 {
-    [super open];
+    [super openOnGlobalQueue];
+    // TODO: open epub
 }
 
 

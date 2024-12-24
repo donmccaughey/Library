@@ -52,15 +52,12 @@
 }
 
 
-- (void)open;
+- (void)openOnGlobalQueue;
 {
-    NSAssert( ! self.isOpen, @"Expected book to be closed.");
-    
+    [super openOnGlobalQueue];
     NSURL *url = [NSURL fileURLWithPath:self.path];
     _document = [[PDFDocument alloc] initWithURL:url];
-    if (_document) {
-        [super open];
-    } else {
+    if ( ! _document) {
         NSLog(@"Failed to open PDF document at '%@'", self.path);
     }
 }
