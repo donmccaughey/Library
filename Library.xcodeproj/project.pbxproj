@@ -11,8 +11,8 @@
 		D41BD02C2D165A1500306549 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD02B2D165A1500306549 /* Notifications.m */; };
 		D41BD0352D17644A00306549 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0342D17644A00306549 /* Logger.m */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
-		D46FDC8A2D1C813B001E8362 /* BookType.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* BookType.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D46FDC8B2D1C813B001E8362 /* BookType.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* BookType.m */; };
+		D46FDC8A2D1C813B001E8362 /* Format.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D46FDC8B2D1C813B001E8362 /* Format.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* Format.m */; };
 		D46FDC8E2D1C9785001E8362 /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC8C2D1C9785001E8362 /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8F2D1C9785001E8362 /* PDF.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC8D2D1C9785001E8362 /* PDF.m */; };
 		D46FDC912D1C9A9D001E8362 /* File.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC902D1C9A9D001E8362 /* File.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -132,8 +132,8 @@
 		D41BD0342D17644A00306549 /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
-		D46FDC882D1C813B001E8362 /* BookType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookType.h; sourceTree = "<group>"; };
-		D46FDC892D1C813B001E8362 /* BookType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookType.m; sourceTree = "<group>"; };
+		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
+		D46FDC892D1C813B001E8362 /* Format.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Format.m; sourceTree = "<group>"; };
 		D46FDC8C2D1C9785001E8362 /* PDF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDF.h; sourceTree = "<group>"; };
 		D46FDC8D2D1C9785001E8362 /* PDF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDF.m; sourceTree = "<group>"; };
 		D46FDC902D1C9A9D001E8362 /* File.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = File.h; sourceTree = "<group>"; };
@@ -327,8 +327,8 @@
 			children = (
 				D48D00562C17A35F00177AD0 /* Book.h */,
 				D48D00572C17A35F00177AD0 /* Book.m */,
-				D46FDC882D1C813B001E8362 /* BookType.h */,
-				D46FDC892D1C813B001E8362 /* BookType.m */,
+				D46FDC882D1C813B001E8362 /* Format.h */,
+				D46FDC892D1C813B001E8362 /* Format.m */,
 				D46FDC902D1C9A9D001E8362 /* File.h */,
 				D48D00522C17A08400177AD0 /* Library.h */,
 				D48D00532C17A08400177AD0 /* Library.m */,
@@ -385,7 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
-				D46FDC8A2D1C813B001E8362 /* BookType.h in Headers */,
+				D46FDC8A2D1C813B001E8362 /* Format.h in Headers */,
 				D46FDC912D1C9A9D001E8362 /* File.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
@@ -705,7 +705,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
-				D46FDC8B2D1C813B001E8362 /* BookType.m in Sources */,
+				D46FDC8B2D1C813B001E8362 /* Format.m in Sources */,
 				D48D00542C17A08400177AD0 /* Library.m in Sources */,
 				D46FDC8F2D1C9785001E8362 /* PDF.m in Sources */,
 			);

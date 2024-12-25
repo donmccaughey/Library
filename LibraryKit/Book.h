@@ -1,4 +1,4 @@
-#import <LibraryKit/BookType.h>
+#import <LibraryKit/Format.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -11,10 +11,10 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 @interface Book : NSObject
 
 @property (readonly) NSNumber *fileSize;
+@property (readonly) enum Format format;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
-@property (readonly) enum BookType type;
 @property (readonly) BOOL wasRead;
 
 - (nullable instancetype)initWithPath:(NSString *)path

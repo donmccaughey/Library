@@ -16,9 +16,9 @@ makeTitleFromPath(NSString *path);
 
 @interface Book ()
 
-- (instancetype)initWithType:(enum BookType)type
-                        path:(NSString *)path
-                 andFileSize:(NSNumber *)fileSize;
+- (instancetype)initWithFormat:(enum Format)format
+                          path:(NSString *)path
+                   andFileSize:(NSNumber *)fileSize;
 
 @end
 
@@ -36,30 +36,30 @@ makeTitleFromPath(NSString *path);
 - (nullable instancetype)initWithPath:(NSString *)path
                           andFileSize:(NSNumber *)fileSize;
 {
-    if ([bookTypeExtension(BookTypeEPUB) isEqualToString:path.pathExtension]) {
-        return [[Book alloc] initWithType:BookTypeEPUB
-                                     path:path
-                              andFileSize:fileSize];
+    if ([extensionForFormat(FormatEPUB) isEqualToString:path.pathExtension]) {
+        return [[Book alloc] initWithFormat:FormatEPUB
+                                       path:path
+                                andFileSize:fileSize];
     }
-    if ([bookTypeExtension(BookTypePDF) isEqualToString:path.pathExtension]) {
-        return [[Book alloc] initWithType:BookTypePDF
-                                     path:path
-                              andFileSize:fileSize];
+    if ([extensionForFormat(FormatPDF) isEqualToString:path.pathExtension]) {
+        return [[Book alloc] initWithFormat:FormatPDF
+                                       path:path
+                                andFileSize:fileSize];
     }
     return nil;
 }
 
 
-- (instancetype)initWithType:(enum BookType)type
-                        path:(NSString *)path
-                 andFileSize:(NSNumber *)fileSize;
+- (instancetype)initWithFormat:(enum Format)format
+                          path:(NSString *)path
+                   andFileSize:(NSNumber *)fileSize;
 {
     self = [super init];
     if (self) {
         _fileSize = fileSize;
+        _format = format;
         _path = path;
         _title = makeTitleFromPath(path);
-        _type = type;
         _wasRead = NO;
     }
     return self;
@@ -74,7 +74,7 @@ makeTitleFromPath(NSString *path);
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         id<File> file = nil;
-        if (BookTypePDF == self->_type) file = [[PDF alloc] initWithPath:self->_path];
+        if (FormatPDF == self->_format) file = [[PDF alloc] initWithPath:self->_path];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_wasRead = YES;
             if (file) {

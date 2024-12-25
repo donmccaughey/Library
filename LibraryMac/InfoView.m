@@ -40,9 +40,9 @@
         NSUInteger pageCount = _book.pageCount;
         if (pageCount) {
             _sizeLabel.stringValue = [NSString stringWithFormat:@"%ld page %@ (%@)",
-                                      pageCount, bookTypeName(_book.type), byteCount];
+                                      pageCount, formatName(_book.format), byteCount];
         } else {
-            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)", bookTypeName(_book.type), byteCount];
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)", formatName(_book.format), byteCount];
         }
         
         _countLabel.stringValue = [NSString stringWithFormat:@"%ld of %ld books", _index + 1, _count];

@@ -50,7 +50,7 @@ formatInterval(struct timespec elapsedTime);
         Book *book = value;
         NSNumber *index = notification.userInfo[IndexKey];
         NSUInteger i = 1 + index.unsignedLongValue;
-        NSLog(@"Did select %@ book %lu: '%@'", bookTypeName(book.type), i, book);
+        NSLog(@"Did select %@ book %lu: '%@'", formatName(book.format), i, book);
     }
 }
 
@@ -58,7 +58,7 @@ formatInterval(struct timespec elapsedTime);
 - (void)bookWillStartReadingFile:(NSNotification *)notification;
 {
     Book *book = notification.object;
-    NSLog(@"Book '%@' will start reading %@ file", book, bookTypeName(book.type));
+    NSLog(@"Book '%@' will start reading %@ file", book, formatName(book.format));
     clock_gettime(CLOCK_UPTIME_RAW, &_startOpeningBookTime);
 }
 
@@ -67,7 +67,7 @@ formatInterval(struct timespec elapsedTime);
 {
     struct timespec openTime = calculateIntervalToNow(_startOpeningBookTime);
     Book *book = notification.object;
-    NSLog(@"Book '%@' did finish reading %@ file in %@", book, bookTypeName(book.type), formatInterval(openTime));
+    NSLog(@"Book '%@' did finish reading %@ file in %@", book, formatName(book.format), formatInterval(openTime));
 }
 
 
