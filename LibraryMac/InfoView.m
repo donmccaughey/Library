@@ -39,9 +39,10 @@
                                                              countStyle:NSByteCountFormatterCountStyleFile];
         NSUInteger pageCount = _book.pageCount;
         if (pageCount) {
-            _sizeLabel.stringValue = [NSString stringWithFormat:@"%ld page %@ (%@)", pageCount, _book.typeName, byteCount];
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%ld page %@ (%@)",
+                                      pageCount, bookTypeName(_book.type), byteCount];
         } else {
-            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)", _book.typeName, byteCount];
+            _sizeLabel.stringValue = [NSString stringWithFormat:@"%@ (%@)", bookTypeName(_book.type), byteCount];
         }
         
         _countLabel.stringValue = [NSString stringWithFormat:@"%ld of %ld books", _index + 1, _count];

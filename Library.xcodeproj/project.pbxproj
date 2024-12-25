@@ -16,6 +16,8 @@
 		D46FDC7F2D18F8C9001E8362 /* PDFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC7D2D18F8C9001E8362 /* PDFBook.m */; };
 		D46FDC812D18F9C4001E8362 /* Book+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC802D18F9B6001E8362 /* Book+Internal.h */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
+		D46FDC8A2D1C813B001E8362 /* BookType.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* BookType.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D46FDC8B2D1C813B001E8362 /* BookType.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* BookType.m */; };
 		D48D00022C179ED400177AD0 /* LibraryMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00012C179ED400177AD0 /* LibraryMacUITests.m */; };
 		D48D00042C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */; };
 		D48D000F2C179EDE00177AD0 /* LibraryKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48DFFC82C179E8A00177AD0 /* LibraryKit.framework */; };
@@ -137,6 +139,8 @@
 		D46FDC802D18F9B6001E8362 /* Book+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Book+Internal.h"; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
+		D46FDC882D1C813B001E8362 /* BookType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookType.h; sourceTree = "<group>"; };
+		D46FDC892D1C813B001E8362 /* BookType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookType.m; sourceTree = "<group>"; };
 		D48D00012C179ED400177AD0 /* LibraryMacUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITests.m; sourceTree = "<group>"; };
 		D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacUITestsLaunchTests.m; sourceTree = "<group>"; };
 		D48D00182C179EFA00177AD0 /* LibraryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LibraryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,9 +329,11 @@
 		D48DFFCA2C179E8A00177AD0 /* LibraryKit */ = {
 			isa = PBXGroup;
 			children = (
-				D46FDC802D18F9B6001E8362 /* Book+Internal.h */,
 				D48D00562C17A35F00177AD0 /* Book.h */,
+				D46FDC802D18F9B6001E8362 /* Book+Internal.h */,
 				D48D00572C17A35F00177AD0 /* Book.m */,
+				D46FDC882D1C813B001E8362 /* BookType.h */,
+				D46FDC892D1C813B001E8362 /* BookType.m */,
 				D46FDC782D18F7D9001E8362 /* EPUBBook.h */,
 				D46FDC792D18F7D9001E8362 /* EPUBBook.m */,
 				D48D00522C17A08400177AD0 /* Library.h */,
@@ -385,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
+				D46FDC8A2D1C813B001E8362 /* BookType.h in Headers */,
 				D46FDC7A2D18F7D9001E8362 /* EPUBBook.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
@@ -705,8 +712,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
-				D48D00542C17A08400177AD0 /* Library.m in Sources */,
+				D46FDC8B2D1C813B001E8362 /* BookType.m in Sources */,
 				D46FDC7B2D18F7D9001E8362 /* EPUBBook.m in Sources */,
+				D48D00542C17A08400177AD0 /* Library.m in Sources */,
 				D46FDC7F2D18F8C9001E8362 /* PDFBook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

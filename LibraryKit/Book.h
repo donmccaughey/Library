@@ -1,14 +1,4 @@
-#import <Foundation/Foundation.h>
-
-
-@class FileMatcher;
-
-
-enum BookType : NSUInteger {
-    BookTypeUnknown,
-    BookTypeEPUB,
-    BookTypePDF,
-};
+#import <LibraryKit/BookType.h>
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,7 +16,6 @@ extern NSNotificationName const BookDidFinishOpeningNotification;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
 @property (readonly) enum BookType type;
-@property (readonly) NSString *typeName;
 
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;

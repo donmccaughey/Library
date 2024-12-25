@@ -35,11 +35,11 @@ makeTitleFromPath(NSString *path);
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
-    if ([@"epub" isEqualToString:path.pathExtension]) {
+    if ([bookTypeExtension(BookTypeEPUB) isEqualToString:path.pathExtension]) {
         return [[EPUBBook alloc] initWithPath:path
                                   andFileSize:fileSize];
     }
-    if ([@"pdf" isEqualToString:path.pathExtension]) {
+    if ([bookTypeExtension(BookTypePDF) isEqualToString:path.pathExtension]) {
         return [[PDFBook alloc] initWithPath:path
                                  andFileSize:fileSize];
     }
@@ -48,7 +48,6 @@ makeTitleFromPath(NSString *path);
 
 
 - (instancetype)initWithType:(enum BookType)type
-                    typeName:(NSString *)typeName
                         path:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
@@ -59,7 +58,6 @@ makeTitleFromPath(NSString *path);
         _path = path;
         _title = makeTitleFromPath(path);
         _type = type;
-        _typeName = typeName;
     }
     return self;
 }
