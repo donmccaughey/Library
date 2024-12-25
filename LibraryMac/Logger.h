@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)userDidSelectBook:(NSNotification *)notification;
 
-- (void)bookWillStartOpening:(NSNotification *)notification;
+- (void)bookWillStartReadingFile:(NSNotification *)notification;
 
-- (void)bookDidFinishOpening:(NSNotification *)notification;
+- (void)bookDidFinishReadingFile:(NSNotification *)notification;
 
 @end
 

@@ -3,8 +3,8 @@
 #import "PDF.h"
 
 
-NSNotificationName const BookWillStartOpeningNotification = @"BookWillStartOpening";
-NSNotificationName const BookDidFinishOpeningNotification = @"BookDidFinishOpening";
+NSNotificationName const BookWillStartReadingFileNotification = @"BookWillStartReadingFile";
+NSNotificationName const BookDidFinishReadingFileNotification = @"BookDidFinishReadingFile";
 
 
 static BOOL
@@ -57,45 +57,33 @@ makeTitleFromPath(NSString *path);
     self = [super init];
     if (self) {
         _fileSize = fileSize;
-        _isOpen = NO;
         _path = path;
         _title = makeTitleFromPath(path);
         _type = type;
+        _wasRead = NO;
     }
     return self;
 }
 
 
-- (void)dealloc;
+- (void)startReadingFile;
 {
-    [self close];
-}
-
-
-- (void)startOpening;
-{
-    NSAssert( ! self.isOpen, @"Expected book to be closed.");
+    NSAssert( ! self.wasRead, @"Expected book was not read yet.");
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartOpeningNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartReadingFileNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         id<File> file = nil;
         if (BookTypePDF == self->_type) file = [[PDF alloc] initWithPath:self->_path];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self->_isOpen = YES;
+            self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishOpeningNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
                                                                 object:self];
         });
     });
-}
-
-
-- (void)close;
-{
-    _isOpen = NO;
 }
 
 

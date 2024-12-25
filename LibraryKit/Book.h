@@ -4,25 +4,23 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSNotificationName const BookWillStartOpeningNotification;
-extern NSNotificationName const BookDidFinishOpeningNotification;
+extern NSNotificationName const BookWillStartReadingFileNotification;
+extern NSNotificationName const BookDidFinishReadingFileNotification;
 
 
 @interface Book : NSObject
 
 @property (readonly) NSNumber *fileSize;
-@property (readonly) BOOL isOpen;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;
 @property (readonly) enum BookType type;
+@property (readonly) BOOL wasRead;
 
 - (nullable instancetype)initWithPath:(NSString *)path
                           andFileSize:(NSNumber *)fileSize;
 
-- (void)startOpening;
-
-- (void)close;
+- (void)startReadingFile;
 
 @end
 

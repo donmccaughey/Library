@@ -13,7 +13,7 @@
 }
 
 
-- (void)bookDidFinishOpening:(NSNotification *)notification;
+- (void)bookDidFinishReadingFile:(NSNotification *)notification;
 {
     Book *book = notification.object;
     if (book == _book) [self updateLabels];
@@ -83,8 +83,8 @@
                                                      name:UserDidSelectBookNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(bookDidFinishOpening:)
-                                                     name:BookDidFinishOpeningNotification
+                                                 selector:@selector(bookDidFinishReadingFile:)
+                                                     name:BookDidFinishReadingFileNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(libraryDidFinishScanningFolders:)

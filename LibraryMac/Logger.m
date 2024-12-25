@@ -29,7 +29,7 @@ formatInterval(struct timespec elapsedTime);
 
 - (void)libraryWillStartScanningFolders:(NSNotification *)notification;
 {
-    NSLog(@"Will start scanning for books.");
+    NSLog(@"Library will start scanning folders.");
     clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
 }
 
@@ -37,7 +37,7 @@ formatInterval(struct timespec elapsedTime);
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     struct timespec scanTime = calculateIntervalToNow(_startScanningForBooksTime);
-    NSLog(@"Did finish scanning for books in %@", formatInterval(scanTime));
+    NSLog(@"Library did finish scanning folders in %@", formatInterval(scanTime));
 }
 
 
@@ -50,24 +50,24 @@ formatInterval(struct timespec elapsedTime);
         Book *book = value;
         NSNumber *index = notification.userInfo[IndexKey];
         NSUInteger i = 1 + index.unsignedLongValue;
-        NSLog(@"Did select %@ book %lu: \"%@\"", bookTypeName(book.type), i, book);
+        NSLog(@"Did select %@ book %lu: '%@'", bookTypeName(book.type), i, book);
     }
 }
 
 
-- (void)bookWillStartOpening:(NSNotification *)notification;
+- (void)bookWillStartReadingFile:(NSNotification *)notification;
 {
     Book *book = notification.object;
-    NSLog(@"Will start opening book '%@'", book);
+    NSLog(@"Book '%@' will start reading %@ file", book, bookTypeName(book.type));
     clock_gettime(CLOCK_UPTIME_RAW, &_startOpeningBookTime);
 }
 
 
-- (void)bookDidFinishOpening:(NSNotification *)notification;
+- (void)bookDidFinishReadingFile:(NSNotification *)notification;
 {
     struct timespec openTime = calculateIntervalToNow(_startOpeningBookTime);
     Book *book = notification.object;
-    NSLog(@"Did finish opening book '%@' in %@", book, formatInterval(openTime));
+    NSLog(@"Book '%@' did finish reading %@ file in %@", book, bookTypeName(book.type), formatInterval(openTime));
 }
 
 
@@ -95,12 +95,12 @@ formatInterval(struct timespec elapsedTime);
                                                  name:UserDidSelectBookNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(bookWillStartOpening:)
-                                                 name:BookWillStartOpeningNotification
+                                             selector:@selector(bookWillStartReadingFile:)
+                                                 name:BookWillStartReadingFileNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(bookDidFinishOpening:)
-                                                 name:BookDidFinishOpeningNotification
+                                             selector:@selector(bookDidFinishReadingFile:)
+                                                 name:BookDidFinishReadingFileNotification
                                                object:nil];
     
     return self;

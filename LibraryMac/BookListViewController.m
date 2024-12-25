@@ -27,7 +27,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UserDidSelectBookNotification
                                                         object:self
                                                       userInfo:userInfo];
-    if (book && ! book.isOpen) [book startOpening];
+    if (book && ! book.wasRead) [book startReadingFile];
 }
 
 

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet NSTextField *countLabel;
 @property (weak) IBOutlet NSTextField *sizeLabel;
 
-- (void)bookDidFinishOpening:(NSNotification *)notification;
+- (void)bookDidFinishReadingFile:(NSNotification *)notification;
 
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 
