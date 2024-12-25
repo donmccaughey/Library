@@ -1,7 +1,6 @@
 #import "Notifications.h"
 
 
-NSNotificationName const DidSelectBookNotification = @"DidSelectBook";
+NSNotificationName const UserDidSelectBookNotification = @"UserDidSelectBook";
 NSString *const BookKey = @"Book";
-NSString *const CountKey = @"Count";
 NSString *const IndexKey = @"Index";

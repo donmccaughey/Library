@@ -20,17 +20,6 @@
 }
 
 
-- (void)didSelectBook:(NSNotification *)notification;
-{
-    _book = notification.userInfo[BookKey];
-    
-    NSNumber *index = notification.userInfo[IndexKey];
-    _index = index.integerValue;
-    
-    [self updateLabels];
-}
-
-
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     Library *library = notification.object;
@@ -60,6 +49,17 @@
 }
 
 
+- (void)userDidSelectBook:(NSNotification *)notification;
+{
+    _book = notification.userInfo[BookKey];
+    
+    NSNumber *index = notification.userInfo[IndexKey];
+    _index = index.integerValue;
+    
+    [self updateLabels];
+}
+
+
 - (instancetype)init;
 {
     self = [super init];
@@ -78,8 +78,8 @@
     [super viewDidMoveToWindow];
     if (self.window) {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didSelectBook:)
-                                                     name:DidSelectBookNotification
+                                                 selector:@selector(userDidSelectBook:)
+                                                     name:UserDidSelectBookNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(bookDidFinishOpening:)

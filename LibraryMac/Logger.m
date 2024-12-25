@@ -41,7 +41,7 @@ formatInterval(struct timespec elapsedTime);
 }
 
 
-- (void)didSelectBook:(NSNotification *)notification;
+- (void)userDidSelectBook:(NSNotification *)notification;
 {
     id value = notification.userInfo[BookKey];
     if ([NSNull null] == value) {
@@ -91,8 +91,8 @@ formatInterval(struct timespec elapsedTime);
                                                  name:LibraryDidFinishScanningFoldersNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didSelectBook:)
-                                                 name:DidSelectBookNotification
+                                             selector:@selector(userDidSelectBook:)
+                                                 name:UserDidSelectBookNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(bookWillStartOpening:)

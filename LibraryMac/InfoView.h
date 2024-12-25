@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bookDidFinishOpening:(NSNotification *)notification;
 
-- (void)didSelectBook:(NSNotification *)notification;
-
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 
 - (void)updateLabels;
+
+- (void)userDidSelectBook:(NSNotification *)notification;
 
 @end
 
