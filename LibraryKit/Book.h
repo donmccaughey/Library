@@ -28,10 +28,6 @@ extern NSNotificationName const BookDidFinishOpeningNotification;
 @property (readonly) enum BookType type;
 @property (readonly) NSString *typeName;
 
-+ (NSArray<FileMatcher *> *)fileMatchers;
-
-+ (BOOL)isBookFile:(NSString *)path;
-
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 

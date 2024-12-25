@@ -2,9 +2,7 @@
 #import "Book-internal.h"
 
 #import "EPUBBook.h"
-#import "EPUBMatcher.h"
 #import "PDFBook.h"
-#import "PDFMatcher.h"
 
 
 NSNotificationName const BookWillStartOpeningNotification = @"BookWillStartOpening";
@@ -19,24 +17,6 @@ makeTitleFromPath(NSString *path);
 
 
 @implementation Book
-
-
-+ (NSArray<FileMatcher *> *)fileMatchers;
-{
-    return @[
-        [EPUBMatcher matcher],
-        [PDFMatcher matcher],
-    ];
-}
-
-
-+ (BOOL)isBookFile:(NSString *)path;
-{
-    for (FileMatcher *matcher in [self fileMatchers]) {
-        if ([matcher pathMatches:path]) return true;
-    }
-    return false;
-}
 
 
 - (NSUInteger)pageCount;
@@ -55,16 +35,14 @@ makeTitleFromPath(NSString *path);
 - (instancetype)initWithPath:(NSString *)path
                  andFileSize:(NSNumber *)fileSize;
 {
-    if ([[EPUBMatcher matcher] pathMatches:path]) {
+    if ([@"epub" isEqualToString:path.pathExtension]) {
         return [[EPUBBook alloc] initWithPath:path
                                   andFileSize:fileSize];
     }
-    if ([[PDFMatcher matcher] pathMatches:path]) {
+    if ([@"pdf" isEqualToString:path.pathExtension]) {
         return [[PDFBook alloc] initWithPath:path
                                  andFileSize:fileSize];
     }
-    [NSException raise:@"Invalid book path"
-                format:@"The path '%@' is not a valid book format.", path];
     return nil;
 }
 

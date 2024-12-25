@@ -1,15 +1,10 @@
 #import "Library.h"
 
 #import "Book.h"
-#import "FileMatcher.h"
 
 
 NSNotificationName const LibraryWillStartScanningFoldersNotification = @"LibraryWillStartFoldersScanning";
 NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"LibraryDidFinishFoldersScanning";
-
-
-void
-addMatchingPaths(NSString *folder, NSArray<FileMatcher *> *matchers, NSMutableOrderedSet<Book *> *books);
 
 
 @implementation Library
@@ -54,7 +49,15 @@ addMatchingPaths(NSString *folder, NSArray<FileMatcher *> *matchers, NSMutableOr
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableOrderedSet<Book *> *books = [NSMutableOrderedSet new];
         for (NSString *folder in folders) {
-            addMatchingPaths(folder, [Book fileMatchers], books);
+            NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:folder];
+            NSString *relPath;
+            while ((relPath = [enumerator nextObject])) {
+                if (NSFileTypeRegular != enumerator.fileAttributes.fileType) continue;
+                NSString *absPath = [folder stringByAppendingPathComponent:relPath];
+                Book *book = [[Book alloc] initWithPath:absPath
+                                            andFileSize:enumerator.fileAttributes[NSFileSize]];
+                if (book) [books addObject:book];
+            }
         }
         [books sortUsingDescriptors:self->_sortDescriptors];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -68,23 +71,3 @@ addMatchingPaths(NSString *folder, NSArray<FileMatcher *> *matchers, NSMutableOr
 
 
 @end
-
-
-void
-addMatchingPaths(NSString *folder, NSArray<FileMatcher *> *matchers, NSMutableOrderedSet<Book *> *books)
-{
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *enumerator = [manager enumeratorAtPath:folder];
-    
-    NSString *relPath;
-    while ((relPath = [enumerator nextObject])) {
-        if (NSFileTypeRegular == enumerator.fileAttributes.fileType) {
-            if ([Book isBookFile:relPath]) {
-                NSString *absPath = [folder stringByAppendingPathComponent:relPath];
-                Book *book = [[Book alloc] initWithPath:absPath
-                                            andFileSize:enumerator.fileAttributes[NSFileSize]];
-                [books addObject:book];
-            }
-        }
-    }
-}

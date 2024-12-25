@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		D41BD0222D13C43900306549 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0212D13C43900306549 /* InfoView.m */; };
 		D41BD02C2D165A1500306549 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD02B2D165A1500306549 /* Notifications.m */; };
-		D41BD0312D1669A200306549 /* EPUBMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D41BD02F2D1669A200306549 /* EPUBMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D41BD0322D1669A200306549 /* EPUBMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0302D1669A200306549 /* EPUBMatcher.m */; };
 		D41BD0352D17644A00306549 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0342D17644A00306549 /* Logger.m */; };
 		D46FDC7A2D18F7D9001E8362 /* EPUBBook.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC782D18F7D9001E8362 /* EPUBBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC7B2D18F7D9001E8362 /* EPUBBook.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC792D18F7D9001E8362 /* EPUBBook.m */; };
@@ -46,10 +44,6 @@
 		D48DFFED2C179ED400177AD0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D48DFFEC2C179ED400177AD0 /* main.m */; };
 		D48DFFF82C179ED400177AD0 /* LibraryMacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48DFFF72C179ED400177AD0 /* LibraryMacTests.m */; };
 		D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BC2C17AA7300980513 /* BookTests.m */; };
-		D4E7D0C02C17AC7400980513 /* FileMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0BE2C17AC7400980513 /* FileMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4E7D0C12C17AC7400980513 /* FileMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BF2C17AC7400980513 /* FileMatcher.m */; };
-		D4E7D0C42C17ADB200980513 /* PDFMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D4E7D0C22C17ADB200980513 /* PDFMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D4E7D0C52C17ADB200980513 /* PDFMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0C32C17ADB200980513 /* PDFMatcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,8 +128,6 @@
 		D41BD0232D13C44800306549 /* InfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
 		D41BD02A2D1659BD00306549 /* Notifications.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notifications.h; sourceTree = "<group>"; };
 		D41BD02B2D165A1500306549 /* Notifications.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notifications.m; sourceTree = "<group>"; };
-		D41BD02F2D1669A200306549 /* EPUBMatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPUBMatcher.h; sourceTree = "<group>"; };
-		D41BD0302D1669A200306549 /* EPUBMatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPUBMatcher.m; sourceTree = "<group>"; };
 		D41BD0332D17644A00306549 /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		D41BD0342D17644A00306549 /* Logger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logger.m; sourceTree = "<group>"; };
 		D46FDC782D18F7D9001E8362 /* EPUBBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPUBBook.h; sourceTree = "<group>"; };
@@ -182,10 +174,6 @@
 		D48DFFF72C179ED400177AD0 /* LibraryMacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacTests.m; sourceTree = "<group>"; };
 		D48DFFFD2C179ED400177AD0 /* LibraryMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibraryMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4E7D0BC2C17AA7300980513 /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
-		D4E7D0BE2C17AC7400980513 /* FileMatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileMatcher.h; sourceTree = "<group>"; };
-		D4E7D0BF2C17AC7400980513 /* FileMatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileMatcher.m; sourceTree = "<group>"; };
-		D4E7D0C22C17ADB200980513 /* PDFMatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PDFMatcher.h; sourceTree = "<group>"; };
-		D4E7D0C32C17ADB200980513 /* PDFMatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PDFMatcher.m; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -342,17 +330,11 @@
 				D48D00572C17A35F00177AD0 /* Book.m */,
 				D46FDC782D18F7D9001E8362 /* EPUBBook.h */,
 				D46FDC792D18F7D9001E8362 /* EPUBBook.m */,
-				D41BD02F2D1669A200306549 /* EPUBMatcher.h */,
-				D41BD0302D1669A200306549 /* EPUBMatcher.m */,
-				D4E7D0BE2C17AC7400980513 /* FileMatcher.h */,
-				D4E7D0BF2C17AC7400980513 /* FileMatcher.m */,
 				D48D00522C17A08400177AD0 /* Library.h */,
 				D48D00532C17A08400177AD0 /* Library.m */,
 				D48DFFCB2C179E8A00177AD0 /* LibraryKit.h */,
 				D46FDC7C2D18F8C9001E8362 /* PDFBook.h */,
 				D46FDC7D2D18F8C9001E8362 /* PDFBook.m */,
-				D4E7D0C22C17ADB200980513 /* PDFMatcher.h */,
-				D4E7D0C32C17ADB200980513 /* PDFMatcher.m */,
 			);
 			path = LibraryKit;
 			sourceTree = "<group>";
@@ -404,12 +386,9 @@
 			files = (
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
 				D46FDC7A2D18F7D9001E8362 /* EPUBBook.h in Headers */,
-				D41BD0312D1669A200306549 /* EPUBMatcher.h in Headers */,
-				D4E7D0C02C17AC7400980513 /* FileMatcher.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
 				D46FDC7E2D18F8C9001E8362 /* PDFBook.h in Headers */,
-				D4E7D0C42C17ADB200980513 /* PDFMatcher.h in Headers */,
 				D46FDC812D18F9C4001E8362 /* Book-internal.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -726,12 +705,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
-				D41BD0322D1669A200306549 /* EPUBMatcher.m in Sources */,
-				D4E7D0C12C17AC7400980513 /* FileMatcher.m in Sources */,
 				D48D00542C17A08400177AD0 /* Library.m in Sources */,
 				D46FDC7B2D18F7D9001E8362 /* EPUBBook.m in Sources */,
 				D46FDC7F2D18F8C9001E8362 /* PDFBook.m in Sources */,
-				D4E7D0C52C17ADB200980513 /* PDFMatcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
