@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol File
 
 @property (readonly) NSUInteger pageCount;
-@property (readonly) NSString *title;
+@property (nullable, readonly) NSString *title;
 
 @end
 

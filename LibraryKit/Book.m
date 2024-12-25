@@ -11,7 +11,7 @@ static BOOL
 isOneWord(NSString *const string);
 
 static NSString *
-makeTitleFromPath(NSString *path);
+makeTitleFromFilename(NSString *path);
 
 
 @interface Book ()
@@ -24,6 +24,16 @@ makeTitleFromPath(NSString *path);
 
 
 @implementation Book
+{
+    NSString *_titleFromDocument;
+    NSString *_titleFromFilename;
+}
+
+
+- (NSString *)title;
+{
+    return _titleFromFilename;
+}
 
 
 - (instancetype)init;
@@ -58,8 +68,10 @@ makeTitleFromPath(NSString *path);
     if (self) {
         _fileSize = fileSize;
         _format = format;
+        _pageCount = 0;
         _path = path;
-        _title = makeTitleFromPath(path);
+        _titleFromDocument = nil;
+        _titleFromFilename = makeTitleFromFilename(path);
         _wasRead = NO;
     }
     return self;
@@ -74,11 +86,26 @@ makeTitleFromPath(NSString *path);
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         id<File> file = nil;
-        if (FormatPDF == self->_format) file = [[PDF alloc] initWithPath:self->_path];
+        switch (self->_format) {
+            case FormatUnknown:
+                file = nil;
+                break;
+            case FormatEPUB:
+                file = nil;
+                break;
+            case FormatPDF:
+                file = [[PDF alloc] initWithPath:self->_path];
+                break;
+            default:
+                NSAssert(NO, @"Undefined Format %lu", self->_format);
+                file = nil;
+                break;
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;
+                self->_titleFromDocument = file.title;
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
                                                                 object:self];
@@ -89,7 +116,7 @@ makeTitleFromPath(NSString *path);
 
 - (NSString *)description;
 {
-    return _title;
+    return _titleFromFilename;
 }
 
 
@@ -120,7 +147,7 @@ isOneWord(NSString *const string)
 
 
 NSString *
-makeTitleFromPath(NSString *path)
+makeTitleFromFilename(NSString *path)
 {
     NSString *filename = path.lastPathComponent.stringByDeletingPathExtension;
     if (isOneWord(filename)) {

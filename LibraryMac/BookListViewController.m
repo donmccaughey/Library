@@ -8,6 +8,18 @@
 @implementation BookListViewController
 
 
+- (void)bookDidFinishReadingFile:(NSNotification *)notification;
+{
+    Book *book = notification.object;
+    NSInteger index = [_library.books indexOfObject:book];
+    NSRange visibleRowsRange = [_tableView rowsInRect:_tableView.visibleRect];
+    if (NSLocationInRange(index, visibleRowsRange)) {
+        [_tableView reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:index]
+                              columnIndexes:[NSIndexSet indexSetWithIndex:0]];
+    }
+}
+
+
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     [_tableView reloadData];
@@ -36,6 +48,10 @@
     self = [super initWithCoder:coder];
     if ( ! self) return nil;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(bookDidFinishReadingFile:)
+                                                 name:BookDidFinishReadingFileNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(libraryDidFinishScanningFolders:)
                                                  name:LibraryDidFinishScanningFoldersNotification

@@ -13,7 +13,7 @@
 }
 
 
-- (instancetype)initWithPath:(NSString *)path;
+- (nullable instancetype)initWithPath:(NSString *)path;
 {
     self = [super init];
     if ( ! self) return nil;
@@ -22,7 +22,9 @@
     PDFDocument *document = [[PDFDocument alloc] initWithURL:url];
     if ( ! document) {
         NSLog(@"Failed to open PDF file at '%@'", path);
+        return nil;
     }
+    
     _pageCount = document.pageCount;
     _title = document.documentAttributes[PDFDocumentTitleAttribute];
 
