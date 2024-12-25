@@ -56,7 +56,7 @@ formatInterval(struct timespec elapsedTime);
 }
 
 
-- (void)willStartOpeningBook:(NSNotification *)notification;
+- (void)bookWillStartOpening:(NSNotification *)notification;
 {
     Book *book = notification.object;
     NSLog(@"Will start opening book '%@'", book);
@@ -64,7 +64,7 @@ formatInterval(struct timespec elapsedTime);
 }
 
 
-- (void)didFinishOpeningBook:(NSNotification *)notification;
+- (void)bookDidFinishOpening:(NSNotification *)notification;
 {
     struct timespec openTime = calculateIntervalToNow(_startOpeningBookTime);
     Book *book = notification.object;
@@ -96,12 +96,12 @@ formatInterval(struct timespec elapsedTime);
                                                  name:DidSelectBookNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willStartOpeningBook:)
-                                                 name:WillStartOpeningBookNotification
+                                             selector:@selector(bookWillStartOpening:)
+                                                 name:BookWillStartOpeningNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didFinishOpeningBook:)
-                                                 name:DidFinishOpeningBookNotification
+                                             selector:@selector(bookDidFinishOpening:)
+                                                 name:BookDidFinishOpeningNotification
                                                object:nil];
     
     return self;

@@ -13,6 +13,13 @@
 }
 
 
+- (void)bookDidFinishOpening:(NSNotification *)notification;
+{
+    Book *book = notification.object;
+    if (book == _book) [self updateLabels];
+}
+
+
 - (void)didSelectBook:(NSNotification *)notification;
 {
     _book = notification.userInfo[BookKey];
@@ -24,13 +31,6 @@
     _index = index.integerValue;
     
     [self updateLabels];
-}
-
-
-- (void)didFinishOpeningBook:(NSNotification *)notification;
-{
-    Book *book = notification.object;
-    if (book == _book) [self updateLabels];
 }
 
 
@@ -76,8 +76,8 @@
                                                      name:DidSelectBookNotification
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(didFinishOpeningBook:)
-                                                     name:DidFinishOpeningBookNotification
+                                                 selector:@selector(bookDidFinishOpening:)
+                                                     name:BookDidFinishOpeningNotification
                                                    object:nil];
     }
 }

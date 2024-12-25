@@ -7,8 +7,8 @@
 #import "PDFMatcher.h"
 
 
-NSNotificationName const WillStartOpeningBookNotification = @"WillStartOpeningBook";
-NSNotificationName const DidFinishOpeningBookNotification = @"DidFinishOpeningBook";
+NSNotificationName const BookWillStartOpeningNotification = @"BookWillStartOpening";
+NSNotificationName const BookDidFinishOpeningNotification = @"BookDidFinishOpening";
 
 
 BOOL
@@ -97,13 +97,13 @@ makeTitleFromPath(NSString *path);
 {
     NSAssert( ! self.isOpen, @"Expected book to be closed.");
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:WillStartOpeningBookNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartOpeningNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         [self openOnGlobalQueue];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_isOpen = YES;
-            [[NSNotificationCenter defaultCenter] postNotificationName:DidFinishOpeningBookNotification
+            [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishOpeningNotification
                                                                 object:self];
         });
     });

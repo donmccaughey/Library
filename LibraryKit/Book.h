@@ -14,8 +14,8 @@ enum BookType : NSUInteger {
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSNotificationName const WillStartOpeningBookNotification;
-extern NSNotificationName const DidFinishOpeningBookNotification;
+extern NSNotificationName const BookWillStartOpeningNotification;
+extern NSNotificationName const BookDidFinishOpeningNotification;
 
 
 @interface Book : NSObject
