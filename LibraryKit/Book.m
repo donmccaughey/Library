@@ -1,5 +1,6 @@
 #import "Book.h"
 
+#import "EPUB.h"
 #import "PDF.h"
 
 
@@ -91,7 +92,7 @@ makeTitleFromFilename(NSString *path);
                 file = nil;
                 break;
             case FormatEPUB:
-                file = nil;
+                file = [[EPUB alloc] initWithPath:self->_path];
                 break;
             case FormatPDF:
                 file = [[PDF alloc] initWithPath:self->_path];
