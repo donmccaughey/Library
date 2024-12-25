@@ -6,14 +6,10 @@
 
 
 @implementation BookListViewController
-{
-    NSArray<NSSortDescriptor *> *_sortDescriptors;
-}
 
 
 - (void)didFinishScanningForBooks:(NSNotification *)notification;
 {
-    [_library sortBy:_sortDescriptors];
     [_tableView reloadData];
     if (_library.books.count) {
         [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
@@ -54,11 +50,6 @@
 {
     self = [super initWithCoder:coder];
     if ( ! self) return nil;
-    
-    _sortDescriptors = @[
-        [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
-        [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
-    ];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didFinishScanningForBooks:)

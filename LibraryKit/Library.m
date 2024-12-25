@@ -15,6 +15,20 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
 @implementation Library
 {
     NSMutableOrderedSet<Book *> *_books;
+    NSArray<NSSortDescriptor *> *_sortDescriptors;
+}
+
+
+- (NSArray<NSSortDescriptor *> *)sortDescriptors;
+{
+    return [_sortDescriptors copy];
+}
+
+
+- (void)setSortDescriptors:(NSArray<NSSortDescriptor *> *)sortDescriptors;
+{
+    _sortDescriptors = [sortDescriptors copy];
+    [_books sortUsingDescriptors:_sortDescriptors];
 }
 
 
@@ -24,6 +38,10 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
     if (self) {
         _books = [NSMutableOrderedSet new];
         _dirs = @[];
+        _sortDescriptors = @[
+            [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
+            [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
+        ];
     }
     return self;
 }
@@ -44,6 +62,7 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
         for (NSString *dir in dirs) {
             addMatchingPaths(dir, [Book fileMatchers], books);
         }
+        [books sortUsingDescriptors:self->_sortDescriptors];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_books = books;
             self->_dirs = [dirs copy];

@@ -26,7 +26,6 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
 {
-    [_library startScanningForBooksInDirs:_dirs];
 }
 
 
@@ -43,6 +42,7 @@
         @"/Users/donmcc/Downloads",
         @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
+    [_library startScanningForBooksInDirs:_dirs];
 }
 
 
