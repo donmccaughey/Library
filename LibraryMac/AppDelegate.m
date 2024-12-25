@@ -24,17 +24,6 @@
 }
 
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification;
-{
-}
-
-
-- (BOOL)applicationSupportsSecureRestorableState:(NSApplication *)app;
-{
-    return YES;
-}
-
-
 - (void)applicationWillFinishLaunching:(NSNotification *)notification;
 {
     _folders = @[
@@ -43,12 +32,6 @@
         @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
     [_library startScanningFolders:_folders];
-}
-
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification;
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

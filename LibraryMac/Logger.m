@@ -50,8 +50,7 @@ formatInterval(struct timespec elapsedTime);
         Book *book = value;
         NSNumber *index = notification.userInfo[IndexKey];
         NSUInteger i = 1 + index.unsignedLongValue;
-        NSNumber *count = notification.userInfo[CountKey];
-        NSLog(@"Did select %@ book %lu of %@: \"%@\"", book.typeName, i, count, book);
+        NSLog(@"Did select %@ book %lu: \"%@\"", book.typeName, i, book);
     }
 }
 

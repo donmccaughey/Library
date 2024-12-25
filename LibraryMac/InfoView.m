@@ -24,11 +24,17 @@
 {
     _book = notification.userInfo[BookKey];
     
-    NSNumber *count = notification.userInfo[CountKey];
-    _count = count.unsignedIntegerValue;
-    
     NSNumber *index = notification.userInfo[IndexKey];
     _index = index.integerValue;
+    
+    [self updateLabels];
+}
+
+
+- (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
+{
+    Library *library = notification.object;
+    _count = library.books.count;
     
     [self updateLabels];
 }
@@ -78,6 +84,10 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(bookDidFinishOpening:)
                                                      name:BookDidFinishOpeningNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(libraryDidFinishScanningFolders:)
+                                                     name:LibraryDidFinishScanningFoldersNotification
                                                    object:nil];
     }
 }

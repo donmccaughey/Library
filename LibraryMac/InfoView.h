@@ -9,12 +9,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InfoView : NSView
 
-@property (strong) IBOutlet NSTextField *countLabel;
-@property (strong) IBOutlet NSTextField *sizeLabel;
+@property (weak) IBOutlet NSTextField *countLabel;
+@property (weak) IBOutlet NSTextField *sizeLabel;
 
 - (void)bookDidFinishOpening:(NSNotification *)notification;
 
 - (void)didSelectBook:(NSNotification *)notification;
+
+- (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 
 - (void)updateLabels;
 

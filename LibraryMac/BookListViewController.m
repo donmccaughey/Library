@@ -27,7 +27,6 @@
             : nil;
     NSDictionary *userInfo = @{
         BookKey: book ?: [NSNull null],
-        CountKey: @(_library.books.count),
         IndexKey: @(_tableView.selectedRow),
     };
     [[NSNotificationCenter defaultCenter] postNotificationName:DidSelectBookNotification
