@@ -1,28 +1,29 @@
 #import "Book.h"
-#import "Book+Internal.h"
 
-#import "EPUBBook.h"
-#import "PDFBook.h"
+#import "PDF.h"
 
 
 NSNotificationName const BookWillStartOpeningNotification = @"BookWillStartOpening";
 NSNotificationName const BookDidFinishOpeningNotification = @"BookDidFinishOpening";
 
 
-BOOL
+static BOOL
 isOneWord(NSString *const string);
 
-NSString *
+static NSString *
 makeTitleFromPath(NSString *path);
 
 
+@interface Book ()
+
+- (instancetype)initWithType:(enum BookType)type
+                        path:(NSString *)path
+                 andFileSize:(NSNumber *)fileSize;
+
+@end
+
+
 @implementation Book
-
-
-- (NSUInteger)pageCount;
-{
-    return 0;
-}
 
 
 - (instancetype)init;
@@ -32,16 +33,18 @@ makeTitleFromPath(NSString *path);
 }
 
 
-- (instancetype)initWithPath:(NSString *)path
-                 andFileSize:(NSNumber *)fileSize;
+- (nullable instancetype)initWithPath:(NSString *)path
+                          andFileSize:(NSNumber *)fileSize;
 {
     if ([bookTypeExtension(BookTypeEPUB) isEqualToString:path.pathExtension]) {
-        return [[EPUBBook alloc] initWithPath:path
-                                  andFileSize:fileSize];
+        return [[Book alloc] initWithType:BookTypeEPUB
+                                     path:path
+                              andFileSize:fileSize];
     }
     if ([bookTypeExtension(BookTypePDF) isEqualToString:path.pathExtension]) {
-        return [[PDFBook alloc] initWithPath:path
-                                 andFileSize:fileSize];
+        return [[Book alloc] initWithType:BookTypePDF
+                                     path:path
+                              andFileSize:fileSize];
     }
     return nil;
 }
@@ -76,19 +79,17 @@ makeTitleFromPath(NSString *path);
     [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartOpeningNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        [self openOnGlobalQueue];
+        id<File> file = nil;
+        if (BookTypePDF == self->_type) file = [[PDF alloc] initWithPath:self->_path];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_isOpen = YES;
+            if (file) {
+                self->_pageCount = file.pageCount;
+            }
             [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishOpeningNotification
                                                                 object:self];
         });
     });
-}
-
-
-- (void)openOnGlobalQueue;
-{
-    // nothing to do
 }
 
 

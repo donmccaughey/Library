@@ -17,8 +17,8 @@ extern NSNotificationName const BookDidFinishOpeningNotification;
 @property (readonly) NSString *title;
 @property (readonly) enum BookType type;
 
-- (instancetype)initWithPath:(NSString *)path
-                 andFileSize:(NSNumber *)fileSize;
+- (nullable instancetype)initWithPath:(NSString *)path
+                          andFileSize:(NSNumber *)fileSize;
 
 - (void)startOpening;
 
