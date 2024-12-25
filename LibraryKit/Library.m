@@ -18,12 +18,6 @@ addMatchingPaths(NSString *dir, NSArray<FileMatcher *> *matchers, NSMutableOrder
 }
 
 
-//- (NSOrderedSet<Book *> *)books;
-//{
-//    return _books;
-//}
-
-
 - (instancetype)init;
 {
     self = [super init];

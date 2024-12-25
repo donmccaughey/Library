@@ -50,23 +50,28 @@
 }
 
 
-- (void)dealloc;
+- (instancetype)initWithCoder:(NSCoder *)coder;
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-- (void)viewDidLoad;
-{
+    self = [super initWithCoder:coder];
+    if ( ! self) return nil;
+    
     _sortDescriptors = @[
         [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
         [NSSortDescriptor sortDescriptorWithKey:@"fileSize" ascending:YES],
     ];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didFinishScanningForBooks:)
                                                  name:DidFinishScanningForBooksNotification
                                                object:nil];
-    [super viewDidLoad];
+    
+    return self;
+}
+
+
+- (void)dealloc;
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 

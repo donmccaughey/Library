@@ -17,6 +17,7 @@
     self = [super init];
     if ( ! self) return nil;
     
+    _dirs = @[];
     _logger = [Logger new];
     
     return self;
