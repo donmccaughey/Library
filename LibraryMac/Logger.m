@@ -27,14 +27,14 @@ formatInterval(struct timespec elapsedTime);
 }
 
 
-- (void)willStartScanningForBooks:(NSNotification *)notification;
+- (void)libraryWillStartScanningFolders:(NSNotification *)notification;
 {
     NSLog(@"Will start scanning for books.");
     clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
 }
 
 
-- (void)didFinishScanningForBooks:(NSNotification *)notification;
+- (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     struct timespec scanTime = calculateIntervalToNow(_startScanningForBooksTime);
     NSLog(@"Did finish scanning for books in %@", formatInterval(scanTime));
@@ -84,12 +84,12 @@ formatInterval(struct timespec elapsedTime);
     if ( ! self) return nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(willStartScanningForBooks:)
-                                                 name:WillStartScanningForBooksNotification
+                                             selector:@selector(libraryWillStartScanningFolders:)
+                                                 name:LibraryWillStartScanningFoldersNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didFinishScanningForBooks:)
-                                                 name:DidFinishScanningForBooksNotification
+                                             selector:@selector(libraryDidFinishScanningFolders:)
+                                                 name:LibraryDidFinishScanningFoldersNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didSelectBook:)

@@ -6,9 +6,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Logger : NSObject
 
-- (void)willStartScanningForBooks:(NSNotification *)notification;
+- (void)libraryWillStartScanningFolders:(NSNotification *)notification;
 
-- (void)didFinishScanningForBooks:(NSNotification *)notification;
+- (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 
 - (void)didSelectBook:(NSNotification *)notification;
 

@@ -7,7 +7,7 @@
 
 @implementation AppDelegate
 {
-    NSArray<NSString *> *_dirs;
+    NSArray<NSString *> *_folders;
     Logger *_logger;
 }
 
@@ -17,7 +17,7 @@
     self = [super init];
     if ( ! self) return nil;
     
-    _dirs = @[];
+    _folders = @[];
     _logger = [Logger new];
     
     return self;
@@ -37,12 +37,12 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification;
 {
-    _dirs = @[
+    _folders = @[
         @"/Users/donmcc/Documents",
         @"/Users/donmcc/Downloads",
         @"/Users/donmcc/Dropbox/Books/Don's Library",
     ];
-    [_library startScanningForBooksInDirs:_dirs];
+    [_library startScanningFolders:_folders];
 }
 
 

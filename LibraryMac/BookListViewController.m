@@ -8,7 +8,7 @@
 @implementation BookListViewController
 
 
-- (void)didFinishScanningForBooks:(NSNotification *)notification;
+- (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     [_tableView reloadData];
     if (_library.books.count) {
@@ -52,8 +52,8 @@
     if ( ! self) return nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didFinishScanningForBooks:)
-                                                 name:DidFinishScanningForBooksNotification
+                                             selector:@selector(libraryDidFinishScanningFolders:)
+                                                 name:LibraryDidFinishScanningFoldersNotification
                                                object:nil];
     
     return self;

@@ -7,19 +7,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSNotificationName const WillStartScanningForBooksNotification;
-extern NSNotificationName const DidFinishScanningForBooksNotification;
+extern NSNotificationName const LibraryWillStartScanningFoldersNotification;
+extern NSNotificationName const LibraryDidFinishScanningFoldersNotification;
 
 
 @interface Library : NSObject
 
 @property (copy, readonly) NSOrderedSet<Book *> *books;
-@property (copy, readonly) NSArray<NSString *> *dirs;
+@property (copy, readonly) NSArray<NSString *> *folders;
 @property (copy) NSArray<NSSortDescriptor *> *sortDescriptors;
 
-- (void)sortBy:(NSArray<NSSortDescriptor *> *)descriptors;
-
-- (void)startScanningForBooksInDirs:(NSArray<NSString *> *)dirs;
+- (void)startScanningFolders:(NSArray<NSString *> *)folders;
 
 @end
 
