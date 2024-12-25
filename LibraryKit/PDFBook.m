@@ -2,17 +2,7 @@
 
 @import PDFKit;
 
-#import "Book-internal.h"
-
-
-@interface PDFBook ()
-
-- (instancetype)initWithType:(enum BookType)type
-                    typeName:(NSString *)typeName
-                        path:(NSString *)path
-                 andFileSize:(NSNumber *)fileSize;
-
-@end
+#import "Book+Internal.h"
 
 
 @implementation PDFBook

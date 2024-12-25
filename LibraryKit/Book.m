@@ -1,5 +1,5 @@
 #import "Book.h"
-#import "Book-internal.h"
+#import "Book+Internal.h"
 
 #import "EPUBBook.h"
 #import "PDFBook.h"
