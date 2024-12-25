@@ -11,12 +11,7 @@
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     [_tableView reloadData];
-    if (_library.books.count) {
-        [_tableView selectRowIndexes:[NSIndexSet indexSetWithIndex:0]
-                byExtendingSelection:NO];
-    } else {
-        [self updateSelectedBook];
-    }
+    [self updateSelectedBook];
 }
 
 
