@@ -177,6 +177,7 @@
 		D48DFFF32C179ED400177AD0 /* LibraryMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibraryMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D48DFFF72C179ED400177AD0 /* LibraryMacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LibraryMacTests.m; sourceTree = "<group>"; };
 		D48DFFFD2C179ED400177AD0 /* LibraryMacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LibraryMacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4DA2D182D1D0792006B459C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D4E7D0BC2C17AA7300980513 /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -298,6 +299,7 @@
 		D48DFFBC2C179E6900177AD0 = {
 			isa = PBXGroup;
 			children = (
+				D4DA2D182D1D0792006B459C /* README.md */,
 				D48DFFCA2C179E8A00177AD0 /* LibraryKit */,
 				D48DFFD42C179E8A00177AD0 /* LibraryKitTests */,
 				D48DFFE32C179ED300177AD0 /* LibraryMac */,
