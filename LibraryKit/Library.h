@@ -13,8 +13,8 @@ extern NSNotificationName const LibraryDidFinishScanningFoldersNotification;
 
 @interface Library : NSObject
 
-@property (copy, readonly) NSOrderedSet<Book *> *books;
-@property (copy, readonly) NSArray<NSString *> *folders;
+@property (readonly) NSOrderedSet<Book *> *books;
+@property (readonly) NSArray<NSString *> *folders;
 @property (copy) NSArray<NSSortDescriptor *> *sortDescriptors;
 
 - (void)startScanningFolders:(NSArray<NSString *> *)folders;

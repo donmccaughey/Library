@@ -17,6 +17,8 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 @property (readonly) NSString *title;
 @property (readonly) BOOL wasRead;
 
+- (instancetype)init NS_UNAVAILABLE;
+
 - (nullable instancetype)initWithPath:(NSString *)path
                           andFileSize:(NSNumber *)fileSize;
 

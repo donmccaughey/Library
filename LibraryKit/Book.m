@@ -19,7 +19,7 @@ makeTitleFromFilename(NSString *path);
 
 - (instancetype)initWithFormat:(enum Format)format
                           path:(NSString *)path
-                   andFileSize:(NSNumber *)fileSize;
+                   andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -37,25 +37,18 @@ makeTitleFromFilename(NSString *path);
 }
 
 
-- (instancetype)init;
-{
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-
 - (nullable instancetype)initWithPath:(NSString *)path
                           andFileSize:(NSNumber *)fileSize;
 {
     if ([extensionForFormat(FormatEPUB) isEqualToString:path.pathExtension]) {
-        return [[Book alloc] initWithFormat:FormatEPUB
-                                       path:path
-                                andFileSize:fileSize];
+        return [self initWithFormat:FormatEPUB
+                               path:path
+                        andFileSize:fileSize];
     }
     if ([extensionForFormat(FormatPDF) isEqualToString:path.pathExtension]) {
-        return [[Book alloc] initWithFormat:FormatPDF
-                                       path:path
-                                andFileSize:fileSize];
+        return [self initWithFormat:FormatPDF
+                               path:path
+                        andFileSize:fileSize];
     }
     return nil;
 }
