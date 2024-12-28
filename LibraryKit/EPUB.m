@@ -1,6 +1,6 @@
 #import "EPUB.h"
 
-#import <minizip/minizip.h>
+@import minizip;
 
 #import "EPUBContainer.h"
 

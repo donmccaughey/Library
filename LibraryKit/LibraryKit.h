@@ -12,4 +12,3 @@ FOUNDATION_EXPORT const unsigned char LibraryKitVersionString[];
 #import <LibraryKit/File.h>
 #import <LibraryKit/Format.h>
 #import <LibraryKit/Library.h>
-#import <LibraryKit/PDF.h>

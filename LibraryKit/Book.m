@@ -1,7 +1,7 @@
 #import "Book.h"
 
 #import "EPUB.h"
-#import "PDF.h"
+#import "PDF/PDF.h"
 
 
 NSNotificationName const BookWillStartReadingFileNotification = @"BookWillStartReadingFile";
