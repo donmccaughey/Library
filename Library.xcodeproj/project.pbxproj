@@ -14,13 +14,17 @@
 		D44EE7082D1FC261006AC61E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D162D1E502300970B7B /* libbz2.tbd */; };
 		D44EE7092D1FC268006AC61E /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE7032D1FC0A2006AC61E /* libcompression.tbd */; };
 		D44EE70A2D1FC278006AC61E /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D1C2D1E581C00970B7B /* libiconv.tbd */; };
+		D44EE70D2D2098AB006AC61E /* EPUBContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = D44EE70B2D2098AB006AC61E /* EPUBContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D44EE70E2D2098AB006AC61E /* EPUBContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = D44EE70C2D2098AB006AC61E /* EPUBContainer.m */; };
+		D44EE7112D209B7A006AC61E /* EPUBRootfile.h in Headers */ = {isa = PBXBuildFile; fileRef = D44EE70F2D209B7A006AC61E /* EPUBRootfile.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D44EE7122D209B7A006AC61E /* EPUBRootfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D44EE7102D209B7A006AC61E /* EPUBRootfile.m */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
 		D46FDC8A2D1C813B001E8362 /* Format.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8B2D1C813B001E8362 /* Format.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* Format.m */; };
 		D46FDC8E2D1C9785001E8362 /* PDF.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC8C2D1C9785001E8362 /* PDF.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8F2D1C9785001E8362 /* PDF.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC8D2D1C9785001E8362 /* PDF.m */; };
 		D46FDC912D1C9A9D001E8362 /* File.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC902D1C9A9D001E8362 /* File.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D46FDC962D1CAF55001E8362 /* EPUB.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC942D1CAF55001E8362 /* EPUB.h */; };
+		D46FDC962D1CAF55001E8362 /* EPUB.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC942D1CAF55001E8362 /* EPUB.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC972D1CAF55001E8362 /* EPUB.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC952D1CAF55001E8362 /* EPUB.m */; };
 		D48D00022C179ED400177AD0 /* LibraryMacUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00012C179ED400177AD0 /* LibraryMacUITests.m */; };
 		D48D00042C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D48D00032C179ED400177AD0 /* LibraryMacUITestsLaunchTests.m */; };
@@ -157,6 +161,10 @@
 		D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = minizip.xcodeproj; path = libs/minizip_framework/minizip.xcodeproj; sourceTree = "<group>"; };
 		D44EE7032D1FC0A2006AC61E /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libcompression.tbd; sourceTree = DEVELOPER_DIR; };
 		D44EE7062D1FC0B9006AC61E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D44EE70B2D2098AB006AC61E /* EPUBContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPUBContainer.h; sourceTree = "<group>"; };
+		D44EE70C2D2098AB006AC61E /* EPUBContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPUBContainer.m; sourceTree = "<group>"; };
+		D44EE70F2D209B7A006AC61E /* EPUBRootfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EPUBRootfile.h; sourceTree = "<group>"; };
+		D44EE7102D209B7A006AC61E /* EPUBRootfile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPUBRootfile.m; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
@@ -380,6 +388,10 @@
 				D48D00572C17A35F00177AD0 /* Book.m */,
 				D46FDC942D1CAF55001E8362 /* EPUB.h */,
 				D46FDC952D1CAF55001E8362 /* EPUB.m */,
+				D44EE70B2D2098AB006AC61E /* EPUBContainer.h */,
+				D44EE70C2D2098AB006AC61E /* EPUBContainer.m */,
+				D44EE70F2D209B7A006AC61E /* EPUBRootfile.h */,
+				D44EE7102D209B7A006AC61E /* EPUBRootfile.m */,
 				D46FDC882D1C813B001E8362 /* Format.h */,
 				D46FDC892D1C813B001E8362 /* Format.m */,
 				D46FDC902D1C9A9D001E8362 /* File.h */,
@@ -438,11 +450,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
+				D46FDC962D1CAF55001E8362 /* EPUB.h in Headers */,
+				D44EE70D2D2098AB006AC61E /* EPUBContainer.h in Headers */,
+				D44EE7112D209B7A006AC61E /* EPUBRootfile.h in Headers */,
 				D46FDC8A2D1C813B001E8362 /* Format.h in Headers */,
 				D46FDC912D1C9A9D001E8362 /* File.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
-				D46FDC962D1CAF55001E8362 /* EPUB.h in Headers */,
 				D46FDC8E2D1C9785001E8362 /* PDF.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -781,8 +795,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D46FDC972D1CAF55001E8362 /* EPUB.m in Sources */,
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
+				D46FDC972D1CAF55001E8362 /* EPUB.m in Sources */,
+				D44EE70E2D2098AB006AC61E /* EPUBContainer.m in Sources */,
+				D44EE7122D209B7A006AC61E /* EPUBRootfile.m in Sources */,
 				D46FDC8B2D1C813B001E8362 /* Format.m in Sources */,
 				D48D00542C17A08400177AD0 /* Library.m in Sources */,
 				D46FDC8F2D1C9785001E8362 /* PDF.m in Sources */,

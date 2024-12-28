@@ -6,13 +6,6 @@
 @implementation PDF
 
 
-- (instancetype)init;
-{
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-
 - (nullable instancetype)initWithPath:(NSString *)path;
 {
     self = [super init];
