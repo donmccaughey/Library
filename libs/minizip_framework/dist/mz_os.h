@@ -56,7 +56,20 @@ struct dirent {
 };
 typedef void* DIR;
 #else
+
+// patch: include dirent.h outside of the extern "C" block to fix Apple `modules-verifier` error:
+// > import of C++ module 'Darwin.POSIX.dirent' appears within extern "C" language linkage specification
+#ifdef __cplusplus
+}
+#endif
+
 #include <dirent.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+// end patch
+
 #endif
 
 /***************************************************************************/

@@ -1,9 +1,7 @@
 #import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT double minizipVersionNumber;
-
 FOUNDATION_EXPORT const unsigned char minizipVersionString[];
-
 
 #import <minizip/mz.h>
 #import <minizip/mz_crypt.h>

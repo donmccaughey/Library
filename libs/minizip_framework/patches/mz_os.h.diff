@@ -1,0 +1,25 @@
+diff --git a/dist/mz_os.h b/dist/mz_os.h
+index ad6ea4f..461b957 100644
+--- a/dist/mz_os.h
++++ b/dist/mz_os.h
+@@ -56,7 +56,20 @@ struct dirent {
+ };
+ typedef void* DIR;
+ #else
++
++// patch: include dirent.h outside of the extern "C" block to fix Apple `modules-verifier` error:
++// > import of C++ module 'Darwin.POSIX.dirent' appears within extern "C" language linkage specification
++#ifdef __cplusplus
++}
++#endif
++
+ #include <dirent.h>
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++// end patch
++
+ #endif
+ 
+ /***************************************************************************/
