@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable instancetype)initWithPath:(NSString *)path;
 
+- (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath;
+
 @end
 
 
