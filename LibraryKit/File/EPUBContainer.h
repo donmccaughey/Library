@@ -7,7 +7,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface EPUBContainer : NSObject <NSXMLParserDelegate>
+@interface EPUBContainer : NSObject<NSXMLParserDelegate>
 
 @property (nullable, readonly) NSString *firstPackagePath;
 @property (readonly) NSArray<EPUBRootfile *> *rootfiles;

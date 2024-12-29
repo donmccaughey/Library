@@ -2,6 +2,7 @@
 
 #import "EPUBContainer.h"
 #import "EPUBZip.h"
+#import "OPFPackage.h"
 
 
 @implementation EPUB
@@ -30,7 +31,7 @@
     
     NSData *data = [zip dataForEntryWithPath:@"META-INF/container.xml"];
     if ( ! data) {
-        NSLog(@"Unable to read 'container.xml' file for EPUB '%@'", path);
+        NSLog(@"Unable to read 'container.xml' entry in EPUB '%@'", path);
     }
     
     if (data) {
@@ -47,7 +48,7 @@
     }
        
     if ( ! packagePaths.count) {
-        // TODO: fall back to searching for an .opf file
+        // fall back to searching for an .opf file
         NSArray<NSString *> *opfPaths = [zip entryPathsWithExtension:@"opf"];
         [packagePaths addObjectsFromArray:opfPaths];
     }
@@ -57,9 +58,20 @@
         return nil;
     }
     
+    if (packagePaths.count > 1) {
+        NSLog(@"Found %lu package files in EPUB '%@'", (unsigned long)packagePaths.count, path);
+    }
+    
     NSString *packagePath = [packagePaths firstObject];
     NSLog(@"Reading package file '%@' for EPUB '%@'", packagePath, path.lastPathComponent);
-    // TODO: read the first package file
+    data = [zip dataForEntryWithPath:packagePath];
+    if ( ! data) {
+        NSLog(@"Unable to read '%@' entry in EPUB '%@'", packagePath, path);
+        return nil;
+    }
+    
+    OPFPackage *package = [[OPFPackage alloc] initWithData:data];
+    _title = package.title;
 
     return self;
 }
