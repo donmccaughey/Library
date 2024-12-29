@@ -17,9 +17,10 @@ makeTitleFromFilename(NSString *path);
 
 @interface Book ()
 
-- (instancetype)initWithFormat:(enum Format)format
-                          path:(NSString *)path
-                   andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFileClass:(Class<File>)fileClass
+                           format:(enum Format)format
+                             path:(NSString *)path
+                      andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -41,25 +42,29 @@ makeTitleFromFilename(NSString *path);
                           andFileSize:(NSNumber *)fileSize;
 {
     if ([extensionForFormat(FormatEPUB) isEqualToString:path.pathExtension]) {
-        return [self initWithFormat:FormatEPUB
-                               path:path
-                        andFileSize:fileSize];
+        return [self initWithFileClass:[EPUB class]
+                                format:FormatEPUB
+                                  path:path
+                           andFileSize:fileSize];
     }
     if ([extensionForFormat(FormatPDF) isEqualToString:path.pathExtension]) {
-        return [self initWithFormat:FormatPDF
-                               path:path
-                        andFileSize:fileSize];
+        return [self initWithFileClass:[PDF class]
+                                format:FormatPDF
+                                  path:path
+                           andFileSize:fileSize];
     }
     return nil;
 }
 
 
-- (instancetype)initWithFormat:(enum Format)format
-                          path:(NSString *)path
-                   andFileSize:(NSNumber *)fileSize;
+- (instancetype)initWithFileClass:(Class<File>)fileClass
+                           format:(enum Format)format
+                             path:(NSString *)path
+                      andFileSize:(NSNumber *)fileSize;
 {
     self = [super init];
     if (self) {
+        _fileClass = fileClass;
         _fileSize = fileSize;
         _format = format;
         _pageCount = 0;
@@ -79,22 +84,7 @@ makeTitleFromFilename(NSString *path);
     [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartReadingFileNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        id<File> file = nil;
-        switch (self->_format) {
-            case FormatUnknown:
-                file = nil;
-                break;
-            case FormatEPUB:
-                file = [[EPUB alloc] initWithPath:self->_path];
-                break;
-            case FormatPDF:
-                file = [[PDF alloc] initWithPath:self->_path];
-                break;
-            default:
-                NSAssert(NO, @"Undefined Format %lu", self->_format);
-                file = nil;
-                break;
-        }
+        id<File> file = [[self->_fileClass alloc] initWithPath:self->_path];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_wasRead = YES;
             if (file) {

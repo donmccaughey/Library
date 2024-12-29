@@ -12,6 +12,12 @@ endsWith(char const *s, char const *suffix);
 @implementation EPUB
 
 
+- (enum Format)format;
+{
+    return FormatEPUB;
+}
+
+
 - (nullable instancetype)initWithPath:(NSString *)path;
 {
     self = [super init];

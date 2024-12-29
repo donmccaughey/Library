@@ -9,10 +9,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSUInteger pageCount;
 @property (nullable, readonly) NSString *title;
 
-- (instancetype)init NS_UNAVAILABLE;
-
-- (nullable instancetype)initWithPath:(NSString *)path;
-
 @end
 
 

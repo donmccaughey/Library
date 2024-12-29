@@ -6,6 +6,12 @@
 @implementation PDF
 
 
+- (enum Format)format;
+{
+    return FormatPDF;
+}
+
+
 - (nullable instancetype)initWithPath:(NSString *)path;
 {
     self = [super init];

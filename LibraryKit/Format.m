@@ -1,5 +1,8 @@
 #include "Format.h"
 
+#include "File/EPUB.h"
+#include "File/PDF.h"
+
 
 static struct {
     enum Format format;
@@ -30,6 +33,20 @@ extensionForFormat(enum Format format)
 {
     NSCAssert(format < formatsCount, @"Undefined Format %lu", format);
     return formats[format].extension;
+}
+
+
+Class<File>
+fileClassForFormat(enum Format format)
+{
+    switch (format) {
+        case FormatUnknown: return nil;
+        case FormatEPUB: return [EPUB class];
+        case FormatPDF: return [PDF class];
+        default:
+            NSCAssert(NO, @"Undefined Format %lu", format);
+            return nil;
+    }
 }
 
 
