@@ -8,7 +8,6 @@
 
 - (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath;
 {
-    // TODO determine if utf-8 is the correct encoding for a zip entry path
     BOOL ignoreCase = YES;
     int32_t error = mz_zip_reader_locate_entry(_reader, entryPath.UTF8String, ignoreCase);
     if (error) {
@@ -48,6 +47,42 @@
     
     mz_zip_reader_entry_close(_reader);
     return data;
+}
+
+
+- (NSArray<NSString *> *)entryPathsMatchingPredicate:(NSPredicate *)predicate;
+{
+    NSMutableArray<NSString *> *entryPaths = [NSMutableArray new];
+    
+    int32_t error = mz_zip_reader_goto_first_entry(_reader);
+    mz_zip_file *fileInfo;
+    while ( ! error) {
+        error = mz_zip_reader_entry_get_info(_reader, &fileInfo);
+        if (error) {
+            NSLog(@"Failed to read entry from zip file '%@'", _path);
+            return entryPaths;
+        }
+        
+        NSString *entryPath = [NSString stringWithUTF8String:fileInfo->filename];
+        if ([predicate evaluateWithObject:entryPath]) {
+            [entryPaths addObject:entryPath];
+        }
+        error = mz_zip_reader_goto_next_entry(_reader);
+    }
+    
+    if (error != MZ_END_OF_LIST) {
+        NSLog(@"Error reading entries from zip file '%@': %d", _path, error);
+    }
+
+    return entryPaths;
+}
+
+
+- (NSArray<NSString *> *)entryPathsWithExtension:(NSString *)extension;
+{
+    NSString *dotExtension = [@"." stringByAppendingString:extension];
+    NSPredicate *hasExtension = [NSPredicate predicateWithFormat:@"self ENDSWITH[c] %@", dotExtension];
+    return [self entryPathsMatchingPredicate:hasExtension];
 }
 
 

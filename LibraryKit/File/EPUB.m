@@ -1,13 +1,7 @@
 #import "EPUB.h"
 
-@import minizip;
-
 #import "EPUBContainer.h"
 #import "EPUBZip.h"
-
-
-BOOL
-endsWith(char const *s, char const *suffix);
 
 
 @implementation EPUB
@@ -28,12 +22,17 @@ endsWith(char const *s, char const *suffix);
     _title = nil;
     
     NSMutableArray<NSString *> *packagePaths = [NSMutableArray new];
-    
-    int32_t error;
-    
     EPUBZip *zip = [[EPUBZip alloc] initWithPath:path];
+    if ( ! zip) {
+        NSLog(@"Unable to open zip archive for EPUB '%@'", path);
+        return nil;
+    }
     
     NSData *data = [zip dataForEntryWithPath:@"META-INF/container.xml"];
+    if ( ! data) {
+        NSLog(@"Unable to read 'container.xml' file for EPUB '%@'", path);
+    }
+    
     if (data) {
         EPUBContainer *container = [[EPUBContainer alloc] initWithData:data];
         NSLog(@"Found %lu rootfiles in 'container.xml' in EPUB '%@'",
@@ -48,46 +47,22 @@ endsWith(char const *s, char const *suffix);
     }
        
     if ( ! packagePaths.count) {
-        // TODO: fall back to searching for a .opf file
-        NSLog(@"Did not find 'container.xml' for EPUB at '%@'", path);
-        error = mz_zip_reader_goto_first_entry(zip.reader);
-        mz_zip_file *fileInfo;
-        while ( ! error) {
-            error = mz_zip_reader_entry_get_info(zip.reader, &fileInfo);
-            if (error) {
-                NSLog(@"Failed to read entry from EPUB at '%@'", path);
-            } else {
-                if (endsWith(fileInfo->filename, ".opf")) {
-                    // TODO: is utf-8 encoding a valid assumption?
-                    NSString *packagePath = [NSString stringWithUTF8String:fileInfo->filename];
-                    NSLog(@"Found package at '%@' in EPUB '%@'", packagePath, path.lastPathComponent);
-                    [packagePaths addObject:packagePath];
-                }
-                error = mz_zip_reader_goto_next_entry(zip.reader);
-            }
-        }
-        if (MZ_END_OF_LIST != error) {
-            NSLog(@"Error reading entries from EPUB at '%@': %d", path, error);
-        }
+        // TODO: fall back to searching for an .opf file
+        NSArray<NSString *> *opfPaths = [zip entryPathsWithExtension:@"opf"];
+        [packagePaths addObjectsFromArray:opfPaths];
     }
     
-    if (packagePaths.count) {
-        // TODO: read the first package file
-        NSString *packagePath = [packagePaths firstObject];
-        NSLog(@"Reading package file '%@' for EPUB '%@'", packagePath, path.lastPathComponent);
+    if ( ! packagePaths.count) {
+        NSLog(@"No package file found in EPUB '%@'", path);
+        return nil;
     }
     
+    NSString *packagePath = [packagePaths firstObject];
+    NSLog(@"Reading package file '%@' for EPUB '%@'", packagePath, path.lastPathComponent);
+    // TODO: read the first package file
+
     return self;
 }
 
 
 @end
-
-
-BOOL
-endsWith(char const *s, char const *suffix)
-{
-    size_t suffix_len = strlen(suffix);
-    char const *suffix_start = strstr(s, suffix);
-    return suffix_start && ! suffix_start[suffix_len];
-}

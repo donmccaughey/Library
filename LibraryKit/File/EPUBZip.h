@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath;
 
+- (NSArray<NSString *> *)entryPathsMatchingPredicate:(NSPredicate *)predicate;
+
+- (NSArray<NSString *> *)entryPathsWithExtension:(NSString *)extension;
+
 @end
 
 
