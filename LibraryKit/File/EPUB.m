@@ -3,6 +3,7 @@
 @import minizip;
 
 #import "EPUBContainer.h"
+#import "EPUBZip.h"
 
 
 BOOL
@@ -29,24 +30,19 @@ endsWith(char const *s, char const *suffix);
     NSMutableArray<NSString *> *packagePaths = [NSMutableArray new];
     
     int32_t error;
-    void *zipReader = mz_zip_reader_create();
-    error = mz_zip_reader_open_file(zipReader, path.UTF8String);
-    if (error) {
-        NSLog(@"Failed to open EPUB at '%@'", path);
-        mz_zip_reader_delete(&zipReader);
-        return self;
-    }
+    
+    EPUBZip *zip = [[EPUBZip alloc] initWithPath:path];
     
     BOOL ignoreCase = YES;
-    error = mz_zip_reader_locate_entry(zipReader, "META-INF/container.xml", ignoreCase);
+    error = mz_zip_reader_locate_entry(zip.reader, "META-INF/container.xml", ignoreCase);
     if ( ! error) {
         mz_zip_file *fileInfo;
-        error = mz_zip_reader_entry_get_info(zipReader, &fileInfo);
+        error = mz_zip_reader_entry_get_info(zip.reader, &fileInfo);
         if ( ! error) {
-            error = mz_zip_reader_entry_open(zipReader);
+            error = mz_zip_reader_entry_open(zip.reader);
             if ( ! error) {
                 NSMutableData *data = [NSMutableData dataWithLength:fileInfo->uncompressed_size];
-                int32_t bytesRead = mz_zip_reader_entry_read(zipReader, data.mutableBytes, (int32_t)data.length);
+                int32_t bytesRead = mz_zip_reader_entry_read(zip.reader, data.mutableBytes, (int32_t)data.length);
                 if (bytesRead == fileInfo->uncompressed_size) {
                     EPUBContainer *container = [[EPUBContainer alloc] initWithData:data];
                     NSLog(@"Found %lu rootfiles in 'container.xml' in EPUB '%@'",
@@ -62,7 +58,7 @@ endsWith(char const *s, char const *suffix);
                     NSLog(@"Only read %d of %lld bytes of 'container.xml' in EPUB '%@'",
                           bytesRead, fileInfo->uncompressed_size, path);
                 }
-                mz_zip_reader_entry_close(zipReader);
+                mz_zip_reader_entry_close(zip.reader);
             }
         }
     }
@@ -70,10 +66,10 @@ endsWith(char const *s, char const *suffix);
     if ( ! packagePaths.count) {
         // TODO: fall back to searching for a .opf file
         NSLog(@"Did not find 'container.xml' for EPUB at '%@'", path);
-        error = mz_zip_reader_goto_first_entry(zipReader);
+        error = mz_zip_reader_goto_first_entry(zip.reader);
         mz_zip_file *fileInfo;
         while ( ! error) {
-            error = mz_zip_reader_entry_get_info(zipReader, &fileInfo);
+            error = mz_zip_reader_entry_get_info(zip.reader, &fileInfo);
             if (error) {
                 NSLog(@"Failed to read entry from EPUB at '%@'", path);
             } else {
@@ -83,7 +79,7 @@ endsWith(char const *s, char const *suffix);
                     NSLog(@"Found package at '%@' in EPUB '%@'", packagePath, path.lastPathComponent);
                     [packagePaths addObject:packagePath];
                 }
-                error = mz_zip_reader_goto_next_entry(zipReader);
+                error = mz_zip_reader_goto_next_entry(zip.reader);
             }
         }
         if (MZ_END_OF_LIST != error) {
@@ -96,9 +92,6 @@ endsWith(char const *s, char const *suffix);
         NSString *packagePath = [packagePaths firstObject];
         NSLog(@"Reading package file '%@' for EPUB '%@'", packagePath, path.lastPathComponent);
     }
-    
-    mz_zip_reader_close(zipReader);
-    mz_zip_reader_delete(&zipReader);
     
     return self;
 }
