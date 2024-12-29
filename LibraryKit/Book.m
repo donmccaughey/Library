@@ -17,10 +17,11 @@ makeTitleFromFilename(NSString *path);
 
 @interface Book ()
 
-- (instancetype)initWithFileClass:(Class<File>)fileClass
-                           format:(enum Format)format
-                             path:(NSString *)path
-                      andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
+@property (readonly) Class<File> fileClass;
+
+- (nullable instancetype)initWithFileClass:(Class<File>)fileClass
+                                      path:(NSString *)path
+                               andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -29,6 +30,12 @@ makeTitleFromFilename(NSString *path);
 {
     NSString *_titleFromDocument;
     NSString *_titleFromFilename;
+}
+
+
+- (enum Format)format;
+{
+    return [_fileClass format];
 }
 
 
@@ -41,32 +48,28 @@ makeTitleFromFilename(NSString *path);
 - (nullable instancetype)initWithPath:(NSString *)path
                           andFileSize:(NSNumber *)fileSize;
 {
-    if ([extensionForFormat(FormatEPUB) isEqualToString:path.pathExtension]) {
-        return [self initWithFileClass:[EPUB class]
-                                format:FormatEPUB
+    enum Format format = formatForExtension(path.pathExtension);
+    Class<File> fileClass = fileClassForFormat(format);
+    if (fileClass) {
+        return [self initWithFileClass:fileClass
                                   path:path
                            andFileSize:fileSize];
+    } else {
+        return nil;
     }
-    if ([extensionForFormat(FormatPDF) isEqualToString:path.pathExtension]) {
-        return [self initWithFileClass:[PDF class]
-                                format:FormatPDF
-                                  path:path
-                           andFileSize:fileSize];
-    }
-    return nil;
 }
 
 
 - (instancetype)initWithFileClass:(Class<File>)fileClass
-                           format:(enum Format)format
                              path:(NSString *)path
                       andFileSize:(NSNumber *)fileSize;
 {
+    if ( ! fileClass) return nil;
+    
     self = [super init];
     if (self) {
         _fileClass = fileClass;
         _fileSize = fileSize;
-        _format = format;
         _pageCount = 0;
         _path = path;
         _titleFromDocument = nil;

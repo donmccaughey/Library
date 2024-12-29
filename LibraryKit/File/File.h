@@ -8,11 +8,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol File
 
-@property (readonly) enum Format format;
 @property (readonly) NSUInteger pageCount;
 @property (nullable, readonly) NSString *title;
 
 + (instancetype)alloc;
+
++ (enum Format)format;
 
 - (instancetype)init NS_UNAVAILABLE;
 

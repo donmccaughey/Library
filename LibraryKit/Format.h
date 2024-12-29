@@ -22,8 +22,12 @@ Class<File>
 fileClassForFormat(enum Format format);
 
 
+enum Format
+formatForExtension(NSString *extension);
+
+
 NSString *
-formatName(enum Format format);
+nameForFormat(enum Format format);
 
 
 NS_ASSUME_NONNULL_END

@@ -12,7 +12,7 @@ endsWith(char const *s, char const *suffix);
 @implementation EPUB
 
 
-- (enum Format)format;
++ (enum Format)format;
 {
     return FormatEPUB;
 }

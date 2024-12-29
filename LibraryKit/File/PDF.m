@@ -6,7 +6,7 @@
 @implementation PDF
 
 
-- (enum Format)format;
++ (enum Format)format;
 {
     return FormatPDF;
 }
@@ -24,6 +24,7 @@
         return nil;
     }
     
+    NSLog(@"Reading data from PDF '%@'", path.lastPathComponent);
     _pageCount = document.pageCount;
     _title = document.documentAttributes[PDFDocumentTitleAttribute];
 

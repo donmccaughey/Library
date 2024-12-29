@@ -4,55 +4,79 @@
 #include "File/PDF.h"
 
 
-static struct {
+struct formatProperties {
     enum Format format;
     NSString *extension;
     NSString *name;
-} formats[] = {
-    {
-        .format=FormatUnknown,
-        .extension=@"",
-        .name=@"Unknown",
-    },
-    {
-        .format=FormatEPUB,
-        .extension=@"epub",
-        .name=@"EPUB",
-    },
-    {
-        .format=FormatPDF,
-        .extension=@"pdf",
-        .name=@"PDF",
-    },
+    Class cls;
 };
-static NSUInteger formatsCount = sizeof formats / sizeof formats[0];
+
+
+static struct formatProperties *
+getformatProperties(enum Format format)
+{
+    static struct formatProperties properties[] = {
+        {
+            .format=FormatUnknown,
+            .extension=@"",
+            .name=@"Unknown",
+            .cls=nil,
+        },
+        {
+            .format=FormatEPUB,
+            .extension=@"epub",
+            .name=@"EPUB",
+            .cls=nil,
+        },
+        {
+            .format=FormatPDF,
+            .extension=@"pdf",
+            .name=@"PDF",
+            .cls=nil,
+        },
+    };
+    static NSUInteger propertiesCount = sizeof properties / sizeof properties[0];
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        properties[1].cls = [EPUB class];
+        properties[2].cls = [PDF class];
+    });
+
+    NSCAssert(format < propertiesCount, @"Undefined Format %lu", format);
+    return &properties[format];
+}
 
 
 NSString *
 extensionForFormat(enum Format format)
 {
-    NSCAssert(format < formatsCount, @"Undefined Format %lu", format);
-    return formats[format].extension;
+    return getformatProperties(format)->extension;
 }
 
 
 Class<File>
 fileClassForFormat(enum Format format)
 {
-    switch (format) {
-        case FormatUnknown: return nil;
-        case FormatEPUB: return [EPUB class];
-        case FormatPDF: return [PDF class];
-        default:
-            NSCAssert(NO, @"Undefined Format %lu", format);
-            return nil;
+    return getformatProperties(format)->cls;
+}
+
+
+enum Format
+formatForExtension(NSString *extension)
+{
+    if ([extensionForFormat(FormatEPUB) isEqualToString:extension]) {
+        return FormatEPUB;
     }
+    if ([extensionForFormat(FormatPDF) isEqualToString:extension]) {
+        return FormatPDF;
+    }
+    return FormatUnknown;
 }
 
 
 NSString *
-formatName(enum Format format)
+nameForFormat(enum Format format)
 {
-    NSCAssert(format < formatsCount, @"Undefined Format %lu", format);
-    return formats[format].name;
+    return getformatProperties(format)->name;
 }
