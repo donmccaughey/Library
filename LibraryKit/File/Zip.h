@@ -4,7 +4,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface EPUBZip : NSObject
+@interface Zip : NSObject
 
 @property (readonly) NSString *path;
 @property (readonly) void *reader;

@@ -1,9 +1,9 @@
-#import "EPUBZip.h"
+#import "Zip.h"
 
 @import minizip;
 
 
-@implementation EPUBZip
+@implementation Zip
 
 
 - (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath;

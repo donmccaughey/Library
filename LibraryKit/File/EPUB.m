@@ -1,8 +1,8 @@
 #import "EPUB.h"
 
 #import "EPUBContainer.h"
-#import "EPUBZip.h"
 #import "OPFPackage.h"
+#import "Zip.h"
 
 
 @implementation EPUB
@@ -23,7 +23,7 @@
     _title = nil;
     
     NSMutableArray<NSString *> *packagePaths = [NSMutableArray new];
-    EPUBZip *zip = [[EPUBZip alloc] initWithPath:path];
+    Zip *zip = [[Zip alloc] initWithPath:path];
     if ( ! zip) {
         NSLog(@"Unable to open zip archive for EPUB '%@'", path);
         return nil;
