@@ -71,7 +71,7 @@
     }
     
     OPFPackage *package = [[OPFPackage alloc] initWithData:data];
-    _title = package.title;
+    _title = [package.title copy];
 
     return self;
 }

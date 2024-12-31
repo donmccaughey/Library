@@ -76,7 +76,7 @@ makeTitleFromFilename(NSString *path);
         _fileModificationDate = fileModificationDate;
         _fileSize = fileSize;
         _pageCount = 0;
-        _path = path;
+        _path = [path copy];
         _titleFromDocument = nil;
         _titleFromFilename = makeTitleFromFilename(path);
         _wasRead = NO;

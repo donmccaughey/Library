@@ -2,6 +2,23 @@
 
 
 static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
+static NSString *const opfURI = @"http://www.idpf.org/2007/opf";
+
+
+static BOOL
+isMetadataTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [opfURI isEqualToString:namespaceURI]
+        && [@"metadata" isEqualToString:elementName];
+}
+
+
+static BOOL
+isTitleTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [dublinCoreURI isEqualToString:namespaceURI]
+        && [@"title" isEqualToString:elementName];
+}
 
 
 @implementation OPFPackage
@@ -34,12 +51,12 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qName
     attributes:(NSDictionary *)attributes;
 {
-    if ([@"metadata" isEqualToString:elementName]) {
+    if (isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     }
     
     if (_inMetadataTag) {
-        if ([@"title" isEqualToString:elementName] && [dublinCoreURI isEqualToString:namespaceURI]) {
+        if (isTitleTag(namespaceURI, elementName)) {
             _inTitleTag = YES;
         }
     }
@@ -51,10 +68,10 @@ didStartElement:(NSString *)elementName
   namespaceURI:(nullable NSString *)namespaceURI
  qualifiedName:(nullable NSString *)qName;
 {
-    if ([@"metadata" isEqualToString:elementName]) {
+    if (isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = NO;
     }
-    if ([@"title" isEqualToString:elementName]) {
+    if (isTitleTag(namespaceURI, elementName)) {
         _inTitleTag = NO;
     }
 }

@@ -91,7 +91,7 @@
     self = [super init];
     if ( ! self) return nil;
     
-    _path = path;
+    _path = [path copy];
     
     _reader = mz_zip_reader_create();
     int32_t error = mz_zip_reader_open_file(_reader, _path.UTF8String);

@@ -26,7 +26,7 @@
     
     NSLog(@"Reading data from PDF '%@'", path.lastPathComponent);
     _pageCount = document.pageCount;
-    _title = document.documentAttributes[PDFDocumentTitleAttribute];
+    _title = [document.documentAttributes[PDFDocumentTitleAttribute] copy];
 
     return self;
 }
