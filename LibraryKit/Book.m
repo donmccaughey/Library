@@ -21,7 +21,8 @@ makeTitleFromFilename(NSString *path);
 
 - (nullable instancetype)initWithFileClass:(Class<File>)fileClass
                                       path:(NSString *)path
-                               andFileSize:(NSNumber *)fileSize NS_DESIGNATED_INITIALIZER;
+                                  fileSize:(unsigned long long)fileSize
+                   andFileModificationDate:(NSDate *)fileModificationDate NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -46,14 +47,16 @@ makeTitleFromFilename(NSString *path);
 
 
 - (nullable instancetype)initWithPath:(NSString *)path
-                          andFileSize:(NSNumber *)fileSize;
+                             fileSize:(unsigned long long)fileSize
+              andFileModificationDate:(NSDate *)fileModificationDate;
 {
     enum Format format = formatForExtension(path.pathExtension);
     Class<File> fileClass = fileClassForFormat(format);
     if (fileClass) {
         return [self initWithFileClass:fileClass
                                   path:path
-                           andFileSize:fileSize];
+                              fileSize:fileSize
+               andFileModificationDate:fileModificationDate];
     } else {
         return nil;
     }
@@ -62,13 +65,15 @@ makeTitleFromFilename(NSString *path);
 
 - (instancetype)initWithFileClass:(Class<File>)fileClass
                              path:(NSString *)path
-                      andFileSize:(NSNumber *)fileSize;
+                         fileSize:(unsigned long long)fileSize
+          andFileModificationDate:(NSDate *)fileModificationDate;
 {
     if ( ! fileClass) return nil;
     
     self = [super init];
     if (self) {
         _fileClass = fileClass;
+        _fileModificationDate = fileModificationDate;
         _fileSize = fileSize;
         _pageCount = 0;
         _path = path;

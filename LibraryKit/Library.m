@@ -55,7 +55,8 @@ NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"Library
                 if (NSFileTypeRegular != enumerator.fileAttributes.fileType) continue;
                 NSString *absPath = [folder stringByAppendingPathComponent:relPath];
                 Book *book = [[Book alloc] initWithPath:absPath
-                                            andFileSize:enumerator.fileAttributes[NSFileSize]];
+                                               fileSize:enumerator.fileAttributes.fileSize
+                                andFileModificationDate:enumerator.fileAttributes.fileModificationDate];
                 if (book) [books addObject:book];
             }
         }

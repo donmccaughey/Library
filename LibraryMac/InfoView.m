@@ -35,7 +35,7 @@
         _sizeLabel.stringValue = @"";
         _countLabel.stringValue = [NSString stringWithFormat:@"%ld books", _count];
     } else {
-        NSString *byteCount = [NSByteCountFormatter stringFromByteCount:_book.fileSize.longLongValue
+        NSString *byteCount = [NSByteCountFormatter stringFromByteCount:_book.fileSize
                                                              countStyle:NSByteCountFormatterCountStyleFile];
         NSUInteger pageCount = _book.pageCount;
         if (pageCount) {
