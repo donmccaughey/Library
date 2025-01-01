@@ -4,7 +4,7 @@
 @protocol File;
 
 
-enum Format : NSUInteger {
+typedef NS_ENUM(NSInteger, Format) {
     FormatUnknown = 0,
     FormatEPUB,
     FormatPDF,
@@ -15,19 +15,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 NSString *
-extensionForFormat(enum Format format);
+extensionForFormat(Format format);
 
 
 Class<File>
-fileClassForFormat(enum Format format);
+fileClassForFormat(Format format);
 
 
-enum Format
+Format
 formatForExtension(NSString *extension);
 
 
 NSString *
-nameForFormat(enum Format format);
+nameForFormat(Format format);
 
 
 NS_ASSUME_NONNULL_END

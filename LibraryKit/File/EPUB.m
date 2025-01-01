@@ -8,7 +8,7 @@
 @implementation EPUB
 
 
-+ (enum Format)format;
++ (Format)format;
 {
     return FormatEPUB;
 }

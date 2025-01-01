@@ -34,7 +34,7 @@ makeTitleFromFilename(NSString *path);
 }
 
 
-- (enum Format)format;
+- (Format)format;
 {
     return [_fileClass format];
 }
@@ -49,7 +49,7 @@ makeTitleFromFilename(NSString *path);
 - (nullable instancetype)initWithPath:(NSString *)path
                     andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 {
-    enum Format format = formatForExtension(path.pathExtension);
+    Format format = formatForExtension(path.pathExtension);
     if ( ! format) return nil;
     
     Class<File> fileClass = fileClassForFormat(format);

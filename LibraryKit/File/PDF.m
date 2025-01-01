@@ -2,11 +2,13 @@
 
 @import PDFKit;
 
+#import "Error.h"
+
 
 @implementation PDF
 
 
-+ (enum Format)format;
++ (Format)format;
 {
     return FormatPDF;
 }
@@ -18,16 +20,19 @@
     self = [super init];
     if ( ! self) return nil;
     
-    *error = nil;
-    
     NSURL *url = [NSURL fileURLWithPath:path];
     PDFDocument *document = [[PDFDocument alloc] initWithURL:url];
     if ( ! document) {
-        NSLog(@"Failed to open PDF file at '%@'", path);
+        NSString *message = [NSString stringWithFormat:@"Unable to read PDF file at '%@'", path];
+        NSLog(@"%@", message);
+        if (error) {
+            *error = [NSError errorWithDomain:LibraryErrorDomain
+                                         code:LibraryErrorReadingPDF
+                                     userInfo:@{ NSLocalizedDescriptionKey: message }];
+        }
         return nil;
     }
     
-    NSLog(@"Reading data from PDF '%@'", path.lastPathComponent);
     _pageCount = document.pageCount;
     _title = [document.documentAttributes[PDFDocumentTitleAttribute] copy];
 

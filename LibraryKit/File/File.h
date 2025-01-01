@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)alloc;
 
-+ (enum Format)format;
++ (Format)format;
 
 - (instancetype)init NS_UNAVAILABLE;
 

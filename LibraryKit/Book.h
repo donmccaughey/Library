@@ -14,7 +14,7 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 @property (readonly) NSDate *fileCreationDate;
 @property (readonly) NSDate *fileModificationDate;
 @property (readonly) unsigned long long fileSize;
-@property (readonly) enum Format format;
+@property (readonly) Format format;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
 @property (readonly) NSString *title;

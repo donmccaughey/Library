@@ -5,7 +5,7 @@
 
 
 struct formatProperties {
-    enum Format format;
+    Format format;
     NSString *extension;
     NSString *name;
     Class cls;
@@ -13,7 +13,7 @@ struct formatProperties {
 
 
 static struct formatProperties *
-getformatProperties(enum Format format)
+getformatProperties(Format format)
 {
     static struct formatProperties properties[] = {
         {
@@ -49,20 +49,20 @@ getformatProperties(enum Format format)
 
 
 NSString *
-extensionForFormat(enum Format format)
+extensionForFormat(Format format)
 {
     return getformatProperties(format)->extension;
 }
 
 
 Class<File>
-fileClassForFormat(enum Format format)
+fileClassForFormat(Format format)
 {
     return getformatProperties(format)->cls;
 }
 
 
-enum Format
+Format
 formatForExtension(NSString *extension)
 {
     if ([extensionForFormat(FormatEPUB) isEqualToString:extension]) {
@@ -76,7 +76,7 @@ formatForExtension(NSString *extension)
 
 
 NSString *
-nameForFormat(enum Format format)
+nameForFormat(Format format)
 {
     return getformatProperties(format)->name;
 }
