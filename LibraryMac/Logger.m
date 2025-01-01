@@ -58,7 +58,6 @@ formatInterval(struct timespec elapsedTime);
 - (void)bookWillStartReadingFile:(NSNotification *)notification;
 {
     Book *book = notification.object;
-    NSLog(@"Book '%@' will start reading %@ file", book, nameForFormat(book.format));
     clock_gettime(CLOCK_UPTIME_RAW, &_startOpeningBookTime);
 }
 

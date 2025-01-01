@@ -2,7 +2,7 @@
 
 @import PDFKit;
 
-#import "Error.h"
+#import "Errors.h"
 
 
 @implementation PDF
@@ -23,12 +23,9 @@
     NSURL *url = [NSURL fileURLWithPath:path];
     PDFDocument *document = [[PDFDocument alloc] initWithURL:url];
     if ( ! document) {
-        NSString *message = [NSString stringWithFormat:@"Unable to read PDF file at '%@'", path];
-        NSLog(@"%@", message);
         if (error) {
-            *error = [NSError errorWithDomain:LibraryErrorDomain
-                                         code:LibraryErrorReadingPDF
-                                     userInfo:@{ NSLocalizedDescriptionKey: message }];
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingPDF
+                                        andMessage:@"Unable to read PDF file at '%@'", path];
         }
         return nil;
     }

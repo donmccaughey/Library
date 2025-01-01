@@ -98,7 +98,7 @@ makeTitleFromFilename(NSString *path);
             } else if (error) {
                 self->_error = error;
             } else {
-                // TODO: should get either a file or an error but not both
+                // TODO: should get either a file or an error
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
                                                                 object:self];

@@ -1,6 +1,7 @@
 #import "EPUB.h"
 
 #import "EPUBContainer.h"
+#import "Errors.h"
 #import "OPFPackage.h"
 #import "Zip.h"
 
@@ -23,33 +24,36 @@
     _pageCount = 0;
     _title = nil;
     
-    *error = nil;
-    
     NSMutableArray<NSString *> *packagePaths = [NSMutableArray new];
     Zip *zip = [[Zip alloc] initWithPath:path];
     if ( ! zip) {
-        NSLog(@"Unable to open zip archive for EPUB '%@'", path);
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
+                                        andMessage:@"Unable to read EPUB zip file '%@'", path];
+        }
         return nil;
     }
     
     NSData *data = [zip dataForEntryWithPath:@"META-INF/container.xml"];
     if ( ! data) {
-        NSLog(@"Unable to read 'container.xml' entry in EPUB '%@'", path);
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorMissingContainerXML
+                                        andMessage:@"Unable to read 'container.xml' entry in EPUB '%@'", path];
+        }
+        return nil;
     }
     
-    if (data) {
-        EPUBContainer *container = [[EPUBContainer alloc] initWithData:data];
-        NSLog(@"Found %lu rootfiles in 'container.xml' in EPUB '%@'",
-              (unsigned long)container.rootfiles.count, path.lastPathComponent);
-        NSString *packagePath = container.firstPackagePath;
-        if (packagePath) {
-            NSLog(@"Found first package at '%@' in 'container.xml' in EPUB '%@'", packagePath, path.lastPathComponent);
-            [packagePaths addObject:packagePath];
-        } else {
-            NSLog(@"No package found in 'container.xml' in EPUB '%@'", path.lastPathComponent);
-        }
+    EPUBContainer *container = [[EPUBContainer alloc] initWithData:data];
+    NSLog(@"Found %lu rootfiles in 'container.xml' in EPUB '%@'",
+          (unsigned long)container.rootfiles.count, path.lastPathComponent);
+    NSString *packagePath = container.firstPackagePath;
+    if (packagePath) {
+        NSLog(@"Found first package at '%@' in 'container.xml' in EPUB '%@'", packagePath, path.lastPathComponent);
+        [packagePaths addObject:packagePath];
+    } else {
+        NSLog(@"No package found in 'container.xml' in EPUB '%@'", path.lastPathComponent);
     }
-       
+
     if ( ! packagePaths.count) {
         // fall back to searching for an .opf file
         NSArray<NSString *> *opfPaths = [zip entryPathsWithExtension:@"opf"];
@@ -65,7 +69,7 @@
         NSLog(@"Found %lu package files in EPUB '%@'", (unsigned long)packagePaths.count, path);
     }
     
-    NSString *packagePath = [packagePaths firstObject];
+    packagePath = [packagePaths firstObject];
     NSLog(@"Reading package file '%@' for EPUB '%@'", packagePath, path.lastPathComponent);
     data = [zip dataForEntryWithPath:packagePath];
     if ( ! data) {
