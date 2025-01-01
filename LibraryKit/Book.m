@@ -21,8 +21,8 @@ makeTitleFromFilename(NSString *path);
 
 - (nullable instancetype)initWithFileClass:(Class<File>)fileClass
                                       path:(NSString *)path
-                                  fileSize:(unsigned long long)fileSize
-                   andFileModificationDate:(NSDate *)fileModificationDate NS_DESIGNATED_INITIALIZER;
+                         andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes
+        NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -47,34 +47,32 @@ makeTitleFromFilename(NSString *path);
 
 
 - (nullable instancetype)initWithPath:(NSString *)path
-                             fileSize:(unsigned long long)fileSize
-              andFileModificationDate:(NSDate *)fileModificationDate;
+                    andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 {
     enum Format format = formatForExtension(path.pathExtension);
     Class<File> fileClass = fileClassForFormat(format);
     if (fileClass) {
         return [self initWithFileClass:fileClass
                                   path:path
-                              fileSize:fileSize
-               andFileModificationDate:fileModificationDate];
+                     andFileAttributes:fileAttributes];
     } else {
         return nil;
     }
 }
 
 
-- (instancetype)initWithFileClass:(Class<File>)fileClass
-                             path:(NSString *)path
-                         fileSize:(unsigned long long)fileSize
-          andFileModificationDate:(NSDate *)fileModificationDate;
+- (nullable instancetype)initWithFileClass:(Class<File>)fileClass
+                                      path:(NSString *)path
+                         andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 {
     if ( ! fileClass) return nil;
     
     self = [super init];
     if (self) {
         _fileClass = fileClass;
-        _fileModificationDate = fileModificationDate;
-        _fileSize = fileSize;
+        _fileCreationDate = fileAttributes.fileCreationDate;
+        _fileModificationDate = fileAttributes.fileModificationDate;
+        _fileSize = fileAttributes.fileSize;
         _pageCount = 0;
         _path = [path copy];
         _titleFromDocument = nil;

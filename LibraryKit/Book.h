@@ -10,6 +10,7 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 
 @interface Book : NSObject
 
+@property (readonly) NSDate *fileCreationDate;
 @property (readonly) NSDate *fileModificationDate;
 @property (readonly) unsigned long long fileSize;
 @property (readonly) enum Format format;
@@ -21,8 +22,7 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 - (instancetype)init NS_UNAVAILABLE;
 
 - (nullable instancetype)initWithPath:(NSString *)path
-                             fileSize:(unsigned long long)fileSize
-              andFileModificationDate:(NSDate *)fileModificationDate;
+                    andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 
 - (void)startReadingFile;
 
