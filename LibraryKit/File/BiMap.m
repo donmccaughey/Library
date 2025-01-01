@@ -20,13 +20,13 @@
 }
 
 
-- (id)firstForSecond:(id)second;
+- (nullable id)firstForSecond:(id)second;
 {
     return _secondToFirst[second];
 }
 
 
-- (id)secondForFirst:(id)first;
+- (nullable id)secondForFirst:(id)first;
 {
     return _firstToSecond[first];
 }

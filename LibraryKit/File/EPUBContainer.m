@@ -1,6 +1,7 @@
 #import "EPUBContainer.h"
 
 #import "BiMap.h"
+#import "Errors.h"
 #import "EPUBRootfile.h"
 
 
@@ -41,26 +42,38 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation EPUBContainer
 {
-    NSError *_error;
     BOOL _inContainerTag;
     BOOL _inRootfilesTag;
+    NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
+    NSMutableArray<NSError *> *_warnings;
 }
 
 
-- (instancetype)initWithData:(NSData *)containerXml;
+- (nullable instancetype)initWithData:(NSData *)containerXml
+                                error:(NSError **)error;
 {
     self = [super init];
     if ( ! self) return nil;
     
     _prefixToNamespace = [BiMap new];
     _rootfiles = [NSMutableArray new];
+    _warnings = [NSMutableArray new];
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
     [parser parse];
+    
+    if (_parseError) {
+        if (error) *error = _parseError;
+        return nil;
+    }
+    
+    for (EPUBRootfile *rootfile in _rootfiles) {
+        if (rootfile.isPackage) _packagePath = rootfile.fullPath;
+    }
     
     return self;
 }
@@ -76,15 +89,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-- (NSString *)packagePath;
-{
-    for (EPUBRootfile *rootfile in _rootfiles) {
-        if (rootfile.isPackage) return rootfile.fullPath;
-    }
-    return nil;
-}
-
-
 - (void)parser:(NSXMLParser *)parser
 didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
@@ -93,24 +97,24 @@ didStartElement:(NSString *)elementName
 {
     if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = YES;
-    }
-    
-    if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
+    } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
         _inRootfilesTag = YES;
-    }
-    
-    if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
+    }else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
         NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
         NSString *mediaType = attributes[mediaTypeAttribute];
         if ( ! mediaType) {
-            NSLog(@"rootfile element missing media-type attribute");
+            NSError *warning = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
+                                                  andMessage:@"Element <rootfile> is missing attribute 'media-type'"];
+            [_warnings addObject:warning];
             return;
         }
         
         NSString *fullPathAttribute = [self attribute:@"full-path" withNamespace:containerURI];
         NSString *fullPath = attributes[fullPathAttribute];
         if ( ! fullPath) {
-            NSLog(@"rootfile element missing full-path attribute");
+            NSError *warning = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
+                                                  andMessage:@"Element <rootfile> is missing attribute 'full-path'"];
+            [_warnings addObject:warning];
             return;
         }
 
@@ -128,9 +132,7 @@ didStartElement:(NSString *)elementName
 {
     if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = NO;
-    }
-    
-    if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
+    } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
         _inRootfilesTag = NO;
     }
 }
@@ -148,6 +150,13 @@ didStartMappingPrefix:(NSString *)prefix
 didEndMappingPrefix:(NSString *)prefix;
 {
     [_prefixToNamespace removeFirst:prefix];
+}
+
+
+- (void)    parser:(NSXMLParser *)parser
+parseErrorOccurred:(NSError *)parseError;
+{
+    _parseError = parseError;
 }
 
 
