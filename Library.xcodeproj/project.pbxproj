@@ -59,6 +59,8 @@
 		D4B58C9A2D2220CB00BABB13 /* Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58C8D2D2220CB00BABB13 /* Zip.m */; };
 		D4B58CA12D251A1600BABB13 /* Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58C9F2D251A1600BABB13 /* Errors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B58CA22D251A1600BABB13 /* Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA02D251A1600BABB13 /* Errors.m */; };
+		D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CA32D25F10100BABB13 /* BiMap.h */; };
+		D4B58CA62D25F10100BABB13 /* BiMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA42D25F10100BABB13 /* BiMap.m */; };
 		D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BC2C17AA7300980513 /* BookTests.m */; };
 /* End PBXBuildFile section */
 
@@ -222,6 +224,8 @@
 		D4B58C8D2D2220CB00BABB13 /* Zip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Zip.m; sourceTree = "<group>"; };
 		D4B58C9F2D251A1600BABB13 /* Errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
 		D4B58CA02D251A1600BABB13 /* Errors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Errors.m; sourceTree = "<group>"; };
+		D4B58CA32D25F10100BABB13 /* BiMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiMap.h; sourceTree = "<group>"; };
+		D4B58CA42D25F10100BABB13 /* BiMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiMap.m; sourceTree = "<group>"; };
 		D4DA2D182D1D0792006B459C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D4E7D0BC2C17AA7300980513 /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -451,6 +455,8 @@
 		D4B58C9E2D22210100BABB13 /* File */ = {
 			isa = PBXGroup;
 			children = (
+				D4B58CA32D25F10100BABB13 /* BiMap.h */,
+				D4B58CA42D25F10100BABB13 /* BiMap.m */,
 				D4B58C812D2220CB00BABB13 /* EPUB.h */,
 				D4B58C822D2220CB00BABB13 /* EPUB.m */,
 				D4B58C832D2220CB00BABB13 /* EPUBContainer.h */,
@@ -477,6 +483,7 @@
 			files = (
 				D48D00592C17A35F00177AD0 /* Book.h in Headers */,
 				D4B58CA12D251A1600BABB13 /* Errors.h in Headers */,
+				D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */,
 				D46FDC8A2D1C813B001E8362 /* Format.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
@@ -824,6 +831,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4B58CA62D25F10100BABB13 /* BiMap.m in Sources */,
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
 				D4B58C952D2220CB00BABB13 /* EPUB.m in Sources */,
 				D4B58CA22D251A1600BABB13 /* Errors.m in Sources */,

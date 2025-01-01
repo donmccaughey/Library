@@ -1,9 +1,18 @@
 #import "EPUBContainer.h"
 
+#import "BiMap.h"
 #import "EPUBRootfile.h"
 
 
 static NSString *const containerURI = @"urn:oasis:names:tc:opendocument:xmlns:container";
+
+
+static BOOL
+isContainerTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [containerURI isEqualToString:namespaceURI]
+        && [@"container" isEqualToString:elementName];
+}
 
 
 static BOOL
@@ -24,7 +33,8 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation EPUBContainer
 {
-    NSMutableDictionary<NSString *, NSString *> *_prefixForNamespace;
+    BOOL _inContainerTag;
+    BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
 }
 
@@ -32,8 +42,9 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;
 {
-    NSString *prefix = _prefixForNamespace[namespace];
+    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
     if ( ! prefix.length) return attribute;
+    
     return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
 }
 
@@ -51,7 +62,7 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
     self = [super init];
     if ( ! self) return nil;
     
-    _prefixForNamespace = [NSMutableDictionary new];
+    _prefixToNamespace = [BiMap new];
     _rootfiles = [NSMutableArray new];
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
@@ -69,6 +80,10 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qName
     attributes:(NSDictionary *)attributes;
 {
+    if (isContainerTag(namespaceURI, elementName)) {
+        _inContainerTag = YES;
+    }
+    
     if ( ! isRootfileTag(namespaceURI, elementName)) return;
     
     NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
@@ -91,11 +106,29 @@ didStartElement:(NSString *)elementName
 }
 
 
+- (void)parser:(NSXMLParser *)parser
+ didEndElement:(NSString *)elementName
+  namespaceURI:(NSString *)namespaceURI
+ qualifiedName:(NSString *)qName;
+{
+    if (isContainerTag(namespaceURI, elementName)) {
+        _inContainerTag = NO;
+    }
+}
+
+
 - (void)       parser:(NSXMLParser *)parser
 didStartMappingPrefix:(NSString *)prefix
                 toURI:(NSString *)namespaceURI;
 {
-    _prefixForNamespace[namespaceURI] = prefix;
+    [_prefixToNamespace setFirst:prefix forSecond:namespaceURI];
+}
+
+
+- (void)     parser:(NSXMLParser *)parser
+didEndMappingPrefix:(NSString *)prefix;
+{
+    [_prefixToNamespace removeFirst:prefix];
 }
 
 
