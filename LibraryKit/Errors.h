@@ -3,9 +3,9 @@
 
 typedef NS_ENUM(NSInteger, LibraryError) {
     LibraryErrorNone = 0,
-    LibraryErrorReadingEPUBZip = 2,
-    LibraryErrorMissingContainerXML = 3,
-    LibraryErrorReadingPDF = 4,
+    LibraryErrorReadingContainerXML,
+    LibraryErrorReadingEPUBZip,
+    LibraryErrorReadingPDF,
 };
 
 

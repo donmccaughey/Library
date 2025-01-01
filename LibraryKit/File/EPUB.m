@@ -37,7 +37,7 @@
     NSData *data = [zip dataForEntryWithPath:@"META-INF/container.xml"];
     if ( ! data) {
         if (error) {
-            *error = [NSError libraryErrorWithCode:LibraryErrorMissingContainerXML
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
                                         andMessage:@"Unable to read 'container.xml' entry in EPUB '%@'", path];
         }
         return nil;
