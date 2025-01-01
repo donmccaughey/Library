@@ -12,10 +12,13 @@
 }
 
 
-- (nullable instancetype)initWithPath:(NSString *)path;
+- (nullable instancetype)initWithPath:(NSString *)path
+                                error:(NSError **)error;
 {
     self = [super init];
     if ( ! self) return nil;
+    
+    *error = nil;
     
     NSURL *url = [NSURL fileURLWithPath:path];
     PDFDocument *document = [[PDFDocument alloc] initWithURL:url];

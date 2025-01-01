@@ -10,6 +10,7 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 
 @interface Book : NSObject
 
+@property (nullable, readonly) NSError *error;
 @property (readonly) NSDate *fileCreationDate;
 @property (readonly) NSDate *fileModificationDate;
 @property (readonly) unsigned long long fileSize;

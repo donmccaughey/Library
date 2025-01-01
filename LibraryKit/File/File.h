@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (nullable instancetype)initWithPath:(NSString *)path;
+- (nullable instancetype)initWithPath:(NSString *)path
+                                error:(NSError **)error;
 
 @end
 

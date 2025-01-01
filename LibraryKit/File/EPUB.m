@@ -14,13 +14,16 @@
 }
 
 
-- (nullable instancetype)initWithPath:(NSString *)path;
+- (nullable instancetype)initWithPath:(NSString *)path
+                                error:(NSError **)error;
 {
     self = [super init];
     if ( ! self) return nil;
     
     _pageCount = 0;
     _title = nil;
+    
+    *error = nil;
     
     NSMutableArray<NSString *> *packagePaths = [NSMutableArray new];
     Zip *zip = [[Zip alloc] initWithPath:path];

@@ -73,11 +73,8 @@ makeTitleFromFilename(NSString *path);
         _fileCreationDate = fileAttributes.fileCreationDate;
         _fileModificationDate = fileAttributes.fileModificationDate;
         _fileSize = fileAttributes.fileSize;
-        _pageCount = 0;
         _path = [path copy];
-        _titleFromDocument = nil;
         _titleFromFilename = makeTitleFromFilename(path);
-        _wasRead = NO;
     }
     return self;
 }
@@ -90,12 +87,18 @@ makeTitleFromFilename(NSString *path);
     [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartReadingFileNotification
                                                         object:self];
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
-        id<File> file = [[self->_fileClass alloc] initWithPath:self->_path];
+        NSError *error = nil;
+        id<File> file = [[self->_fileClass alloc] initWithPath:self->_path
+                                                         error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
             self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;
                 self->_titleFromDocument = file.title;
+            } else if (error) {
+                self->_error = error;
+            } else {
+                // TODO: should get either a file or an error but not both
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
                                                                 object:self];
