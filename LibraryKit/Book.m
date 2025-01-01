@@ -50,14 +50,14 @@ makeTitleFromFilename(NSString *path);
                     andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 {
     enum Format format = formatForExtension(path.pathExtension);
+    if ( ! format) return nil;
+    
     Class<File> fileClass = fileClassForFormat(format);
-    if (fileClass) {
-        return [self initWithFileClass:fileClass
-                                  path:path
-                     andFileAttributes:fileAttributes];
-    } else {
-        return nil;
-    }
+    if ( ! fileClass) return nil;
+    
+    return [self initWithFileClass:fileClass
+                              path:path
+                 andFileAttributes:fileAttributes];
 }
 
 
