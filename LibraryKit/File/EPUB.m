@@ -46,7 +46,7 @@
     EPUBContainer *container = [[EPUBContainer alloc] initWithData:data];
     NSLog(@"Found %lu rootfiles in 'container.xml' in EPUB '%@'",
           (unsigned long)container.rootfiles.count, path.lastPathComponent);
-    NSString *packagePath = container.firstPackagePath;
+    NSString *packagePath = container.packagePath;
     if (packagePath) {
         NSLog(@"Found first package at '%@' in 'container.xml' in EPUB '%@'", packagePath, path.lastPathComponent);
         [packagePaths addObject:packagePath];

@@ -23,6 +23,14 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
+static BOOL
+isRootfilesTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [containerURI isEqualToString:namespaceURI]
+        && [@"rootfiles" isEqualToString:elementName];
+}
+
+
 @interface EPUBContainer ()
 
 - (NSString *)attribute:(NSString *)attribute
@@ -33,32 +41,16 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation EPUBContainer
 {
+    NSError *_error;
     BOOL _inContainerTag;
+    BOOL _inRootfilesTag;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
 }
 
 
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
+- (instancetype)initWithData:(NSData *)containerXml;
 {
-    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
-    if ( ! prefix.length) return attribute;
-    
-    return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
-}
-
-
-- (NSString *)firstPackagePath;
-{
-    for (EPUBRootfile *rootfile in _rootfiles) {
-        if (rootfile.isPackage) return rootfile.fullPath;
-    }
-    return nil;
-}
-
-
-- (instancetype)initWithData:(NSData *)containerXml {
     self = [super init];
     if ( ! self) return nil;
     
@@ -74,6 +66,25 @@ isRootfileTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
+- (NSString *)attribute:(NSString *)attribute
+          withNamespace:(NSString *)namespace;
+{
+    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
+    if ( ! prefix.length) return attribute;
+    
+    return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
+}
+
+
+- (NSString *)packagePath;
+{
+    for (EPUBRootfile *rootfile in _rootfiles) {
+        if (rootfile.isPackage) return rootfile.fullPath;
+    }
+    return nil;
+}
+
+
 - (void)parser:(NSXMLParser *)parser
 didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
@@ -84,25 +95,29 @@ didStartElement:(NSString *)elementName
         _inContainerTag = YES;
     }
     
-    if ( ! isRootfileTag(namespaceURI, elementName)) return;
-    
-    NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
-    NSString *mediaType = attributes[mediaTypeAttribute];
-    if ( ! mediaType) {
-        NSLog(@"rootfile element missing media-type attribute");
-        return;
+    if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
+        _inRootfilesTag = YES;
     }
     
-    NSString *fullPathAttribute = [self attribute:@"full-path" withNamespace:containerURI];
-    NSString *fullPath = attributes[fullPathAttribute];
-    if ( ! fullPath) {
-        NSLog(@"rootfile element missing full-path attribute");
-        return;
-    }
+    if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
+        NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
+        NSString *mediaType = attributes[mediaTypeAttribute];
+        if ( ! mediaType) {
+            NSLog(@"rootfile element missing media-type attribute");
+            return;
+        }
+        
+        NSString *fullPathAttribute = [self attribute:@"full-path" withNamespace:containerURI];
+        NSString *fullPath = attributes[fullPathAttribute];
+        if ( ! fullPath) {
+            NSLog(@"rootfile element missing full-path attribute");
+            return;
+        }
 
-    EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
-                                                         andFullPath:fullPath];
-    [_rootfiles addObject:rootfile];
+        EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
+                                                             andFullPath:fullPath];
+        [_rootfiles addObject:rootfile];
+    }
 }
 
 
@@ -113,6 +128,10 @@ didStartElement:(NSString *)elementName
 {
     if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = NO;
+    }
+    
+    if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
+        _inRootfilesTag = NO;
     }
 }
 
