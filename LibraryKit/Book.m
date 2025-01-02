@@ -96,7 +96,6 @@ makeTitleFromFilename(NSString *path);
         id<File> file = [[self->_fileClass alloc] initWithPath:self->_path
                                                          error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self->_readTime = calculateTimeIntervalFrom(startTime);
             self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;
@@ -106,6 +105,8 @@ makeTitleFromFilename(NSString *path);
             } else {
                 // TODO: should get either a file or an error
             }
+            
+            self->_readTime = calculateTimeIntervalFrom(startTime);
             [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
                                                                 object:self];
         });

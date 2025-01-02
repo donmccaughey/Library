@@ -6,22 +6,18 @@
 
 
 @implementation Logger
-{
-    struct timespec _startScanningForBooksTime;
-}
 
 
 - (void)libraryWillStartScanningFolders:(NSNotification *)notification;
 {
-    NSLog(@"Library will start scanning folders.");
-    clock_gettime(CLOCK_UPTIME_RAW, &_startScanningForBooksTime);
+    // nothing to do
 }
 
 
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
-    struct timespec scanTime = calculateDurationFrom(_startScanningForBooksTime);
-    NSLog(@"Library did finish scanning folders in %@", formatDuration(scanTime));
+    Library *library = notification.object;
+    NSLog(@"Library did finish scanning folders in %@", formatTimeInterval(library.scanTime));
 }
 
 
