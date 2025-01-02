@@ -102,21 +102,11 @@ didStartElement:(NSString *)elementName
     }else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
         NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
         NSString *mediaType = attributes[mediaTypeAttribute];
-        if ( ! mediaType) {
-            NSError *warning = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
-                                                  andMessage:@"Element <rootfile> is missing attribute 'media-type'"];
-            [_warnings addObject:warning];
-            return;
-        }
+        if ( ! mediaType) return;
         
         NSString *fullPathAttribute = [self attribute:@"full-path" withNamespace:containerURI];
         NSString *fullPath = attributes[fullPathAttribute];
-        if ( ! fullPath) {
-            NSError *warning = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
-                                                  andMessage:@"Element <rootfile> is missing attribute 'full-path'"];
-            [_warnings addObject:warning];
-            return;
-        }
+        if ( ! fullPath) return;
 
         EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
                                                              andFullPath:fullPath];

@@ -42,6 +42,11 @@ makeTitleFromFilename(NSString *path);
 }
 
 
+- (BOOL)scanFailed;
+{
+    return nil != _error;
+}
+
 - (NSString *)title;
 {
     return _titleFromFilename;

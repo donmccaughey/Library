@@ -20,6 +20,7 @@ extern NSNotificationName const BookDidFinishScanningFileNotification;
 @property (readonly) Format format;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
+@property (readonly) BOOL scanFailed;
 @property (nullable, readonly) ElapsedTime *scanTime;
 @property (readonly) NSString *title;
 @property (readonly) BOOL wasScanned;
