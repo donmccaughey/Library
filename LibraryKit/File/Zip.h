@@ -4,14 +4,19 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
+extern NSErrorDomain ZipErrorDomain;
+
+
 @interface Zip : NSObject
 
 @property (readonly) NSString *path;
 @property (readonly) void *reader;
 
-- (nullable instancetype)initWithPath:(NSString *)path;
+- (nullable instancetype)initWithPath:(NSString *)path
+                                error:(NSError **)error;
 
-- (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath;
+- (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath
+                                    error:(NSError **)error;
 
 - (NSArray<NSString *> *)entryPathsMatchingPredicate:(NSPredicate *)predicate;
 

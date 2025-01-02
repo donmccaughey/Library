@@ -21,20 +21,25 @@
     self = [super init];
     if ( ! self) return nil;
     
-    Zip *zip = [[Zip alloc] initWithPath:path];
+    NSError *zipError;
+    Zip *zip = [[Zip alloc] initWithPath:path
+                                   error:&zipError];
     if ( ! zip) {
         if (error) {
             *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
-                                        andMessage:@"Unable to read EPUB zip file '%@'", path];
+                                   underlyingError:zipError
+                                        andMessage:@"Unable to read EPUB file '%@'", path];
         }
         return nil;
     }
     
     NSString *containerPath = @"META-INF/container.xml";
-    NSData *data = [zip dataForEntryWithPath:containerPath];
+    NSData *data = [zip dataForEntryWithPath:containerPath
+                                       error:&zipError];
     if ( ! data) {
         if (error) {
             *error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
+                                   underlyingError:zipError
                                         andMessage:@"Unable to read '%@' entry in EPUB '%@'",
                       containerPath, path];
         }
@@ -62,10 +67,12 @@
         return nil;
     }
 
-    data = [zip dataForEntryWithPath:container.packagePath];
+    data = [zip dataForEntryWithPath:container.packagePath
+                               error:&zipError];
     if ( ! data) {
         if (error) {
             *error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                   underlyingError:zipError
                                         andMessage:@"Unable to read '%@' entry in EPUB '%@'", container.packagePath, path];
         }
         return nil;
