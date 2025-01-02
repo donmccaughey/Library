@@ -80,7 +80,6 @@ NSErrorDomain ZipErrorDomain = @"ZipError";
             *error = [NSError zipErrorWithCode:err
                                     andMessage:@"Could not get info for entry '%@' in zip file '%@'", entryPath, _path];
         }
-        mz_zip_reader_entry_close(_reader);
         return nil;
     }
     
@@ -90,17 +89,21 @@ NSErrorDomain ZipErrorDomain = @"ZipError";
             *error = [NSError zipErrorWithCode:err
                                     andMessage:@"Could not open entry '%@' in zip file '%@'", entryPath, _path];
         }
-        mz_zip_reader_entry_close(_reader);
         return nil;
     }
     
-    NSAssert(fileInfo->uncompressed_size < INT32_MAX,
-             @"Entry '%@' in zip file '%@' has unusually large size %lld bytes",
-             entryPath, _path, fileInfo->uncompressed_size);
-    NSUInteger entrySize = (fileInfo->uncompressed_size < INT32_MAX)
-            ? fileInfo->uncompressed_size
-            : INT32_MAX;
-    NSMutableData *data = [NSMutableData dataWithLength:entrySize];
+    if (fileInfo->uncompressed_size > INT32_MAX) {
+        if (error) {
+            NSString *byteCount = [NSByteCountFormatter stringFromByteCount:fileInfo->uncompressed_size
+                                                                 countStyle:NSByteCountFormatterCountStyleFile];
+            *error = [NSError zipErrorWithCode:MZ_INTERNAL_ERROR
+                                    andMessage:@"Entry '%@' in zip file '%@' has unusually large size of %@",
+                      entryPath, _path, byteCount];
+        }
+        return nil;
+    }
+    
+    NSMutableData *data = [NSMutableData dataWithLength:fileInfo->uncompressed_size];
     int32_t bytesRead = mz_zip_reader_entry_read(_reader, data.mutableBytes, (int32_t)data.length);
     if (bytesRead != fileInfo->uncompressed_size) {
         if (error) {
@@ -114,11 +117,9 @@ NSErrorDomain ZipErrorDomain = @"ZipError";
                           bytesRead, fileInfo->uncompressed_size, entryPath, _path];
             }
         }
-        mz_zip_reader_entry_close(_reader);
         return nil;
     }
     
-    mz_zip_reader_entry_close(_reader);
     return data;
 }
 
