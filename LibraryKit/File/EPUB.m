@@ -33,6 +33,8 @@
         return nil;
     }
     
+    // TODO: read first entry 'mimetype'
+    
     NSString *containerPath = @"META-INF/container.xml";
     NSData *data = [zip dataForEntryWithPath:containerPath
                                        error:&zipError];
