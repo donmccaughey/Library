@@ -9,3 +9,4 @@ FOUNDATION_EXPORT const unsigned char LibraryKitVersionString[];
 #import <LibraryKit/Errors.h>
 #import <LibraryKit/Format.h>
 #import <LibraryKit/Library.h>
+#import <LibraryKit/Timing.h>

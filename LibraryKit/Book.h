@@ -17,6 +17,7 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 @property (readonly) Format format;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
+@property (readonly) NSTimeInterval readTime;
 @property (readonly) NSString *title;
 @property (readonly) BOOL wasRead;
 

@@ -1,5 +1,7 @@
 #import "Book.h"
 
+#import "Timing.h"
+
 #import "File/EPUB.h"
 #import "File/PDF.h"
 
@@ -86,11 +88,15 @@ makeTitleFromFilename(NSString *path);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartReadingFileNotification
                                                         object:self];
+    struct timespec startTime;
+    clock_gettime(CLOCK_UPTIME_RAW, &startTime);
+    
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSError *error = nil;
         id<File> file = [[self->_fileClass alloc] initWithPath:self->_path
                                                          error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
+            self->_readTime = calculateTimeIntervalFrom(startTime);
             self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;

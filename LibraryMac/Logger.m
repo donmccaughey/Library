@@ -5,24 +5,8 @@
 #import "Notifications.h"
 
 
-double const NANOS_PER_SEC = 1e9;
-double const NANOS_PER_MILLI = 1e6;
-double const NANOS_PER_MICRO = 1e3;
-
-
-struct timespec
-calculateInterval(struct timespec start, struct timespec end);
-
-struct timespec
-calculateIntervalToNow(struct timespec start);
-
-NSString *
-formatInterval(struct timespec elapsedTime);
-
-
 @implementation Logger
 {
-    struct timespec _startOpeningBookTime;
     struct timespec _startScanningForBooksTime;
 }
 
@@ -36,8 +20,8 @@ formatInterval(struct timespec elapsedTime);
 
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
-    struct timespec scanTime = calculateIntervalToNow(_startScanningForBooksTime);
-    NSLog(@"Library did finish scanning folders in %@", formatInterval(scanTime));
+    struct timespec scanTime = calculateDurationFrom(_startScanningForBooksTime);
+    NSLog(@"Library did finish scanning folders in %@", formatDuration(scanTime));
 }
 
 
@@ -57,15 +41,15 @@ formatInterval(struct timespec elapsedTime);
 
 - (void)bookWillStartReadingFile:(NSNotification *)notification;
 {
-    clock_gettime(CLOCK_UPTIME_RAW, &_startOpeningBookTime);
+    // nothing to do
 }
 
 
 - (void)bookDidFinishReadingFile:(NSNotification *)notification;
 {
-    struct timespec openTime = calculateIntervalToNow(_startOpeningBookTime);
     Book *book = notification.object;
-    NSLog(@"Book '%@' did finish reading %@ file in %@", book, nameForFormat(book.format), formatInterval(openTime));
+    NSLog(@"Book '%@' did finish reading %@ file in %@",
+          book, nameForFormat(book.format), formatTimeInterval(book.readTime));
 }
 
 
@@ -106,43 +90,3 @@ formatInterval(struct timespec elapsedTime);
 
 
 @end
-
-
-struct timespec
-calculateInterval(struct timespec start, struct timespec end)
-{
-    struct timespec diff;
-    if (end.tv_nsec < start.tv_nsec) {
-        diff.tv_sec = end.tv_sec - start.tv_sec - 1;
-        diff.tv_nsec = 1000000000 + end.tv_nsec - start.tv_nsec;
-    } else {
-        diff.tv_sec = end.tv_sec - start.tv_sec;
-        diff.tv_nsec = end.tv_nsec - start.tv_nsec;
-    }
-    return diff;
-}
-
-
-struct timespec
-calculateIntervalToNow(struct timespec start)
-{
-    struct timespec timeNow;
-    clock_gettime(CLOCK_UPTIME_RAW, &timeNow);
-    return calculateInterval(start, timeNow);
-}
-
-
-NSString *
-formatInterval(struct timespec elapsedTime)
-{
-   if (elapsedTime.tv_sec > 0) {
-       double seconds = elapsedTime.tv_sec + elapsedTime.tv_nsec / NANOS_PER_SEC;
-       return [NSString stringWithFormat:@"%.1f s", seconds];
-   } else if (elapsedTime.tv_nsec >= 1000000) {
-       double milliseconds = elapsedTime.tv_nsec / NANOS_PER_MILLI;
-       return [NSString stringWithFormat:@"%.1f ms", milliseconds];
-   } else {
-       double microseconds = elapsedTime.tv_nsec / NANOS_PER_MICRO;
-       return [NSString stringWithFormat:@"%.1f µs", microseconds];
-   }
-}

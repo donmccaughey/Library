@@ -61,6 +61,8 @@
 		D4B58CA22D251A1600BABB13 /* Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA02D251A1600BABB13 /* Errors.m */; };
 		D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CA32D25F10100BABB13 /* BiMap.h */; };
 		D4B58CA62D25F10100BABB13 /* BiMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA42D25F10100BABB13 /* BiMap.m */; };
+		D4B58CA92D260DC900BABB13 /* Timing.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CA72D260DC900BABB13 /* Timing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4B58CAA2D260DC900BABB13 /* Timing.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA82D260DC900BABB13 /* Timing.m */; };
 		D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BC2C17AA7300980513 /* BookTests.m */; };
 /* End PBXBuildFile section */
 
@@ -226,6 +228,8 @@
 		D4B58CA02D251A1600BABB13 /* Errors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Errors.m; sourceTree = "<group>"; };
 		D4B58CA32D25F10100BABB13 /* BiMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiMap.h; sourceTree = "<group>"; };
 		D4B58CA42D25F10100BABB13 /* BiMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiMap.m; sourceTree = "<group>"; };
+		D4B58CA72D260DC900BABB13 /* Timing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Timing.h; sourceTree = "<group>"; };
+		D4B58CA82D260DC900BABB13 /* Timing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Timing.m; sourceTree = "<group>"; };
 		D4DA2D182D1D0792006B459C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D4E7D0BC2C17AA7300980513 /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -410,6 +414,8 @@
 				D48D00522C17A08400177AD0 /* Library.h */,
 				D48D00532C17A08400177AD0 /* Library.m */,
 				D48DFFCB2C179E8A00177AD0 /* LibraryKit.h */,
+				D4B58CA72D260DC900BABB13 /* Timing.h */,
+				D4B58CA82D260DC900BABB13 /* Timing.m */,
 			);
 			path = LibraryKit;
 			sourceTree = "<group>";
@@ -485,8 +491,9 @@
 				D4B58CA12D251A1600BABB13 /* Errors.h in Headers */,
 				D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */,
 				D46FDC8A2D1C813B001E8362 /* Format.h in Headers */,
-				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
+				D48D00552C17A08400177AD0 /* Library.h in Headers */,
+				D4B58CA92D260DC900BABB13 /* Timing.h in Headers */,
 				D4B58C8E2D2220CB00BABB13 /* EPUB.h in Headers */,
 				D4B58C8F2D2220CB00BABB13 /* EPUBContainer.h in Headers */,
 				D4B58C902D2220CB00BABB13 /* EPUBRootfile.h in Headers */,
@@ -841,6 +848,7 @@
 				D48D00542C17A08400177AD0 /* Library.m in Sources */,
 				D4B58C982D2220CB00BABB13 /* OPFPackage.m in Sources */,
 				D4B58C992D2220CB00BABB13 /* PDF.m in Sources */,
+				D4B58CAA2D260DC900BABB13 /* Timing.m in Sources */,
 				D4B58C9A2D2220CB00BABB13 /* Zip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
