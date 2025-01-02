@@ -2,6 +2,7 @@
 
 
 @class Book;
+@class ElapsedTime;
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -15,7 +16,7 @@ extern NSNotificationName const LibraryDidFinishScanningFoldersNotification;
 
 @property (readonly) NSOrderedSet<Book *> *books;
 @property (readonly) NSArray<NSString *> *folders;
-@property (readonly) NSTimeInterval scanTime;
+@property (nullable, readonly) ElapsedTime *scanTime;
 @property (copy) NSArray<NSSortDescriptor *> *sortDescriptors;
 
 - (void)startScanningFolders:(NSArray<NSString *> *)folders;

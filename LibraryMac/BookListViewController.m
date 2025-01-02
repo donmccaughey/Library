@@ -8,7 +8,7 @@
 @implementation BookListViewController
 
 
-- (void)bookDidFinishReadingFile:(NSNotification *)notification;
+- (void)bookDidFinishScanningFile:(NSNotification *)notification;
 {
     Book *book = notification.object;
     NSInteger index = [_library.books indexOfObject:book];
@@ -39,7 +39,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:UserDidSelectBookNotification
                                                         object:self
                                                       userInfo:userInfo];
-    if (book && ! book.wasRead) [book startReadingFile];
+    if (book && ! book.wasScanned) [book startScanningFile];
 }
 
 
@@ -49,8 +49,8 @@
     if ( ! self) return nil;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(bookDidFinishReadingFile:)
-                                                 name:BookDidFinishReadingFileNotification
+                                             selector:@selector(bookDidFinishScanningFile:)
+                                                 name:BookDidFinishScanningFileNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(libraryDidFinishScanningFolders:)

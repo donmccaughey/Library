@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet Library *library;
 @property (weak) IBOutlet NSTableView *tableView;
 
-- (void)bookDidFinishReadingFile:(NSNotification *)notification;
+- (void)bookDidFinishScanningFile:(NSNotification *)notification;
 
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 

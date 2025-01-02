@@ -1,7 +1,7 @@
 #import "Library.h"
 
 #import "Book.h"
-#import "Timing.h"
+#import "Stopwatch.h"
 
 
 NSNotificationName const LibraryWillStartScanningFoldersNotification = @"LibraryWillStartFoldersScanning";
@@ -47,8 +47,7 @@ NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"Library
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryWillStartScanningFoldersNotification
                                                         object:self];
-    struct timespec startTime;
-    clock_gettime(CLOCK_UPTIME_RAW, &startTime);
+    Stopwatch *stopwatch = [Stopwatch start];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSMutableOrderedSet<Book *> *books = [NSMutableOrderedSet new];
@@ -68,7 +67,7 @@ NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"Library
             self->_books = books;
             self->_folders = [folders copy];
             
-            self->_scanTime = calculateTimeIntervalFrom(startTime);
+            self->_scanTime = [stopwatch stop];
             [[NSNotificationCenter defaultCenter] postNotificationName:LibraryDidFinishScanningFoldersNotification
                                                                 object:self];
         });

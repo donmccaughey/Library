@@ -1,13 +1,13 @@
 #import "Book.h"
 
-#import "Timing.h"
+#import "Stopwatch.h"
 
 #import "File/EPUB.h"
 #import "File/PDF.h"
 
 
-NSNotificationName const BookWillStartReadingFileNotification = @"BookWillStartReadingFile";
-NSNotificationName const BookDidFinishReadingFileNotification = @"BookDidFinishReadingFile";
+NSNotificationName const BookWillStartScanningFileNotification = @"BookWillStartScanningFile";
+NSNotificationName const BookDidFinishScanningFileNotification = @"BookDidFinishScanningFile";
 
 
 static BOOL
@@ -48,6 +48,11 @@ makeTitleFromFilename(NSString *path);
 }
 
 
+- (BOOL)wasScanned;
+{
+    return nil != _scanTime;
+}
+
 - (nullable instancetype)initWithPath:(NSString *)path
                     andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 {
@@ -82,21 +87,19 @@ makeTitleFromFilename(NSString *path);
 }
 
 
-- (void)startReadingFile;
+- (void)startScanningFile;
 {
-    NSAssert( ! self.wasRead, @"Expected book was not read yet.");
+    NSAssert( ! self.wasScanned, @"Expected book was not read yet.");
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartReadingFileNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartScanningFileNotification
                                                         object:self];
-    struct timespec startTime;
-    clock_gettime(CLOCK_UPTIME_RAW, &startTime);
+    Stopwatch *stopwatch = [Stopwatch start];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
         NSError *error = nil;
         id<File> file = [[self->_fileClass alloc] initWithPath:self->_path
                                                          error:&error];
         dispatch_async(dispatch_get_main_queue(), ^{
-            self->_wasRead = YES;
             if (file) {
                 self->_pageCount = file.pageCount;
                 self->_titleFromDocument = file.title;
@@ -106,8 +109,8 @@ makeTitleFromFilename(NSString *path);
                 // TODO: should get either a file or an error
             }
             
-            self->_readTime = calculateTimeIntervalFrom(startTime);
-            [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishReadingFileNotification
+            self->_scanTime = [stopwatch stop];
+            [[NSNotificationCenter defaultCenter] postNotificationName:BookDidFinishScanningFileNotification
                                                                 object:self];
         });
     });

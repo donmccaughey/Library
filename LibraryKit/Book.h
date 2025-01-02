@@ -4,8 +4,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-extern NSNotificationName const BookWillStartReadingFileNotification;
-extern NSNotificationName const BookDidFinishReadingFileNotification;
+@class ElapsedTime;
+
+
+extern NSNotificationName const BookWillStartScanningFileNotification;
+extern NSNotificationName const BookDidFinishScanningFileNotification;
 
 
 @interface Book : NSObject
@@ -17,16 +20,16 @@ extern NSNotificationName const BookDidFinishReadingFileNotification;
 @property (readonly) Format format;
 @property (readonly) NSUInteger pageCount;
 @property (readonly) NSString *path;
-@property (readonly) NSTimeInterval readTime;
+@property (nullable, readonly) ElapsedTime *scanTime;
 @property (readonly) NSString *title;
-@property (readonly) BOOL wasRead;
+@property (readonly) BOOL wasScanned;
 
 - (instancetype)init NS_UNAVAILABLE;
 
 - (nullable instancetype)initWithPath:(NSString *)path
                     andFileAttributes:(NSDictionary<NSFileAttributeKey, id> *)fileAttributes;
 
-- (void)startReadingFile;
+- (void)startScanningFile;
 
 @end
 

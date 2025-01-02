@@ -8,6 +8,56 @@
 @implementation Logger
 
 
+- (instancetype)init;
+{
+    self = [super init];
+    if ( ! self) return nil;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(bookWillStartScanningFile:)
+                                                 name:BookWillStartScanningFileNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(bookDidFinishScanningFile:)
+                                                 name:BookDidFinishScanningFileNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(libraryWillStartScanningFolders:)
+                                                 name:LibraryWillStartScanningFoldersNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(libraryDidFinishScanningFolders:)
+                                                 name:LibraryDidFinishScanningFoldersNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userDidSelectBook:)
+                                                 name:UserDidSelectBookNotification
+                                               object:nil];
+    
+    return self;
+}
+
+
+- (void)dealloc;
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+- (void)bookWillStartScanningFile:(NSNotification *)notification;
+{
+    // nothing to do
+}
+
+
+- (void)bookDidFinishScanningFile:(NSNotification *)notification;
+{
+    Book *book = notification.object;
+    NSLog(@"Book '%@' did finish scanning %@ file in %@",
+          book, nameForFormat(book.format), book.scanTime);
+}
+
+
 - (void)libraryWillStartScanningFolders:(NSNotification *)notification;
 {
     // nothing to do
@@ -17,7 +67,7 @@
 - (void)libraryDidFinishScanningFolders:(NSNotification *)notification;
 {
     Library *library = notification.object;
-    NSLog(@"Library did finish scanning folders in %@", formatTimeInterval(library.scanTime));
+    NSLog(@"Library did finish scanning folders in %@", library.scanTime);
 }
 
 
@@ -32,56 +82,6 @@
         NSUInteger i = 1 + index.unsignedLongValue;
         NSLog(@"Did select %@ book %lu: '%@'", nameForFormat(book.format), i, book);
     }
-}
-
-
-- (void)bookWillStartReadingFile:(NSNotification *)notification;
-{
-    // nothing to do
-}
-
-
-- (void)bookDidFinishReadingFile:(NSNotification *)notification;
-{
-    Book *book = notification.object;
-    NSLog(@"Book '%@' did finish reading %@ file in %@",
-          book, nameForFormat(book.format), formatTimeInterval(book.readTime));
-}
-
-
-- (void)dealloc;
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-- (instancetype)init;
-{
-    self = [super init];
-    if ( ! self) return nil;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(libraryWillStartScanningFolders:)
-                                                 name:LibraryWillStartScanningFoldersNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(libraryDidFinishScanningFolders:)
-                                                 name:LibraryDidFinishScanningFoldersNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(userDidSelectBook:)
-                                                 name:UserDidSelectBookNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(bookWillStartReadingFile:)
-                                                 name:BookWillStartReadingFileNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(bookDidFinishReadingFile:)
-                                                 name:BookDidFinishReadingFileNotification
-                                               object:nil];
-    
-    return self;
 }
 
 
