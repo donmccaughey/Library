@@ -47,7 +47,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
-    NSMutableArray<NSError *> *_warnings;
 }
 
 
@@ -59,7 +58,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     
     _prefixToNamespace = [BiMap new];
     _rootfiles = [NSMutableArray new];
-    _warnings = [NSMutableArray new];
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
@@ -89,17 +87,17 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-- (void)parser:(NSXMLParser *)parser
+- (void) parser:(NSXMLParser *)parser
 didStartElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName
-    attributes:(NSDictionary *)attributes;
+   namespaceURI:(NSString *)namespaceURI
+  qualifiedName:(NSString *)qName
+     attributes:(NSDictionary *)attributes;
 {
     if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = YES;
     } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
         _inRootfilesTag = YES;
-    }else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
+    } else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
         NSString *mediaTypeAttribute = [self attribute:@"media-type" withNamespace:containerURI];
         NSString *mediaType = attributes[mediaTypeAttribute];
         if ( ! mediaType) return;

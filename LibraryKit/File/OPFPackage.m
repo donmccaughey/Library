@@ -1,5 +1,7 @@
 #import "OPFPackage.h"
 
+#import "BiMap.h"
+
 
 static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
 static NSString *const opfURI = @"http://www.idpf.org/2007/opf";
@@ -14,6 +16,14 @@ isMetadataTag(NSString *namespaceURI, NSString *elementName)
 
 
 static BOOL
+isPackageTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [opfURI isEqualToString:namespaceURI]
+        && [@"package" isEqualToString:elementName];
+}
+
+
+static BOOL
 isTitleTag(NSString *namespaceURI, NSString *elementName)
 {
     return [dublinCoreURI isEqualToString:namespaceURI]
@@ -21,41 +31,68 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
+@interface OPFPackage ()
+
+- (NSString *)attribute:(NSString *)attribute
+          withNamespace:(NSString *)namespace;
+
+@end
+
+
 @implementation OPFPackage
 {
-    NSMutableArray<NSError *> *_errors;
     BOOL _inMetadataTag;
+    BOOL _inPackageTag;
     BOOL _inTitleTag;
+    NSError *_parseError;
+    BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableString *_title;
 }
 
 
-- (instancetype)initWithData:(NSData *)containerXml {
+- (instancetype)initWithData:(NSData *)containerXml
+                       error:(NSError **)error;
+{
     self = [super init];
     if ( ! self) return nil;
     
-    _errors = [NSMutableArray new];
-    
+    _prefixToNamespace = [BiMap new];
+
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
     [parser parse];
     
+    if (_parseError) {
+        if (error) *error = _parseError;
+        return nil;
+    }
+    
     return self;
 }
 
 
-- (void)parser:(NSXMLParser *)parser
-didStartElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName
-    attributes:(NSDictionary *)attributes;
+- (NSString *)attribute:(NSString *)attribute
+          withNamespace:(NSString *)namespace;
 {
-    if (isMetadataTag(namespaceURI, elementName)) {
-        _inMetadataTag = YES;
-    }
+    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
+    if ( ! prefix.length) return attribute;
     
-    if (_inMetadataTag) {
+    return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
+}
+
+
+- (void) parser:(NSXMLParser *)parser
+didStartElement:(NSString *)elementName
+   namespaceURI:(NSString *)namespaceURI
+  qualifiedName:(NSString *)qName
+     attributes:(NSDictionary *)attributes;
+{
+    if (isPackageTag(namespaceURI, elementName)) {
+        _inPackageTag = YES;
+    } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
+        _inMetadataTag = YES;
+    } else if (_inMetadataTag) {
         if (isTitleTag(namespaceURI, elementName)) {
             _inTitleTag = YES;
         }
@@ -68,10 +105,11 @@ didStartElement:(NSString *)elementName
   namespaceURI:(nullable NSString *)namespaceURI
  qualifiedName:(nullable NSString *)qName;
 {
-    if (isMetadataTag(namespaceURI, elementName)) {
+    if (isPackageTag(namespaceURI, elementName)) {
+        _inPackageTag = NO;
+    } else if (isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = NO;
-    }
-    if (isTitleTag(namespaceURI, elementName)) {
+    } else if (isTitleTag(namespaceURI, elementName)) {
         _inTitleTag = NO;
     }
 }
@@ -99,10 +137,25 @@ foundCharacters:(NSString *)string;
 }
 
 
+- (void)       parser:(NSXMLParser *)parser
+didStartMappingPrefix:(NSString *)prefix
+                toURI:(NSString *)namespaceURI;
+{
+    [_prefixToNamespace setFirst:prefix forSecond:namespaceURI];
+}
+
+
+- (void)     parser:(NSXMLParser *)parser
+didEndMappingPrefix:(NSString *)prefix;
+{
+    [_prefixToNamespace removeFirst:prefix];
+}
+
+
 - (void)    parser:(NSXMLParser *)parser
 parseErrorOccurred:(NSError *)parseError;
 {
-    [_errors addObject:parseError];
+    _parseError = parseError;
 }
 
 

@@ -80,7 +80,18 @@
         return nil;
     }
     
-    OPFPackage *package = [[OPFPackage alloc] initWithData:data];
+    NSError *packageError;
+    OPFPackage *package = [[OPFPackage alloc] initWithData:data
+                                                     error:&packageError];
+    if ( ! package) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                   underlyingError:packageError
+                                        andMessage:@"Unable to parse '%@' entry in EPUB '%@'", container.packagePath, path];
+        }
+        return nil;
+    }
+    
     _title = [package.title copy];
 
     return self;
