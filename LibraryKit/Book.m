@@ -94,13 +94,14 @@ makeTitleFromFilename(NSString *path);
 
 - (void)startScanningFile;
 {
-    NSAssert( ! self.wasScanned, @"Expected book was not read yet.");
+    NSAssert( ! self.wasScanned, @"Expected book was not scanned.");
     
     [[NSNotificationCenter defaultCenter] postNotificationName:BookWillStartScanningFileNotification
                                                         object:self];
-    Stopwatch *stopwatch = [Stopwatch start];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        Stopwatch *stopwatch = [Stopwatch start];
+        
         NSError *error = nil;
         id<File> file = [[self->_fileClass alloc] initWithPath:self->_path
                                                          error:&error];

@@ -47,9 +47,10 @@ NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"Library
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:LibraryWillStartScanningFoldersNotification
                                                         object:self];
-    Stopwatch *stopwatch = [Stopwatch start];
     
     dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+        Stopwatch *stopwatch = [Stopwatch start];
+        
         NSMutableOrderedSet<Book *> *books = [NSMutableOrderedSet new];
         for (NSString *folder in folders) {
             NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:folder];
@@ -59,7 +60,12 @@ NSNotificationName const LibraryDidFinishScanningFoldersNotification = @"Library
                 NSString *absPath = [folder stringByAppendingPathComponent:relPath];
                 Book *book = [[Book alloc] initWithPath:absPath
                                       andFileAttributes:enumerator.fileAttributes];
-                if (book) [books addObject:book];
+                if (book) {
+                    [books addObject:book];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [book startScanningFile];
+                    });
+                }
             }
         }
         [books sortUsingDescriptors:self->_sortDescriptors];
