@@ -42,6 +42,7 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation EPUBContainer
 {
+    NSError *_error;
     BOOL _inContainerTag;
     BOOL _inRootfilesTag;
     NSError *_parseError;
@@ -63,6 +64,11 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
     [parser parse];
+    
+    if (_error) {
+        if (error) *error = _error;
+        return nil;
+    }
     
     if (_parseError) {
         if (error) *error = _parseError;
@@ -95,6 +101,14 @@ didStartElement:(NSString *)elementName
 {
     if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = YES;
+        
+        NSString *versionAttribute = [self attribute:@"version" withNamespace:containerURI];
+        NSString *version = attributes[versionAttribute];
+        if ( ! [@"1.0" isEqualToString:version]) {
+            _error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
+                                        andMessage:@"The <container> element must be version 1.0 but was '%@'", version];
+            [parser abortParsing];
+        }
     } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
         _inRootfilesTag = YES;
     } else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
