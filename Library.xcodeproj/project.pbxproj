@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -239,6 +239,10 @@
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D469C2A12D28ECC1001AC87B /* docs */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = docs; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		D48D00152C179EFA00177AD0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -376,6 +380,7 @@
 			isa = PBXGroup;
 			children = (
 				D4DA2D182D1D0792006B459C /* README.md */,
+				D469C2A12D28ECC1001AC87B /* docs */,
 				D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */,
 				D48DFFCA2C179E8A00177AD0 /* LibraryKit */,
 				D48DFFD42C179E8A00177AD0 /* LibraryKitTests */,
