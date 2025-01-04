@@ -1,6 +1,5 @@
 #import "OPFPackage.h"
 
-#import "BiMap.h"
 #import "Errors.h"
 #import "OPFIdentifier.h"
 
@@ -43,9 +42,6 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 
 @interface OPFPackage ()
 
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
-
 - (NSString *)trimmedCharacters;
 
 @end
@@ -59,22 +55,19 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
     NSString *_packageVersion;
-    NSError *_parseError;
-    BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<NSString *> *_titles;
     NSString *_uniqueIdentifierID;
 }
 
 
-- (instancetype)initWithData:(NSData *)containerXml
-                       error:(NSError **)error;
+- (nullable instancetype)initWithData:(NSData *)containerXml
+                                error:(NSError **)error;
 {
     self = [super init];
     if ( ! self) return nil;
     
     _characters = [NSMutableArray new];
     _identifiers = [NSMutableArray new];
-    _prefixToNamespace = [BiMap new];
     _titles = [NSMutableArray new];
 
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
@@ -116,16 +109,6 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     }
     
     return self;
-}
-
-
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
-{
-    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
-    if ( ! prefix.length) return attribute;
-    
-    return [NSString stringWithFormat:@"%@:%@", prefix, attribute];
 }
 
 
@@ -219,28 +202,6 @@ didStartElement:(NSString *)elementName
 foundCharacters:(NSString *)string;
 {
     [_characters addObject:string];
-}
-
-
-- (void)       parser:(NSXMLParser *)parser
-didStartMappingPrefix:(NSString *)prefix
-                toURI:(NSString *)namespaceURI;
-{
-    [_prefixToNamespace setFirst:prefix forSecond:namespaceURI];
-}
-
-
-- (void)     parser:(NSXMLParser *)parser
-didEndMappingPrefix:(NSString *)prefix;
-{
-    [_prefixToNamespace removeFirst:prefix];
-}
-
-
-- (void)    parser:(NSXMLParser *)parser
-parseErrorOccurred:(NSError *)parseError;
-{
-    _parseError = parseError;
 }
 
 

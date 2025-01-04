@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#import "XML.h"
+
 
 @class OPFIdentifier;
 
@@ -7,15 +9,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface OPFPackage : NSObject<NSXMLParserDelegate>
+@interface OPFPackage : XML
 
 @property (readonly) NSArray<NSString *> *titles;
 @property (readonly) OPFIdentifier *uniqueIdentifier;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithData:(NSData *)containerXml
-                       error:(NSError **)error;
+- (nullable instancetype)initWithData:(NSData *)containerXml
+                                error:(NSError **)error;
 
 @end
 

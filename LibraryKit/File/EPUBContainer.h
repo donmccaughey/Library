@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+#import "XML.h"
+
 
 @class EPUBRootfile;
 
@@ -7,7 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 
-@interface EPUBContainer : NSObject<NSXMLParserDelegate>
+@interface EPUBContainer : XML
 
 @property (nullable, readonly) NSString *packagePath;
 

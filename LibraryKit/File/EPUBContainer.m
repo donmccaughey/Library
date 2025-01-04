@@ -1,6 +1,5 @@
 #import "EPUBContainer.h"
 
-#import "BiMap.h"
 #import "Errors.h"
 #import "EPUBRootfile.h"
 
@@ -32,21 +31,11 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-@interface EPUBContainer ()
-
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
-
-@end
-
-
 @implementation EPUBContainer
 {
     NSError *_error;
     BOOL _inContainerTag;
     BOOL _inRootfilesTag;
-    NSError *_parseError;
-    BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
 }
 
@@ -57,7 +46,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     self = [super init];
     if ( ! self) return nil;
     
-    _prefixToNamespace = [BiMap new];
     _rootfiles = [NSMutableArray new];
     
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
@@ -92,16 +80,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     }
     
     return self;
-}
-
-
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
-{
-    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
-    if ( ! prefix.length) return attribute;
-    
-    return [NSString stringWithFormat:@"%@:%@", prefix, attribute];
 }
 
 
@@ -149,28 +127,6 @@ didStartElement:(NSString *)elementName
     } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
         _inRootfilesTag = NO;
     }
-}
-
-
-- (void)       parser:(NSXMLParser *)parser
-didStartMappingPrefix:(NSString *)prefix
-                toURI:(NSString *)namespaceURI;
-{
-    [_prefixToNamespace setFirst:prefix forSecond:namespaceURI];
-}
-
-
-- (void)     parser:(NSXMLParser *)parser
-didEndMappingPrefix:(NSString *)prefix;
-{
-    [_prefixToNamespace removeFirst:prefix];
-}
-
-
-- (void)    parser:(NSXMLParser *)parser
-parseErrorOccurred:(NSError *)parseError;
-{
-    _parseError = parseError;
 }
 
 

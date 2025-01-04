@@ -10,6 +10,8 @@
 		D41BD0222D13C43900306549 /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0212D13C43900306549 /* InfoView.m */; };
 		D41BD02C2D165A1500306549 /* Notifications.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD02B2D165A1500306549 /* Notifications.m */; };
 		D41BD0352D17644A00306549 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0342D17644A00306549 /* Logger.m */; };
+		D44AC1982D29FE4200E2807A /* XML.m in Sources */ = {isa = PBXBuildFile; fileRef = D44AC1972D29FE4200E2807A /* XML.m */; };
+		D44AC1992D29FE4200E2807A /* XML.h in Headers */ = {isa = PBXBuildFile; fileRef = D44AC1962D29FE4200E2807A /* XML.h */; };
 		D44EE7002D1FC05D006AC61E /* minizip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE6FD2D1FC04A006AC61E /* minizip.framework */; };
 		D44EE7082D1FC261006AC61E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D162D1E502300970B7B /* libbz2.tbd */; };
 		D44EE7092D1FC268006AC61E /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE7032D1FC0A2006AC61E /* libcompression.tbd */; };
@@ -174,6 +176,8 @@
 		D43F0D162D1E502300970B7B /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		D43F0D192D1E548200970B7B /* liblzma.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = liblzma.5.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/liblzma.5.tbd; sourceTree = DEVELOPER_DIR; };
 		D43F0D1C2D1E581C00970B7B /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
+		D44AC1962D29FE4200E2807A /* XML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XML.h; sourceTree = "<group>"; };
+		D44AC1972D29FE4200E2807A /* XML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XML.m; sourceTree = "<group>"; };
 		D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = minizip.xcodeproj; path = libs/minizip_framework/minizip.xcodeproj; sourceTree = "<group>"; };
 		D44EE7032D1FC0A2006AC61E /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libcompression.tbd; sourceTree = DEVELOPER_DIR; };
 		D44EE7062D1FC0B9006AC61E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -491,6 +495,8 @@
 				D469C2B12D29DEA9001AC87B /* OPFPackageTests.m */,
 				D4B58C8A2D2220CB00BABB13 /* PDF.h */,
 				D4B58C8B2D2220CB00BABB13 /* PDF.m */,
+				D44AC1962D29FE4200E2807A /* XML.h */,
+				D44AC1972D29FE4200E2807A /* XML.m */,
 				D4B58C8C2D2220CB00BABB13 /* Zip.h */,
 				D4B58C8D2D2220CB00BABB13 /* Zip.m */,
 			);
@@ -519,6 +525,7 @@
 				D469C2A92D290823001AC87B /* OPFIdentifier.h in Headers */,
 				D4B58C922D2220CB00BABB13 /* OPFPackage.h in Headers */,
 				D4B58C932D2220CB00BABB13 /* PDF.h in Headers */,
+				D44AC1992D29FE4200E2807A /* XML.h in Headers */,
 				D4B58C942D2220CB00BABB13 /* Zip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -870,6 +877,7 @@
 				D4B58C982D2220CB00BABB13 /* OPFPackage.m in Sources */,
 				D4B58C992D2220CB00BABB13 /* PDF.m in Sources */,
 				D4B58CB62D274C0100BABB13 /* Stopwatch.m in Sources */,
+				D44AC1982D29FE4200E2807A /* XML.m in Sources */,
 				D4B58C9A2D2220CB00BABB13 /* Zip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
