@@ -27,6 +27,14 @@ NSErrorDomain ZipErrorDomain = @"ZipError";
 @end
 
 
+@interface Zip ()
+
+- (BOOL)getFileInfoForFirstEntry:(mz_zip_file **)fileInfo
+                           error:(NSError **)error;
+
+@end
+
+
 @implementation Zip
 {
     void *_reader;
@@ -126,6 +134,40 @@ NSErrorDomain ZipErrorDomain = @"ZipError";
     }
     
     return data;
+}
+
+
+- (BOOL)getFileInfoForFirstEntry:(mz_zip_file **)fileInfo
+                           error:(NSError **)error;
+{
+    int32_t err = mz_zip_reader_goto_first_entry(_reader);
+    if (err) {
+        if (error) {
+            *error = [NSError zipErrorWithCode:err
+                                  andMessage:@"Could not go to first entry in zip file '%@'", _path];
+        }
+        return NO;
+    }
+    
+    err = mz_zip_reader_entry_get_info(_reader, fileInfo);
+    if (err) {
+        if (error) {
+            *error = [NSError zipErrorWithCode:err
+                                    andMessage:@"Could not get info for first entry in zip file '%@'", _path];
+        }
+        return NO;
+    }
+
+    return YES;
+}
+
+
+- (nullable NSString *)pathOfFirstEntryWithError:(NSError **)error;
+{
+    mz_zip_file *fileInfo;
+    BOOL success = [self getFileInfoForFirstEntry:&fileInfo
+                                            error:error];
+    return success ? @(fileInfo->filename) : nil;
 }
 
 

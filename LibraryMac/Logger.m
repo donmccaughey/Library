@@ -52,9 +52,9 @@
 
 - (void)bookDidFinishScanningFile:(NSNotification *)notification;
 {
-    Book *book = notification.object;
-    NSLog(@"Book '%@' did finish scanning %@ file in %@",
-          book, nameForFormat(book.format), book.scanTime);
+    // Book *book = notification.object;
+    // NSLog(@"Book '%@' did finish scanning %@ file in %@",
+    //       book, nameForFormat(book.format), book.scanTime);
 }
 
 

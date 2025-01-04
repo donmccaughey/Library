@@ -17,6 +17,8 @@ extern NSErrorDomain ZipErrorDomain;
 - (nullable NSData *)dataForEntryWithPath:(NSString *)entryPath
                                     error:(NSError **)error;
 
+- (nullable NSString *)pathOfFirstEntryWithError:(NSError **)error;
+
 @end
 
 

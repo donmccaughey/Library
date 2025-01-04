@@ -33,7 +33,49 @@
         return nil;
     }
     
-    // TODO: read first entry 'mimetype'
+    NSError *mimetypeError;
+    NSString *mimetypePath = [zip pathOfFirstEntryWithError:&mimetypeError];
+    if ( ! mimetypePath) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
+                                   underlyingError:zipError
+                                        andMessage:@"Unable to find first entry in EPUB file '%@'", path];
+        }
+        return nil;
+    }
+    if ( ! [@"mimetype" isEqualToString:mimetypePath]) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
+                                   underlyingError:zipError
+                                        andMessage:@"Missing first entry 'mimetype' in EPUB file '%@', found '%@' instead",
+                      path, mimetypePath];
+        }
+        return nil;
+    }
+    
+    NSData *mimetypeData = [zip dataForEntryWithPath:mimetypePath
+                                               error:&mimetypeError];
+    if ( ! mimetypeData) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
+                                   underlyingError:zipError
+                                        andMessage:@"Unable to read '%@' entry in EPUB '%@'",
+                      mimetypePath, path];
+        }
+        return nil;
+    }
+    
+    
+    NSString *mimetype = [NSString stringWithCString:mimetypeData.bytes
+                                            encoding:NSUTF8StringEncoding];
+    if ( ! [@"application/epub+zip" isEqualToString:mimetype]) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingEPUBZip
+                                   underlyingError:zipError
+                                        andMessage:@"Unexpected mimetype '%@' for EPUB '%@'", mimetype, path];
+        }
+        return nil;
+    }
     
     NSString *containerPath = @"META-INF/container.xml";
     NSData *data = [zip dataForEntryWithPath:containerPath
