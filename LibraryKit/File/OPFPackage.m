@@ -1,6 +1,7 @@
 #import "OPFPackage.h"
 
 #import "BiMap.h"
+#import "Errors.h"
 
 
 static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
@@ -41,9 +42,11 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation OPFPackage
 {
+    NSError *_error;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
     BOOL _inTitleTag;
+    NSString *_packageVersion;
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableString *_title;
@@ -62,6 +65,11 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
     [parser parse];
+    
+    if (_error) {
+        if (error) *error = _error;
+        return nil;
+    }
     
     if (_parseError) {
         if (error) *error = _parseError;
@@ -90,6 +98,16 @@ didStartElement:(NSString *)elementName
 {
     if (isPackageTag(namespaceURI, elementName)) {
         _inPackageTag = YES;
+        NSString *versionAttr = [self attribute:@"version" withNamespace:opfURI];
+        
+        NSString *version = attributes[versionAttr];
+        if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
+            _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                      andMessage:@"The <package> element must be version 2.0 or 3.0 but was '%@'", version];
+            [parser abortParsing];
+            return;
+        }
+        _packageVersion = version;
     } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     } else if (_inMetadataTag) {
