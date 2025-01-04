@@ -6,9 +6,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OPFIdentifier : NSObject
 
-@property (nullable, readonly) NSString *ID;
-@property NSString *identifier;
-@property (nullable, readonly) NSString *scheme;
+@property (nullable, copy) NSString *ID;
+@property (nonnull, copy) NSString *identifier;
+@property (nullable, copy) NSString *scheme;
 
 - (instancetype)init NS_UNAVAILABLE;
 
