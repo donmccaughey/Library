@@ -18,6 +18,7 @@
 		D469C2A92D290823001AC87B /* OPFIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D469C2A62D290823001AC87B /* OPFIdentifier.h */; };
 		D469C2AB2D29C2F7001AC87B /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2AA2D29C2F7001AC87B /* BookTests.m */; };
 		D469C2B02D29CB4E001AC87B /* EPUBContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2AE2D29CB4E001AC87B /* EPUBContainerTests.m */; };
+		D469C2B32D29DEA9001AC87B /* OPFPackageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2B12D29DEA9001AC87B /* OPFPackageTests.m */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
 		D46FDC8A2D1C813B001E8362 /* Format.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8B2D1C813B001E8362 /* Format.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* Format.m */; };
@@ -181,6 +182,7 @@
 		D469C2A72D290823001AC87B /* OPFIdentifier.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPFIdentifier.m; sourceTree = "<group>"; };
 		D469C2AA2D29C2F7001AC87B /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D469C2AE2D29CB4E001AC87B /* EPUBContainerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EPUBContainerTests.m; sourceTree = "<group>"; };
+		D469C2B12D29DEA9001AC87B /* OPFPackageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPFPackageTests.m; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
@@ -482,14 +484,15 @@
 				D4B58C852D2220CB00BABB13 /* EPUBRootfile.h */,
 				D4B58C862D2220CB00BABB13 /* EPUBRootfile.m */,
 				D4B58C872D2220CB00BABB13 /* File.h */,
+				D469C2A62D290823001AC87B /* OPFIdentifier.h */,
+				D469C2A72D290823001AC87B /* OPFIdentifier.m */,
 				D4B58C882D2220CB00BABB13 /* OPFPackage.h */,
 				D4B58C892D2220CB00BABB13 /* OPFPackage.m */,
+				D469C2B12D29DEA9001AC87B /* OPFPackageTests.m */,
 				D4B58C8A2D2220CB00BABB13 /* PDF.h */,
 				D4B58C8B2D2220CB00BABB13 /* PDF.m */,
 				D4B58C8C2D2220CB00BABB13 /* Zip.h */,
 				D4B58C8D2D2220CB00BABB13 /* Zip.m */,
-				D469C2A62D290823001AC87B /* OPFIdentifier.h */,
-				D469C2A72D290823001AC87B /* OPFIdentifier.m */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 			files = (
 				D469C2AB2D29C2F7001AC87B /* BookTests.m in Sources */,
 				D469C2B02D29CB4E001AC87B /* EPUBContainerTests.m in Sources */,
+				D469C2B32D29DEA9001AC87B /* OPFPackageTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
