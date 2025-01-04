@@ -98,8 +98,8 @@ didStartElement:(NSString *)elementName
 {
     if (isPackageTag(namespaceURI, elementName)) {
         _inPackageTag = YES;
-        NSString *versionAttr = [self attribute:@"version" withNamespace:opfURI];
         
+        NSString *versionAttr = [self attribute:@"version" withNamespace:opfURI];
         NSString *version = attributes[versionAttr];
         if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
@@ -108,6 +108,17 @@ didStartElement:(NSString *)elementName
             return;
         }
         _packageVersion = version;
+        
+        NSString *uniqueIdentifierAttribute = [self attribute:@"unique-identifier" withNamespace:opfURI];
+        NSString *uniqueIdentifier = attributes[uniqueIdentifierAttribute];
+        if ( ! uniqueIdentifier || ! uniqueIdentifier.length) {
+            _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                      andMessage:@"The <package> element must have a unique-identifier attribute"];
+            [parser abortParsing];
+            return;
+        }
+        _uniqueIdentifier = uniqueIdentifier;
+        
     } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     } else if (_inMetadataTag) {

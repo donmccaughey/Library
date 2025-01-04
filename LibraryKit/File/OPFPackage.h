@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface OPFPackage : NSObject<NSXMLParserDelegate>
 
 @property (readonly) NSString *title;
+@property (readonly) NSString *uniqueIdentifier;
 
 - (instancetype)init NS_UNAVAILABLE;
 
