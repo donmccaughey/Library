@@ -173,6 +173,7 @@
 		D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = minizip.xcodeproj; path = libs/minizip_framework/minizip.xcodeproj; sourceTree = "<group>"; };
 		D44EE7032D1FC0A2006AC61E /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libcompression.tbd; sourceTree = DEVELOPER_DIR; };
 		D44EE7062D1FC0B9006AC61E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		D469C2A52D290696001AC87B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
@@ -380,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				D4DA2D182D1D0792006B459C /* README.md */,
+				D469C2A52D290696001AC87B /* TODO.md */,
 				D469C2A12D28ECC1001AC87B /* docs */,
 				D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */,
 				D48DFFCA2C179E8A00177AD0 /* LibraryKit */,

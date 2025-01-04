@@ -134,7 +134,7 @@
         return nil;
     }
     
-    _title = [package.title copy];
+    _title = [package.titles.firstObject copy];
 
     return self;
 }

@@ -37,11 +37,14 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;
 
+- (NSString *)trimmedCharacters;
+
 @end
 
 
 @implementation OPFPackage
 {
+    NSMutableArray<NSString *> *_characters;
     NSError *_error;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
@@ -49,7 +52,7 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     NSString *_packageVersion;
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
-    NSMutableString *_title;
+    NSMutableArray<NSString *> *_titles;
 }
 
 
@@ -59,7 +62,9 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     self = [super init];
     if ( ! self) return nil;
     
+    _characters = [NSMutableArray new];
     _prefixToNamespace = [BiMap new];
+    _titles = [NSMutableArray new];
 
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
@@ -76,6 +81,14 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
         return nil;
     }
     
+    if ( ! _titles.count) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                        andMessage:@"No titles found in package metadata"];
+        }
+        return nil;
+    }
+    
     return self;
 }
 
@@ -87,6 +100,13 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     if ( ! prefix.length) return attribute;
     
     return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
+}
+
+
+- (NSString *)trimmedCharacters;
+{
+    NSString *string = [_characters componentsJoinedByString:@""];
+    return [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 
@@ -118,7 +138,6 @@ didStartElement:(NSString *)elementName
             return;
         }
         _uniqueIdentifier = uniqueIdentifier;
-        
     } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     } else if (_inMetadataTag) {
@@ -140,29 +159,26 @@ didStartElement:(NSString *)elementName
         _inMetadataTag = NO;
     } else if (isTitleTag(namespaceURI, elementName)) {
         _inTitleTag = NO;
+        NSString *title = [self trimmedCharacters];
+        if (title.length) [_titles addObject:title];
     }
+    [_characters removeAllObjects];
 }
 
 
 - (void)parser:(NSXMLParser *)parser
     foundCDATA:(NSData *)CDATABlock;
 {
-    if (_inTitleTag) {
-        _title = _title ?: [NSMutableString new];
-        NSString *string = [[NSString alloc] initWithData:CDATABlock
-                                                 encoding:NSUTF16StringEncoding];
-        [_title appendString:string];
-    }
+    NSString *string = [[NSString alloc] initWithData:CDATABlock
+                                             encoding:NSUTF8StringEncoding];
+    [_characters addObject:string];
 }
 
 
 - (void) parser:(NSXMLParser *)parser
 foundCharacters:(NSString *)string;
 {
-    if (_inTitleTag) {
-        _title = _title ?: [NSMutableString new];
-        [_title appendString:string];
-    }
+    [_characters addObject:string];
 }
 
 
