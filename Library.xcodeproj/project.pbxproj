@@ -16,6 +16,7 @@
 		D44EE70A2D1FC278006AC61E /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D1C2D1E581C00970B7B /* libiconv.tbd */; };
 		D469C2A82D290823001AC87B /* OPFIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2A72D290823001AC87B /* OPFIdentifier.m */; };
 		D469C2A92D290823001AC87B /* OPFIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D469C2A62D290823001AC87B /* OPFIdentifier.h */; };
+		D469C2AB2D29C2F7001AC87B /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2AA2D29C2F7001AC87B /* BookTests.m */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
 		D46FDC8A2D1C813B001E8362 /* Format.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8B2D1C813B001E8362 /* Format.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* Format.m */; };
@@ -67,7 +68,6 @@
 		D4B58CAE2D27487900BABB13 /* ElapsedTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CAC2D27487900BABB13 /* ElapsedTime.m */; };
 		D4B58CB52D274C0100BABB13 /* Stopwatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CB32D274C0100BABB13 /* Stopwatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B58CB62D274C0100BABB13 /* Stopwatch.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CB42D274C0100BABB13 /* Stopwatch.m */; };
-		D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D4E7D0BC2C17AA7300980513 /* BookTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +178,7 @@
 		D469C2A52D290696001AC87B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		D469C2A62D290823001AC87B /* OPFIdentifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPFIdentifier.h; sourceTree = "<group>"; };
 		D469C2A72D290823001AC87B /* OPFIdentifier.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPFIdentifier.m; sourceTree = "<group>"; };
+		D469C2AA2D29C2F7001AC87B /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
@@ -240,7 +241,6 @@
 		D4B58CB32D274C0100BABB13 /* Stopwatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stopwatch.h; sourceTree = "<group>"; };
 		D4B58CB42D274C0100BABB13 /* Stopwatch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Stopwatch.m; sourceTree = "<group>"; };
 		D4DA2D182D1D0792006B459C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		D4E7D0BC2C17AA7300980513 /* BookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookTests.m; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,7 +389,6 @@
 				D469C2A12D28ECC1001AC87B /* docs */,
 				D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */,
 				D48DFFCA2C179E8A00177AD0 /* LibraryKit */,
-				D48DFFD42C179E8A00177AD0 /* LibraryKitTests */,
 				D48DFFE32C179ED300177AD0 /* LibraryMac */,
 				D48DFFF62C179ED400177AD0 /* LibraryMacTests */,
 				D48D00002C179ED400177AD0 /* LibraryMacUITests */,
@@ -422,6 +421,7 @@
 				D4B58C9E2D22210100BABB13 /* File */,
 				D48D00562C17A35F00177AD0 /* Book.h */,
 				D48D00572C17A35F00177AD0 /* Book.m */,
+				D469C2AA2D29C2F7001AC87B /* BookTests.m */,
 				D4B58CAB2D27487900BABB13 /* ElapsedTime.h */,
 				D4B58CAC2D27487900BABB13 /* ElapsedTime.m */,
 				D4B58C9F2D251A1600BABB13 /* Errors.h */,
@@ -435,14 +435,6 @@
 				D4B58CB42D274C0100BABB13 /* Stopwatch.m */,
 			);
 			path = LibraryKit;
-			sourceTree = "<group>";
-		};
-		D48DFFD42C179E8A00177AD0 /* LibraryKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				D4E7D0BC2C17AA7300980513 /* BookTests.m */,
-			);
-			path = LibraryKitTests;
 			sourceTree = "<group>";
 		};
 		D48DFFE32C179ED300177AD0 /* LibraryMac */ = {
@@ -880,7 +872,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4E7D0BD2C17AA7300980513 /* BookTests.m in Sources */,
+				D469C2AB2D29C2F7001AC87B /* BookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
