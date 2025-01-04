@@ -62,6 +62,7 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
     NSMutableArray<NSString *> *_titles;
+    NSString *_uniqueIdentifierID;
 }
 
 
@@ -89,6 +90,20 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     
     if (_parseError) {
         if (error) *error = _parseError;
+        return nil;
+    }
+    
+    for (OPFIdentifier *identifier in _identifiers) {
+        if ([_uniqueIdentifierID isEqualToString:identifier.ID]) {
+            _uniqueIdentifier = identifier;
+            break;
+        }
+    }
+    if ( ! _uniqueIdentifier) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
+                                        andMessage:@"Unique identifier not found in package metadata"];
+        }
         return nil;
     }
     
@@ -142,13 +157,13 @@ didStartElement:(NSString *)elementName
         
         NSString *uniqueIdentifierAttribute = [self attribute:@"unique-identifier" withNamespace:opfURI];
         NSString *uniqueIdentifier = attributes[uniqueIdentifierAttribute];
-        if ( ! uniqueIdentifier || ! uniqueIdentifier.length) {
+        if ( ! uniqueIdentifier.length) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must have a unique-identifier attribute"];
             [parser abortParsing];
             return;
         }
-        _uniqueIdentifier = uniqueIdentifier;
+        _uniqueIdentifierID = uniqueIdentifier;
     } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     } else if (_inMetadataTag) {

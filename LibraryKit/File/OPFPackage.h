@@ -1,13 +1,16 @@
 #import <Foundation/Foundation.h>
 
 
+@class OPFIdentifier;
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 
 @interface OPFPackage : NSObject<NSXMLParserDelegate>
 
 @property (readonly) NSArray<NSString *> *titles;
-@property (readonly) NSString *uniqueIdentifier;
+@property (readonly) OPFIdentifier *uniqueIdentifier;
 
 - (instancetype)init NS_UNAVAILABLE;
 
