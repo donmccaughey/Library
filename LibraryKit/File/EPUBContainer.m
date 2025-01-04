@@ -77,7 +77,18 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     }
     
     for (EPUBRootfile *rootfile in _rootfiles) {
-        if (rootfile.isPackage) _packagePath = rootfile.fullPath;
+        if (rootfile.isPackage) {
+            _packagePath = rootfile.fullPath;
+            break;
+        }
+    }
+    
+    if ( ! _packagePath) {
+        if (error) {
+            *error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
+                                        andMessage:@"Did not find a <rootfile> with media type application/oebps-package+xml"];
+            return nil;
+        }
     }
     
     return self;
