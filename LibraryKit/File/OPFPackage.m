@@ -2,10 +2,19 @@
 
 #import "BiMap.h"
 #import "Errors.h"
+#import "OPFIdentifier.h"
 
 
 static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
 static NSString *const opfURI = @"http://www.idpf.org/2007/opf";
+
+
+static BOOL
+isIdentifierTag(NSString *namespaceURI, NSString *elementName)
+{
+    return [dublinCoreURI isEqualToString:namespaceURI]
+        && [@"identifier" isEqualToString:elementName];
+}
 
 
 static BOOL
@@ -46,9 +55,9 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 {
     NSMutableArray<NSString *> *_characters;
     NSError *_error;
+    NSMutableArray<OPFIdentifier *> *_identifiers;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
-    BOOL _inTitleTag;
     NSString *_packageVersion;
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
@@ -63,12 +72,14 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     if ( ! self) return nil;
     
     _characters = [NSMutableArray new];
+    _identifiers = [NSMutableArray new];
     _prefixToNamespace = [BiMap new];
     _titles = [NSMutableArray new];
 
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
+    parser.shouldReportNamespacePrefixes = YES;
     [parser parse];
     
     if (_error) {
@@ -99,7 +110,7 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
     if ( ! prefix.length) return attribute;
     
-    return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
+    return [NSString stringWithFormat:@"%@:%@", prefix, attribute];
 }
 
 
@@ -141,8 +152,14 @@ didStartElement:(NSString *)elementName
     } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = YES;
     } else if (_inMetadataTag) {
-        if (isTitleTag(namespaceURI, elementName)) {
-            _inTitleTag = YES;
+        if (isIdentifierTag(namespaceURI, elementName)) {
+            NSString *ID = attributes[@"id"];
+            NSString *schemeAttribute = [self attribute:@"scheme" withNamespace:opfURI];
+            NSString *scheme = attributes[schemeAttribute];
+
+            OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
+                                                                andScheme:scheme];
+            [_identifiers addObject:identifier];
         }
     }
 }
@@ -155,12 +172,20 @@ didStartElement:(NSString *)elementName
 {
     if (isPackageTag(namespaceURI, elementName)) {
         _inPackageTag = NO;
-    } else if (isMetadataTag(namespaceURI, elementName)) {
+    } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
         _inMetadataTag = NO;
-    } else if (isTitleTag(namespaceURI, elementName)) {
-        _inTitleTag = NO;
-        NSString *title = [self trimmedCharacters];
-        if (title.length) [_titles addObject:title];
+    } else if (_inMetadataTag) {
+        if (isIdentifierTag(namespaceURI, elementName)) {
+            NSString *identifier = [self trimmedCharacters];
+            if (identifier.length) {
+                _identifiers.lastObject.identifier = identifier;
+            } else {
+                [_identifiers removeLastObject];
+            }
+        } else if (isTitleTag(namespaceURI, elementName)) {
+            NSString *title = [self trimmedCharacters];
+            if (title.length) [_titles addObject:title];
+        }
     }
     [_characters removeAllObjects];
 }

@@ -63,6 +63,7 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
     parser.delegate = self;
     parser.shouldProcessNamespaces = YES;
+    parser.shouldReportNamespacePrefixes = YES;
     [parser parse];
     
     if (_error) {
@@ -89,7 +90,7 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
     NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
     if ( ! prefix.length) return attribute;
     
-    return [NSString stringWithFormat:@"%@:%@", prefix, namespace];
+    return [NSString stringWithFormat:@"%@:%@", prefix, attribute];
 }
 
 

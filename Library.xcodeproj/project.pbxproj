@@ -14,6 +14,8 @@
 		D44EE7082D1FC261006AC61E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D162D1E502300970B7B /* libbz2.tbd */; };
 		D44EE7092D1FC268006AC61E /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE7032D1FC0A2006AC61E /* libcompression.tbd */; };
 		D44EE70A2D1FC278006AC61E /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D1C2D1E581C00970B7B /* libiconv.tbd */; };
+		D469C2A82D290823001AC87B /* OPFIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D469C2A72D290823001AC87B /* OPFIdentifier.m */; };
+		D469C2A92D290823001AC87B /* OPFIdentifier.h in Headers */ = {isa = PBXBuildFile; fileRef = D469C2A62D290823001AC87B /* OPFIdentifier.h */; };
 		D46FDC872D1B65ED001E8362 /* BookListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC862D1B65ED001E8362 /* BookListViewController.m */; };
 		D46FDC8A2D1C813B001E8362 /* Format.h in Headers */ = {isa = PBXBuildFile; fileRef = D46FDC882D1C813B001E8362 /* Format.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D46FDC8B2D1C813B001E8362 /* Format.m in Sources */ = {isa = PBXBuildFile; fileRef = D46FDC892D1C813B001E8362 /* Format.m */; };
@@ -174,6 +176,8 @@
 		D44EE7032D1FC0A2006AC61E /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libcompression.tbd; sourceTree = DEVELOPER_DIR; };
 		D44EE7062D1FC0B9006AC61E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		D469C2A52D290696001AC87B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		D469C2A62D290823001AC87B /* OPFIdentifier.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OPFIdentifier.h; sourceTree = "<group>"; };
+		D469C2A72D290823001AC87B /* OPFIdentifier.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OPFIdentifier.m; sourceTree = "<group>"; };
 		D46FDC852D1B65ED001E8362 /* BookListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookListViewController.h; sourceTree = "<group>"; };
 		D46FDC862D1B65ED001E8362 /* BookListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookListViewController.m; sourceTree = "<group>"; };
 		D46FDC882D1C813B001E8362 /* Format.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Format.h; sourceTree = "<group>"; };
@@ -489,6 +493,8 @@
 				D4B58C8B2D2220CB00BABB13 /* PDF.m */,
 				D4B58C8C2D2220CB00BABB13 /* Zip.h */,
 				D4B58C8D2D2220CB00BABB13 /* Zip.m */,
+				D469C2A62D290823001AC87B /* OPFIdentifier.h */,
+				D469C2A72D290823001AC87B /* OPFIdentifier.m */,
 			);
 			path = File;
 			sourceTree = "<group>";
@@ -512,6 +518,7 @@
 				D4B58C8F2D2220CB00BABB13 /* EPUBContainer.h in Headers */,
 				D4B58C902D2220CB00BABB13 /* EPUBRootfile.h in Headers */,
 				D4B58C912D2220CB00BABB13 /* File.h in Headers */,
+				D469C2A92D290823001AC87B /* OPFIdentifier.h in Headers */,
 				D4B58C922D2220CB00BABB13 /* OPFPackage.h in Headers */,
 				D4B58C932D2220CB00BABB13 /* PDF.h in Headers */,
 				D4B58C942D2220CB00BABB13 /* Zip.h in Headers */,
@@ -861,6 +868,7 @@
 				D4B58C972D2220CB00BABB13 /* EPUBRootfile.m in Sources */,
 				D46FDC8B2D1C813B001E8362 /* Format.m in Sources */,
 				D48D00542C17A08400177AD0 /* Library.m in Sources */,
+				D469C2A82D290823001AC87B /* OPFIdentifier.m in Sources */,
 				D4B58C982D2220CB00BABB13 /* OPFPackage.m in Sources */,
 				D4B58C992D2220CB00BABB13 /* PDF.m in Sources */,
 				D4B58CB62D274C0100BABB13 /* Stopwatch.m in Sources */,
