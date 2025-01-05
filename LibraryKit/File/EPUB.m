@@ -102,14 +102,6 @@
         }
         return nil;
     }
-    if ( ! container.packagePath) {
-        if (error) {
-            *error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
-                                        andMessage:@"No OPF package found in '%@' entry in EPUB '%@'",
-                      containerPath, path];
-        }
-        return nil;
-    }
 
     data = [zip dataForEntryWithPath:container.packagePath
                                error:&zipError];

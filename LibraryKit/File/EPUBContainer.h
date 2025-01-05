@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EPUBContainer : XML
 
-@property (nullable, readonly) NSString *packagePath;
+@property (readonly) NSString *packagePath;
 
 - (instancetype)init NS_UNAVAILABLE;
 
