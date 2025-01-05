@@ -31,13 +31,13 @@
 }
 
 
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
+- (NSString *)ns:(NSString *)namespace
+            name:(NSString *)name;
 {
     NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
-    if ( ! prefix.length) return attribute;
+    if ( ! prefix.length) return name;
     
-    return [NSString stringWithFormat:@"%@:%@", prefix, attribute];
+    return [NSString stringWithFormat:@"%@:%@", prefix, name];
 }
 
 

@@ -103,8 +103,7 @@ didStartElement:(NSString *)elementName
     if (isPackageTag(namespaceURI, elementName)) {
         _inPackageTag = YES;
         
-        NSString *versionAttr = [self attribute:@"version" withNamespace:opfURI];
-        NSString *version = attributes[versionAttr];
+        NSString *version = attributes[[self ns:opfURI name:@"version"]];
         if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must be version 2.0 or 3.0 but was '%@'", version];
@@ -113,8 +112,7 @@ didStartElement:(NSString *)elementName
         }
         _packageVersion = version;
         
-        NSString *uniqueIdentifierAttribute = [self attribute:@"unique-identifier" withNamespace:opfURI];
-        NSString *uniqueIdentifier = attributes[uniqueIdentifierAttribute];
+        NSString *uniqueIdentifier = attributes[[self ns:opfURI name:@"unique-identifier"]];
         if ( ! uniqueIdentifier.length) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must have a unique-identifier attribute"];
@@ -127,8 +125,7 @@ didStartElement:(NSString *)elementName
     } else if (_inMetadataTag) {
         if (isIdentifierTag(namespaceURI, elementName)) {
             NSString *ID = attributes[@"id"];
-            NSString *schemeAttribute = [self attribute:@"scheme" withNamespace:opfURI];
-            NSString *scheme = attributes[schemeAttribute];
+            NSString *scheme = attributes[[self ns:opfURI name:@"scheme"]];
 
             OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
                                                                 andScheme:scheme];

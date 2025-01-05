@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithData:(NSData *)xml
         shouldFindCharacters:(BOOL)shouldFindCharacters;
 
-- (NSString *)attribute:(NSString *)attribute
-          withNamespace:(NSString *)namespace;
+- (NSString *)ns:(NSString *)namespace
+            name:(NSString *)name;
 
 - (NSString *)trimmedCharacters;
 
