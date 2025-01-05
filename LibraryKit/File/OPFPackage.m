@@ -10,6 +10,7 @@ static NSString *const opf = @"http://www.idpf.org/2007/opf";
 
 @implementation OPFPackage
 {
+    NSDictionary *_attributes;
     NSMutableArray<OPFIdentifier *> *_identifiers;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
@@ -34,13 +35,7 @@ static NSString *const opf = @"http://www.idpf.org/2007/opf";
         if (error) *error = self.error;
         return nil;
     }
-
-    for (OPFIdentifier *identifier in _identifiers) {
-        if ([_uniqueIdentifierID isEqualToString:identifier.ID]) {
-            _uniqueIdentifier = identifier;
-            break;
-        }
-    }
+    
     if ( ! _uniqueIdentifier) {
         if (error) {
             *error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
@@ -70,12 +65,7 @@ didStartElement:(NSString *)elementName
     if (_inPackageTag) {
         if (_inMetadataTag) {
             if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
-                NSString *ID = attributes[@"id"];
-                NSString *scheme = attributes[[self q: opf:@"scheme"]];
-
-                OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
-                                                                    andScheme:scheme];
-                [_identifiers addObject:identifier];
+                _attributes = attributes;
             }
         } else if ([self is: opf:@"metadata" equalTo: namespaceURI:elementName]) {
             _inMetadataTag = YES;
@@ -112,12 +102,16 @@ didStartElement:(NSString *)elementName
     if (_inPackageTag) {
         if (_inMetadataTag) {
             if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
-                NSString *identifier = [self trimmedCharacters];
-                if (identifier.length) {
-                    _identifiers.lastObject.identifier = identifier;
-                } else {
-                    [_identifiers removeLastObject];
+                NSString *value = [self trimmedCharacters];
+                if (value.length) {
+                    OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithScheme:_attributes[[self q: opf:@"scheme"]]
+                                                                        andIdentifier:value];
+                    [_identifiers addObject:identifier];
+                    if ([_uniqueIdentifierID isEqualToString:_attributes[@"id"]]) {
+                        _uniqueIdentifier = identifier;
+                    }
                 }
+                _attributes = nil;
             } else if ([self is: dc:@"title" equalTo: namespaceURI:elementName]) {
                 NSString *title = [self trimmedCharacters];
                 if (title.length) [_titles addObject:title];

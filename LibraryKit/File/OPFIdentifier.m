@@ -4,13 +4,13 @@
 @implementation OPFIdentifier
 
 
-- (instancetype)initWithID:(nullable NSString *)ID
-                 andScheme:(nullable NSString *)scheme;
+- (instancetype)initWithScheme:(NSString *)scheme
+                 andIdentifier:(NSString *)identifier;
 {
     self = [super init];
     if ( ! self) return nil;
     
-    _ID = [ID copy];
+    _identifier = [identifier copy];
     _scheme = [scheme copy];
     
     return self;
@@ -19,12 +19,8 @@
 
 - (NSString *)description;
 {
-    if (_ID && _scheme) {
-        return [NSString stringWithFormat:@"%@ = %@ [id=%@]", _scheme, _identifier, _ID];
-    } else if (_ID) {
-        return [NSString stringWithFormat:@"%@ [id=%@]", _identifier, _ID];
-    } else if (_scheme) {
-        return [NSString stringWithFormat:@"%@ = %@", _scheme, _identifier];
+    if (_scheme) {
+        return [NSString stringWithFormat:@"%@ %@", _scheme, _identifier];
     } else {
         return _identifier;
     }

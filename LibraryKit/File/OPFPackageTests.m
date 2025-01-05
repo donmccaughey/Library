@@ -35,7 +35,6 @@
     XCTAssertNotNil(package);
     XCTAssertEqual(package.titles.count, 1);
     XCTAssertEqualObjects(package.titles.firstObject, @"Alice in Wonderland");
-    XCTAssertEqualObjects(package.uniqueIdentifier.ID, @"BookId");
     XCTAssertEqualObjects(package.uniqueIdentifier.identifier, @"123456789X");
     XCTAssertEqualObjects(package.uniqueIdentifier.scheme, @"ISBN");
 }
@@ -62,7 +61,6 @@
     XCTAssertNotNil(package);
     XCTAssertEqual(package.titles.count, 1);
     XCTAssertEqualObjects(package.titles.firstObject, @"Alice in Wonderland");
-    XCTAssertEqualObjects(package.uniqueIdentifier.ID, @"BookId");
     XCTAssertEqualObjects(package.uniqueIdentifier.identifier, @"123456789X");
     XCTAssertEqualObjects(package.uniqueIdentifier.scheme, @"ISBN");
 }
@@ -276,7 +274,6 @@
     XCTAssertEqualObjects(package.titles[0], @"Alice in Wonderland");
     XCTAssertEqualObjects(package.titles[1], @"Alicia in Terra Mirabili");
     XCTAssertEqualObjects(package.titles[2], @"Aventures d'Alice au Pays des Merveilles");
-    XCTAssertEqualObjects(package.uniqueIdentifier.ID, @"BookId");
     XCTAssertEqualObjects(package.uniqueIdentifier.identifier, @"123456789X");
     XCTAssertEqualObjects(package.uniqueIdentifier.scheme, @"ISBN");
 }
@@ -307,7 +304,6 @@
     XCTAssertEqualObjects(package.titles[0], @"Alice in Wonderland");
     XCTAssertEqualObjects(package.titles[1], @"Alicia in Terra Mirabili");
     XCTAssertEqualObjects(package.titles[2], @"Aventures d'Alice au Pays des Merveilles");
-    XCTAssertEqualObjects(package.uniqueIdentifier.ID, @"BookId");
     XCTAssertEqualObjects(package.uniqueIdentifier.identifier, @"urn:isbn:123456789X");
     XCTAssertNil(package.uniqueIdentifier.scheme);
 }
