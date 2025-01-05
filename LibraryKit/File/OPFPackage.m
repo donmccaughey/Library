@@ -100,7 +100,20 @@ didStartElement:(NSString *)elementName
   qualifiedName:(NSString *)qName
      attributes:(NSDictionary *)attributes;
 {
-    if (isPackageTag(namespaceURI, elementName)) {
+    if (_inPackageTag) {
+        if (_inMetadataTag) {
+            if (isIdentifierTag(namespaceURI, elementName)) {
+                NSString *ID = attributes[@"id"];
+                NSString *scheme = attributes[[self ns:opfURI name:@"scheme"]];
+
+                OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
+                                                                    andScheme:scheme];
+                [_identifiers addObject:identifier];
+            }
+        } else if (isMetadataTag(namespaceURI, elementName)) {
+            _inMetadataTag = YES;
+        }
+    } else if (isPackageTag(namespaceURI, elementName)) {
         _inPackageTag = YES;
         
         NSString *version = attributes[[self ns:opfURI name:@"version"]];
@@ -120,17 +133,6 @@ didStartElement:(NSString *)elementName
             return;
         }
         _uniqueIdentifierID = uniqueIdentifier;
-    } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
-        _inMetadataTag = YES;
-    } else if (_inMetadataTag) {
-        if (isIdentifierTag(namespaceURI, elementName)) {
-            NSString *ID = attributes[@"id"];
-            NSString *scheme = attributes[[self ns:opfURI name:@"scheme"]];
-
-            OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
-                                                                andScheme:scheme];
-            [_identifiers addObject:identifier];
-        }
     }
 }
 
@@ -140,23 +142,26 @@ didStartElement:(NSString *)elementName
   namespaceURI:(nullable NSString *)namespaceURI
  qualifiedName:(nullable NSString *)qName;
 {
-    if (isPackageTag(namespaceURI, elementName)) {
-        _inPackageTag = NO;
-    } else if (_inPackageTag && isMetadataTag(namespaceURI, elementName)) {
-        _inMetadataTag = NO;
-    } else if (_inMetadataTag) {
-        if (isIdentifierTag(namespaceURI, elementName)) {
-            NSString *identifier = [self trimmedCharacters];
-            if (identifier.length) {
-                _identifiers.lastObject.identifier = identifier;
-            } else {
-                [_identifiers removeLastObject];
+    if (_inPackageTag) {
+        if (_inMetadataTag) {
+            if (isIdentifierTag(namespaceURI, elementName)) {
+                NSString *identifier = [self trimmedCharacters];
+                if (identifier.length) {
+                    _identifiers.lastObject.identifier = identifier;
+                } else {
+                    [_identifiers removeLastObject];
+                }
+            } else if (isTitleTag(namespaceURI, elementName)) {
+                NSString *title = [self trimmedCharacters];
+                if (title.length) [_titles addObject:title];
             }
-        } else if (isTitleTag(namespaceURI, elementName)) {
-            NSString *title = [self trimmedCharacters];
-            if (title.length) [_titles addObject:title];
+        } else if (isMetadataTag(namespaceURI, elementName)) {
+            _inMetadataTag = NO;
         }
+    } else if (isPackageTag(namespaceURI, elementName)) {
+        _inPackageTag = NO;
     }
+    
     [_characters removeAllObjects];
 }
 
