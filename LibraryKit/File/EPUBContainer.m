@@ -33,7 +33,6 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation EPUBContainer
 {
-    NSError *_error;
     BOOL _inContainerTag;
     BOOL _inRootfilesTag;
     NSMutableArray<EPUBRootfile *> *_rootfiles;
@@ -43,7 +42,7 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 - (nullable instancetype)initWithData:(NSData *)containerXml
                                 error:(NSError **)error;
 {
-    self = [super init];
+    self = [super initWithShouldFindCharacters:NO];
     if ( ! self) return nil;
     
     _rootfiles = [NSMutableArray new];

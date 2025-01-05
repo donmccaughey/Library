@@ -49,8 +49,6 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 
 @implementation OPFPackage
 {
-    NSMutableArray<NSString *> *_characters;
-    NSError *_error;
     NSMutableArray<OPFIdentifier *> *_identifiers;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
@@ -63,10 +61,9 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 - (nullable instancetype)initWithData:(NSData *)containerXml
                                 error:(NSError **)error;
 {
-    self = [super init];
+    self = [super initWithShouldFindCharacters:YES];
     if ( ! self) return nil;
     
-    _characters = [NSMutableArray new];
     _identifiers = [NSMutableArray new];
     _titles = [NSMutableArray new];
 
@@ -186,22 +183,6 @@ didStartElement:(NSString *)elementName
         }
     }
     [_characters removeAllObjects];
-}
-
-
-- (void)parser:(NSXMLParser *)parser
-    foundCDATA:(NSData *)CDATABlock;
-{
-    NSString *string = [[NSString alloc] initWithData:CDATABlock
-                                             encoding:NSUTF8StringEncoding];
-    [_characters addObject:string];
-}
-
-
-- (void) parser:(NSXMLParser *)parser
-foundCharacters:(NSString *)string;
-{
-    [_characters addObject:string];
 }
 
 

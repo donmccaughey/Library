@@ -6,12 +6,14 @@
 @implementation XML
 
 
-- (instancetype)init;
+- (instancetype)initWithShouldFindCharacters:(BOOL)shouldFindCharacters;
 {
     self = [super init];
     if ( ! self) return nil;
     
     _prefixToNamespace = [BiMap new];
+    
+    if (shouldFindCharacters) _characters = [NSMutableArray new];
     
     return self;
 }
@@ -39,6 +41,22 @@ didStartMappingPrefix:(NSString *)prefix
 didEndMappingPrefix:(NSString *)prefix;
 {
     [_prefixToNamespace removeFirst:prefix];
+}
+
+
+- (void)parser:(NSXMLParser *)parser
+    foundCDATA:(NSData *)CDATABlock;
+{
+    NSString *string = [[NSString alloc] initWithData:CDATABlock
+                                             encoding:NSUTF8StringEncoding];
+    [_characters addObject:string];
+}
+
+
+- (void) parser:(NSXMLParser *)parser
+foundCharacters:(NSString *)string;
+{
+    [_characters addObject:string];
 }
 
 

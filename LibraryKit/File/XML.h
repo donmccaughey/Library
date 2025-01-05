@@ -9,11 +9,15 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XML : NSObject<NSXMLParserDelegate>
 {
 @protected
+    NSMutableArray<NSString *> *_characters;
+    NSError *_error;
     NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
 }
 
-- (instancetype)init;
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)initWithShouldFindCharacters:(BOOL)shouldFindCharacters;
 
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;
