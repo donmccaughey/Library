@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (nullable instancetype)initWithData:(NSData *)containerXml
+- (nullable instancetype)initWithData:(NSData *)containerXML
                                 error:(NSError **)error;
 
 @end

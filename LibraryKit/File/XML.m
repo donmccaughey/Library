@@ -6,10 +6,16 @@
 @implementation XML
 
 
-- (instancetype)initWithShouldFindCharacters:(BOOL)shouldFindCharacters;
+- (instancetype)initWithData:(NSData *)xml
+     andShouldFindCharacters:(BOOL)shouldFindCharacters;
 {
     self = [super init];
     if ( ! self) return nil;
+    
+    _parser = [[NSXMLParser alloc] initWithData:xml];
+    _parser.delegate = self;
+    _parser.shouldProcessNamespaces = YES;
+    _parser.shouldReportNamespacePrefixes = YES;
     
     _prefixToNamespace = [BiMap new];
     

@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithShouldFindCharacters:(BOOL)shouldFindCharacters;
+- (instancetype)initWithData:(NSData *)xml
+     andShouldFindCharacters:(BOOL)shouldFindCharacters;
 
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;

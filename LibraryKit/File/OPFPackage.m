@@ -58,19 +58,16 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-- (nullable instancetype)initWithData:(NSData *)containerXml
+- (nullable instancetype)initWithData:(NSData *)packageXML
                                 error:(NSError **)error;
 {
-    self = [super initWithShouldFindCharacters:YES];
+    self = [super initWithData:packageXML
+       andShouldFindCharacters:YES];
     if ( ! self) return nil;
     
     _identifiers = [NSMutableArray new];
     _titles = [NSMutableArray new];
 
-    _parser = [[NSXMLParser alloc] initWithData:containerXml];
-    _parser.delegate = self;
-    _parser.shouldProcessNamespaces = YES;
-    _parser.shouldReportNamespacePrefixes = YES;
     [_parser parse];
     
     if (self.error) {

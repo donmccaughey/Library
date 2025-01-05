@@ -39,18 +39,15 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-- (nullable instancetype)initWithData:(NSData *)containerXml
+- (nullable instancetype)initWithData:(NSData *)containerXML
                                 error:(NSError **)error;
 {
-    self = [super initWithShouldFindCharacters:NO];
+    self = [super initWithData:containerXML
+       andShouldFindCharacters:NO];
     if ( ! self) return nil;
     
     _rootfiles = [NSMutableArray new];
     
-    _parser = [[NSXMLParser alloc] initWithData:containerXml];
-    _parser.delegate = self;
-    _parser.shouldProcessNamespaces = YES;
-    _parser.shouldReportNamespacePrefixes = YES;
     [_parser parse];
     
     if (self.error) {
