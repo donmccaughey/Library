@@ -47,23 +47,18 @@ didEndMappingPrefix:(NSString *)prefix;
 - (void)parser:(NSXMLParser *)parser
     foundCDATA:(NSData *)CDATABlock;
 {
-    NSString *string = [[NSString alloc] initWithData:CDATABlock
-                                             encoding:NSUTF8StringEncoding];
-    [_characters addObject:string];
+    if (_characters) {
+        NSString *string = [[NSString alloc] initWithData:CDATABlock
+                                                 encoding:NSUTF8StringEncoding];
+        [_characters addObject:string];
+    }
 }
 
 
 - (void) parser:(NSXMLParser *)parser
 foundCharacters:(NSString *)string;
 {
-    [_characters addObject:string];
-}
-
-
-- (void)    parser:(NSXMLParser *)parser
-parseErrorOccurred:(NSError *)parseError;
-{
-    _parseError = parseError;
+    if (_characters) [_characters addObject:string];
 }
 
 

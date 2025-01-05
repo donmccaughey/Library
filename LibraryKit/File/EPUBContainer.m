@@ -58,8 +58,8 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
         return nil;
     }
     
-    if (_parseError) {
-        if (error) *error = _parseError;
+    if (parser.parserError) {
+        if (error) *error = parser.parserError;
         return nil;
     }
     

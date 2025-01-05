@@ -11,7 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
     NSMutableArray<NSString *> *_characters;
     NSError *_error;
-    NSError *_parseError;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
 }
 
