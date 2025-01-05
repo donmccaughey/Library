@@ -40,13 +40,6 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
 }
 
 
-@interface OPFPackage ()
-
-- (NSString *)trimmedCharacters;
-
-@end
-
-
 @implementation OPFPackage
 {
     NSMutableArray<OPFIdentifier *> *_identifiers;
@@ -98,13 +91,6 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     }
     
     return self;
-}
-
-
-- (NSString *)trimmedCharacters;
-{
-    NSString *string = [_characters componentsJoinedByString:@""];
-    return [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
 

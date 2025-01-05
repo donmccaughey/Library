@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;
 
+- (NSString *)trimmedCharacters;
+
 @end
 
 

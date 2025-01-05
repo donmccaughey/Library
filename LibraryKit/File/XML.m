@@ -41,6 +41,13 @@
 }
 
 
+- (NSString *)trimmedCharacters;
+{
+    NSString *string = [_characters componentsJoinedByString:@""];
+    return [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+
+
 - (void)       parser:(NSXMLParser *)parser
 didStartMappingPrefix:(NSString *)prefix
                 toURI:(NSString *)namespaceURI;
