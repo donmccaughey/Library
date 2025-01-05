@@ -13,7 +13,6 @@ static NSString *const opf = @"http://www.idpf.org/2007/opf";
     NSMutableArray<OPFIdentifier *> *_identifiers;
     BOOL _inMetadataTag;
     BOOL _inPackageTag;
-    NSString *_packageVersion;
     NSMutableArray<NSString *> *_titles;
     NSString *_uniqueIdentifierID;
 }
@@ -91,7 +90,7 @@ didStartElement:(NSString *)elementName
             [parser abortParsing];
             return;
         }
-        _packageVersion = version;
+        _version = version;
         
         NSString *uniqueIdentifier = attributes[[self q: opf:@"unique-identifier"]];
         if ( ! uniqueIdentifier.length) {
