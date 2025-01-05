@@ -4,8 +4,8 @@
 #import "OPFIdentifier.h"
 
 
-static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
-static NSString *const opfURI = @"http://www.idpf.org/2007/opf";
+static NSString *const dc = @"http://purl.org/dc/elements/1.1/";
+static NSString *const opf = @"http://www.idpf.org/2007/opf";
 
 
 @implementation OPFPackage
@@ -70,21 +70,21 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if ([self is: dublinCoreURI:@"identifier" equalTo: namespaceURI:elementName]) {
+            if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
                 NSString *ID = attributes[@"id"];
-                NSString *scheme = attributes[[self q: opfURI:@"scheme"]];
+                NSString *scheme = attributes[[self q: opf:@"scheme"]];
 
                 OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
                                                                     andScheme:scheme];
                 [_identifiers addObject:identifier];
             }
-        } else if ([self is: opfURI:@"metadata" equalTo: namespaceURI:elementName]) {
+        } else if ([self is: opf:@"metadata" equalTo: namespaceURI:elementName]) {
             _inMetadataTag = YES;
         }
-    } else if ([self is: opfURI:@"package" equalTo: namespaceURI:elementName]) {
+    } else if ([self is: opf:@"package" equalTo: namespaceURI:elementName]) {
         _inPackageTag = YES;
         
-        NSString *version = attributes[[self q: opfURI:@"version"]];
+        NSString *version = attributes[[self q: opf:@"version"]];
         if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must be version 2.0 or 3.0 but was '%@'", version];
@@ -93,7 +93,7 @@ didStartElement:(NSString *)elementName
         }
         _packageVersion = version;
         
-        NSString *uniqueIdentifier = attributes[[self q: opfURI:@"unique-identifier"]];
+        NSString *uniqueIdentifier = attributes[[self q: opf:@"unique-identifier"]];
         if ( ! uniqueIdentifier.length) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must have a unique-identifier attribute"];
@@ -112,21 +112,21 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if ([self is: dublinCoreURI:@"identifier" equalTo: namespaceURI:elementName]) {
+            if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
                 NSString *identifier = [self trimmedCharacters];
                 if (identifier.length) {
                     _identifiers.lastObject.identifier = identifier;
                 } else {
                     [_identifiers removeLastObject];
                 }
-            } else if ([self is: dublinCoreURI:@"title" equalTo: namespaceURI:elementName]) {
+            } else if ([self is: dc:@"title" equalTo: namespaceURI:elementName]) {
                 NSString *title = [self trimmedCharacters];
                 if (title.length) [_titles addObject:title];
             }
-        } else if ([self is: opfURI:@"metadata" equalTo: namespaceURI:elementName]) {
+        } else if ([self is: opf:@"metadata" equalTo: namespaceURI:elementName]) {
             _inMetadataTag = NO;
         }
-    } else if ([self is: opfURI:@"package" equalTo: namespaceURI:elementName]) {
+    } else if ([self is: opf:@"package" equalTo: namespaceURI:elementName]) {
         _inPackageTag = NO;
     }
     

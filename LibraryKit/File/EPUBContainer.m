@@ -4,31 +4,7 @@
 #import "EPUBRootfile.h"
 
 
-static NSString *const containerURI = @"urn:oasis:names:tc:opendocument:xmlns:container";
-
-
-static BOOL
-isContainerTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [containerURI isEqualToString:namespaceURI]
-        && [@"container" isEqualToString:elementName];
-}
-
-
-static BOOL
-isRootfileTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [containerURI isEqualToString:namespaceURI]
-        && [@"rootfile" isEqualToString:elementName];
-}
-
-
-static BOOL
-isRootfilesTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [containerURI isEqualToString:namespaceURI]
-        && [@"rootfiles" isEqualToString:elementName];
-}
+static NSString *const ns = @"urn:oasis:names:tc:opendocument:xmlns:container";
 
 
 @implementation EPUBContainer
@@ -82,24 +58,24 @@ didStartElement:(NSString *)elementName
 {
     if (_inContainerTag) {
         if (_inRootfilesTag) {
-            if (isRootfileTag(namespaceURI, elementName)) {
-                NSString *mediaType = attributes[[self q: containerURI:@"media-type"]];
+            if ([self is: ns:@"rootfile" equalTo: namespaceURI:elementName]) {
+                NSString *mediaType = attributes[[self q: ns:@"media-type"]];
                 if ( ! mediaType) return;
                 
-                NSString *fullPath = attributes[[self q: containerURI:@"full-path"]];
+                NSString *fullPath = attributes[[self q: ns:@"full-path"]];
                 if ( ! fullPath) return;
 
                 EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
                                                                      andFullPath:fullPath];
                 [_rootfiles addObject:rootfile];
             }
-        } else if (isRootfilesTag(namespaceURI, elementName)) {
+        } else if ([self is: ns:@"rootfiles" equalTo: namespaceURI:elementName]) {
             _inRootfilesTag = YES;
         }
-    } else if (isContainerTag(namespaceURI, elementName)) {
+    } else if ([self is: ns:@"container" equalTo: namespaceURI:elementName]) {
         _inContainerTag = YES;
                 
-        NSString *version = attributes[[self q: containerURI:@"version"]];
+        NSString *version = attributes[[self q: ns:@"version"]];
         if ( ! [@"1.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
                                         andMessage:@"The <container> element must be version 1.0 but was '%@'", version];
@@ -115,10 +91,10 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qName;
 {
     if (_inContainerTag) {
-        if (isRootfilesTag(namespaceURI, elementName)) {
+        if ([self is: ns:@"rootfiles" equalTo: namespaceURI:elementName]) {
             _inRootfilesTag = NO;
         }
-    } else if (isContainerTag(namespaceURI, elementName)) {
+    } else if ([self is: ns:@"container" equalTo: namespaceURI:elementName]) {
         _inContainerTag = NO;
     }
 }
