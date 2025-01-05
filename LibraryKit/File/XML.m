@@ -31,8 +31,15 @@
 }
 
 
-- (NSString *)ns:(NSString *)namespace
-            name:(NSString *)name;
+- (BOOL)is:(NSString *)namespace1 :(NSString *)name1
+   equalTo:(NSString *)namespace2 :(NSString *)name2;
+{
+    return [namespace1 isEqualToString:namespace2]
+        && [name1 isEqualToString:name2];
+}
+
+
+- (NSString *)q:(NSString *)namespace :(NSString *)name;
 {
     NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
     if ( ! prefix.length) return name;

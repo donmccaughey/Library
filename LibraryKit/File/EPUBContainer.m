@@ -83,10 +83,10 @@ didStartElement:(NSString *)elementName
     if (_inContainerTag) {
         if (_inRootfilesTag) {
             if (isRootfileTag(namespaceURI, elementName)) {
-                NSString *mediaType = attributes[[self ns:containerURI name:@"media-type"]];
+                NSString *mediaType = attributes[[self q: containerURI:@"media-type"]];
                 if ( ! mediaType) return;
                 
-                NSString *fullPath = attributes[[self ns:containerURI name:@"full-path"]];
+                NSString *fullPath = attributes[[self q: containerURI:@"full-path"]];
                 if ( ! fullPath) return;
 
                 EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
@@ -98,8 +98,8 @@ didStartElement:(NSString *)elementName
         }
     } else if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = YES;
-        
-        NSString *version = attributes[[self ns:containerURI name:@"version"]];
+                
+        NSString *version = attributes[[self q: containerURI:@"version"]];
         if ( ! [@"1.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
                                         andMessage:@"The <container> element must be version 1.0 but was '%@'", version];

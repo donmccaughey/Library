@@ -8,38 +8,6 @@ static NSString *const dublinCoreURI = @"http://purl.org/dc/elements/1.1/";
 static NSString *const opfURI = @"http://www.idpf.org/2007/opf";
 
 
-static BOOL
-isIdentifierTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [dublinCoreURI isEqualToString:namespaceURI]
-        && [@"identifier" isEqualToString:elementName];
-}
-
-
-static BOOL
-isMetadataTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [opfURI isEqualToString:namespaceURI]
-        && [@"metadata" isEqualToString:elementName];
-}
-
-
-static BOOL
-isPackageTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [opfURI isEqualToString:namespaceURI]
-        && [@"package" isEqualToString:elementName];
-}
-
-
-static BOOL
-isTitleTag(NSString *namespaceURI, NSString *elementName)
-{
-    return [dublinCoreURI isEqualToString:namespaceURI]
-        && [@"title" isEqualToString:elementName];
-}
-
-
 @implementation OPFPackage
 {
     NSMutableArray<OPFIdentifier *> *_identifiers;
@@ -102,21 +70,21 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if (isIdentifierTag(namespaceURI, elementName)) {
+            if ([self is: dublinCoreURI:@"identifier" equalTo: namespaceURI:elementName]) {
                 NSString *ID = attributes[@"id"];
-                NSString *scheme = attributes[[self ns:opfURI name:@"scheme"]];
+                NSString *scheme = attributes[[self q: opfURI:@"scheme"]];
 
                 OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithID:ID
                                                                     andScheme:scheme];
                 [_identifiers addObject:identifier];
             }
-        } else if (isMetadataTag(namespaceURI, elementName)) {
+        } else if ([self is: opfURI:@"metadata" equalTo: namespaceURI:elementName]) {
             _inMetadataTag = YES;
         }
-    } else if (isPackageTag(namespaceURI, elementName)) {
+    } else if ([self is: opfURI:@"package" equalTo: namespaceURI:elementName]) {
         _inPackageTag = YES;
         
-        NSString *version = attributes[[self ns:opfURI name:@"version"]];
+        NSString *version = attributes[[self q: opfURI:@"version"]];
         if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must be version 2.0 or 3.0 but was '%@'", version];
@@ -125,7 +93,7 @@ didStartElement:(NSString *)elementName
         }
         _packageVersion = version;
         
-        NSString *uniqueIdentifier = attributes[[self ns:opfURI name:@"unique-identifier"]];
+        NSString *uniqueIdentifier = attributes[[self q: opfURI:@"unique-identifier"]];
         if ( ! uniqueIdentifier.length) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must have a unique-identifier attribute"];
@@ -144,21 +112,21 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if (isIdentifierTag(namespaceURI, elementName)) {
+            if ([self is: dublinCoreURI:@"identifier" equalTo: namespaceURI:elementName]) {
                 NSString *identifier = [self trimmedCharacters];
                 if (identifier.length) {
                     _identifiers.lastObject.identifier = identifier;
                 } else {
                     [_identifiers removeLastObject];
                 }
-            } else if (isTitleTag(namespaceURI, elementName)) {
+            } else if ([self is: dublinCoreURI:@"title" equalTo: namespaceURI:elementName]) {
                 NSString *title = [self trimmedCharacters];
                 if (title.length) [_titles addObject:title];
             }
-        } else if (isMetadataTag(namespaceURI, elementName)) {
+        } else if ([self is: opfURI:@"metadata" equalTo: namespaceURI:elementName]) {
             _inMetadataTag = NO;
         }
-    } else if (isPackageTag(namespaceURI, elementName)) {
+    } else if ([self is: opfURI:@"package" equalTo: namespaceURI:elementName]) {
         _inPackageTag = NO;
     }
     
