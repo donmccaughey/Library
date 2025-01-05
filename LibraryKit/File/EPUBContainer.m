@@ -80,7 +80,23 @@ didStartElement:(NSString *)elementName
   qualifiedName:(NSString *)qName
      attributes:(NSDictionary *)attributes;
 {
-    if (isContainerTag(namespaceURI, elementName)) {
+    if (_inContainerTag) {
+        if (_inRootfilesTag) {
+            if (isRootfileTag(namespaceURI, elementName)) {
+                NSString *mediaType = attributes[[self ns:containerURI name:@"media-type"]];
+                if ( ! mediaType) return;
+                
+                NSString *fullPath = attributes[[self ns:containerURI name:@"full-path"]];
+                if ( ! fullPath) return;
+
+                EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
+                                                                     andFullPath:fullPath];
+                [_rootfiles addObject:rootfile];
+            }
+        } else if (isRootfilesTag(namespaceURI, elementName)) {
+            _inRootfilesTag = YES;
+        }
+    } else if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = YES;
         
         NSString *version = attributes[[self ns:containerURI name:@"version"]];
@@ -89,18 +105,6 @@ didStartElement:(NSString *)elementName
                                         andMessage:@"The <container> element must be version 1.0 but was '%@'", version];
             [parser abortParsing];
         }
-    } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
-        _inRootfilesTag = YES;
-    } else if (_inRootfilesTag && isRootfileTag(namespaceURI, elementName)) {
-        NSString *mediaType = attributes[[self ns:containerURI name:@"media-type"]];
-        if ( ! mediaType) return;
-        
-        NSString *fullPath = attributes[[self ns:containerURI name:@"full-path"]];
-        if ( ! fullPath) return;
-
-        EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
-                                                             andFullPath:fullPath];
-        [_rootfiles addObject:rootfile];
     }
 }
 
@@ -110,10 +114,12 @@ didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI
  qualifiedName:(NSString *)qName;
 {
-    if (isContainerTag(namespaceURI, elementName)) {
+    if (_inContainerTag) {
+        if (isRootfilesTag(namespaceURI, elementName)) {
+            _inRootfilesTag = NO;
+        }
+    } else if (isContainerTag(namespaceURI, elementName)) {
         _inContainerTag = NO;
-    } else if (_inContainerTag && isRootfilesTag(namespaceURI, elementName)) {
-        _inRootfilesTag = NO;
     }
 }
 
