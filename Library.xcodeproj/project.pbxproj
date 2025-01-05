@@ -12,6 +12,9 @@
 		D41BD0352D17644A00306549 /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = D41BD0342D17644A00306549 /* Logger.m */; };
 		D44AC1982D29FE4200E2807A /* XML.m in Sources */ = {isa = PBXBuildFile; fileRef = D44AC1972D29FE4200E2807A /* XML.m */; };
 		D44AC1992D29FE4200E2807A /* XML.h in Headers */ = {isa = PBXBuildFile; fileRef = D44AC1962D29FE4200E2807A /* XML.h */; };
+		D44AC19C2D2A42C000E2807A /* XMLNamespaceMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D44AC19B2D2A42C000E2807A /* XMLNamespaceMap.m */; };
+		D44AC19D2D2A42C000E2807A /* XMLNamespaceMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D44AC19A2D2A42C000E2807A /* XMLNamespaceMap.h */; };
+		D44AC1A02D2A495800E2807A /* XMLNamespaceMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D44AC19E2D2A495800E2807A /* XMLNamespaceMapTests.m */; };
 		D44EE7002D1FC05D006AC61E /* minizip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE6FD2D1FC04A006AC61E /* minizip.framework */; };
 		D44EE7082D1FC261006AC61E /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D43F0D162D1E502300970B7B /* libbz2.tbd */; };
 		D44EE7092D1FC268006AC61E /* libcompression.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D44EE7032D1FC0A2006AC61E /* libcompression.tbd */; };
@@ -66,8 +69,6 @@
 		D4B58C9A2D2220CB00BABB13 /* Zip.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58C8D2D2220CB00BABB13 /* Zip.m */; };
 		D4B58CA12D251A1600BABB13 /* Errors.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58C9F2D251A1600BABB13 /* Errors.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B58CA22D251A1600BABB13 /* Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA02D251A1600BABB13 /* Errors.m */; };
-		D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CA32D25F10100BABB13 /* BiMap.h */; };
-		D4B58CA62D25F10100BABB13 /* BiMap.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CA42D25F10100BABB13 /* BiMap.m */; };
 		D4B58CAD2D27487900BABB13 /* ElapsedTime.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CAB2D27487900BABB13 /* ElapsedTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4B58CAE2D27487900BABB13 /* ElapsedTime.m in Sources */ = {isa = PBXBuildFile; fileRef = D4B58CAC2D27487900BABB13 /* ElapsedTime.m */; };
 		D4B58CB52D274C0100BABB13 /* Stopwatch.h in Headers */ = {isa = PBXBuildFile; fileRef = D4B58CB32D274C0100BABB13 /* Stopwatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -178,6 +179,9 @@
 		D43F0D1C2D1E581C00970B7B /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		D44AC1962D29FE4200E2807A /* XML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XML.h; sourceTree = "<group>"; };
 		D44AC1972D29FE4200E2807A /* XML.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XML.m; sourceTree = "<group>"; };
+		D44AC19A2D2A42C000E2807A /* XMLNamespaceMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XMLNamespaceMap.h; sourceTree = "<group>"; };
+		D44AC19B2D2A42C000E2807A /* XMLNamespaceMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMLNamespaceMap.m; sourceTree = "<group>"; };
+		D44AC19E2D2A495800E2807A /* XMLNamespaceMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XMLNamespaceMapTests.m; sourceTree = "<group>"; };
 		D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = minizip.xcodeproj; path = libs/minizip_framework/minizip.xcodeproj; sourceTree = "<group>"; };
 		D44EE7032D1FC0A2006AC61E /* libcompression.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcompression.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/usr/lib/libcompression.tbd; sourceTree = DEVELOPER_DIR; };
 		D44EE7062D1FC0B9006AC61E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
@@ -242,8 +246,6 @@
 		D4B58C8D2D2220CB00BABB13 /* Zip.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Zip.m; sourceTree = "<group>"; };
 		D4B58C9F2D251A1600BABB13 /* Errors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
 		D4B58CA02D251A1600BABB13 /* Errors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Errors.m; sourceTree = "<group>"; };
-		D4B58CA32D25F10100BABB13 /* BiMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BiMap.h; sourceTree = "<group>"; };
-		D4B58CA42D25F10100BABB13 /* BiMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BiMap.m; sourceTree = "<group>"; };
 		D4B58CAB2D27487900BABB13 /* ElapsedTime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElapsedTime.h; sourceTree = "<group>"; };
 		D4B58CAC2D27487900BABB13 /* ElapsedTime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElapsedTime.m; sourceTree = "<group>"; };
 		D4B58CB32D274C0100BABB13 /* Stopwatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Stopwatch.h; sourceTree = "<group>"; };
@@ -478,8 +480,6 @@
 		D4B58C9E2D22210100BABB13 /* File */ = {
 			isa = PBXGroup;
 			children = (
-				D4B58CA32D25F10100BABB13 /* BiMap.h */,
-				D4B58CA42D25F10100BABB13 /* BiMap.m */,
 				D4B58C812D2220CB00BABB13 /* EPUB.h */,
 				D4B58C822D2220CB00BABB13 /* EPUB.m */,
 				D4B58C832D2220CB00BABB13 /* EPUBContainer.h */,
@@ -497,6 +497,9 @@
 				D4B58C8B2D2220CB00BABB13 /* PDF.m */,
 				D44AC1962D29FE4200E2807A /* XML.h */,
 				D44AC1972D29FE4200E2807A /* XML.m */,
+				D44AC19A2D2A42C000E2807A /* XMLNamespaceMap.h */,
+				D44AC19B2D2A42C000E2807A /* XMLNamespaceMap.m */,
+				D44AC19E2D2A495800E2807A /* XMLNamespaceMapTests.m */,
 				D4B58C8C2D2220CB00BABB13 /* Zip.h */,
 				D4B58C8D2D2220CB00BABB13 /* Zip.m */,
 			);
@@ -514,7 +517,6 @@
 				D4B58CAD2D27487900BABB13 /* ElapsedTime.h in Headers */,
 				D4B58CA12D251A1600BABB13 /* Errors.h in Headers */,
 				D46FDC8A2D1C813B001E8362 /* Format.h in Headers */,
-				D4B58CA52D25F10100BABB13 /* BiMap.h in Headers */,
 				D48D00552C17A08400177AD0 /* Library.h in Headers */,
 				D48DFFD72C179E8A00177AD0 /* LibraryKit.h in Headers */,
 				D4B58CB52D274C0100BABB13 /* Stopwatch.h in Headers */,
@@ -526,6 +528,7 @@
 				D4B58C922D2220CB00BABB13 /* OPFPackage.h in Headers */,
 				D4B58C932D2220CB00BABB13 /* PDF.h in Headers */,
 				D44AC1992D29FE4200E2807A /* XML.h in Headers */,
+				D44AC19D2D2A42C000E2807A /* XMLNamespaceMap.h in Headers */,
 				D4B58C942D2220CB00BABB13 /* Zip.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -864,7 +867,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4B58CA62D25F10100BABB13 /* BiMap.m in Sources */,
 				D48D00582C17A35F00177AD0 /* Book.m in Sources */,
 				D4B58CAE2D27487900BABB13 /* ElapsedTime.m in Sources */,
 				D4B58C952D2220CB00BABB13 /* EPUB.m in Sources */,
@@ -878,6 +880,7 @@
 				D4B58C992D2220CB00BABB13 /* PDF.m in Sources */,
 				D4B58CB62D274C0100BABB13 /* Stopwatch.m in Sources */,
 				D44AC1982D29FE4200E2807A /* XML.m in Sources */,
+				D44AC19C2D2A42C000E2807A /* XMLNamespaceMap.m in Sources */,
 				D4B58C9A2D2220CB00BABB13 /* Zip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -889,6 +892,7 @@
 				D469C2AB2D29C2F7001AC87B /* BookTests.m in Sources */,
 				D469C2B02D29CB4E001AC87B /* EPUBContainerTests.m in Sources */,
 				D469C2B32D29DEA9001AC87B /* OPFPackageTests.m in Sources */,
+				D44AC1A02D2A495800E2807A /* XMLNamespaceMapTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-#import "BiMap.h"
+#import "XMLNamespaceMap.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
     NSMutableArray<NSString *> *_characters;
     NSError *_error;
+    XMLNamespaceMap *_namespaceMap;
     NSXMLParser *_parser;
-    BiMap<NSString *, NSString *> *_prefixToNamespace;
 }
 
 @property (readonly) NSError *error;
@@ -22,12 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithData:(NSData *)xml
         shouldFindCharacters:(BOOL)shouldFindCharacters;
 
-- (BOOL)is:(NSString *)namespace1 :(NSString *)name1
-   equalTo:(NSString *)namespace2 :(NSString *)name2;
-
-- (NSString *)q:(NSString *)namespace :(NSString *)name;
+- (BOOL)is:(NSString *)namespaceURI1 :(NSString *)name1
+   equalTo:(NSString *)namespaceURI2 :(NSString *)name2;
 
 - (NSString *)trimmedCharacters;
+
+- (NSString *)valueForQualifiedName:(NSString *)namespaceURI :(NSString *)name
+                     fromAttributes:(NSDictionary<NSString *, NSString *> *)attributes;
 
 @end
 

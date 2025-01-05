@@ -4,7 +4,7 @@
 #import "EPUBRootfile.h"
 
 
-static NSString *const ns = @"urn:oasis:names:tc:opendocument:xmlns:container";
+static NSString *const ctr = @"urn:oasis:names:tc:opendocument:xmlns:container";
 
 
 @implementation EPUBContainer
@@ -58,24 +58,24 @@ didStartElement:(NSString *)elementName
 {
     if (_inContainerTag) {
         if (_inRootfilesTag) {
-            if ([self is: ns:@"rootfile" equalTo: namespaceURI:elementName]) {
-                NSString *mediaType = attributes[[self q: ns:@"media-type"]];
+            if ([self is:ctr:@"rootfile" equalTo:namespaceURI:elementName]) {
+                NSString *mediaType = attributes[@"media-type"];
                 if ( ! mediaType) return;
                 
-                NSString *fullPath = attributes[[self q: ns:@"full-path"]];
+                NSString *fullPath = attributes[@"full-path"];
                 if ( ! fullPath) return;
 
                 EPUBRootfile *rootfile = [[EPUBRootfile alloc] initWithMediaType:mediaType
                                                                      andFullPath:fullPath];
                 [_rootfiles addObject:rootfile];
             }
-        } else if ([self is: ns:@"rootfiles" equalTo: namespaceURI:elementName]) {
+        } else if ([self is:ctr:@"rootfiles" equalTo:namespaceURI:elementName]) {
             _inRootfilesTag = YES;
         }
-    } else if ([self is: ns:@"container" equalTo: namespaceURI:elementName]) {
+    } else if ([self is:ctr:@"container" equalTo:namespaceURI:elementName]) {
         _inContainerTag = YES;
                 
-        NSString *version = attributes[[self q: ns:@"version"]];
+        NSString *version = attributes[@"version"];
         if ( ! [@"1.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingContainerXML
                                         andMessage:@"The <container> element must be version 1.0 but was '%@'", version];
@@ -91,10 +91,10 @@ didStartElement:(NSString *)elementName
  qualifiedName:(NSString *)qName;
 {
     if (_inContainerTag) {
-        if ([self is: ns:@"rootfiles" equalTo: namespaceURI:elementName]) {
+        if ([self is:ctr:@"rootfiles" equalTo:namespaceURI:elementName]) {
             _inRootfilesTag = NO;
         }
-    } else if ([self is: ns:@"container" equalTo: namespaceURI:elementName]) {
+    } else if ([self is:ctr:@"container" equalTo:namespaceURI:elementName]) {
         _inContainerTag = NO;
     }
 }

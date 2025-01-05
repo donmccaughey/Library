@@ -64,16 +64,16 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
+            if ([self is:dc:@"identifier" equalTo:namespaceURI:elementName]) {
                 _attributes = attributes;
             }
-        } else if ([self is: opf:@"metadata" equalTo: namespaceURI:elementName]) {
+        } else if ([self is:opf:@"metadata" equalTo:namespaceURI:elementName]) {
             _inMetadataTag = YES;
         }
-    } else if ([self is: opf:@"package" equalTo: namespaceURI:elementName]) {
+    } else if ([self is:opf:@"package" equalTo:namespaceURI:elementName]) {
         _inPackageTag = YES;
         
-        NSString *version = attributes[[self q: opf:@"version"]];
+        NSString *version = attributes[@"version"];
         if ( ! [@"2.0" isEqualToString:version] && ! [@"3.0" isEqualToString:version]) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must be version 2.0 or 3.0 but was '%@'", version];
@@ -82,7 +82,7 @@ didStartElement:(NSString *)elementName
         }
         _version = version;
         
-        NSString *uniqueIdentifier = attributes[[self q: opf:@"unique-identifier"]];
+        NSString *uniqueIdentifier = attributes[@"unique-identifier"];
         if ( ! uniqueIdentifier.length) {
             _error = [NSError libraryErrorWithCode:LibraryErrorReadingOPFPackageXML
                                       andMessage:@"The <package> element must have a unique-identifier attribute"];
@@ -101,10 +101,12 @@ didStartElement:(NSString *)elementName
 {
     if (_inPackageTag) {
         if (_inMetadataTag) {
-            if ([self is: dc:@"identifier" equalTo: namespaceURI:elementName]) {
+            if ([self is:dc:@"identifier" equalTo:namespaceURI:elementName]) {
                 NSString *value = [self trimmedCharacters];
                 if (value.length) {
-                    OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithScheme:_attributes[[self q: opf:@"scheme"]]
+                    NSString *scheme = [self valueForQualifiedName:opf:@"scheme"
+                                                    fromAttributes:_attributes];
+                    OPFIdentifier *identifier = [[OPFIdentifier alloc] initWithScheme:scheme
                                                                         andIdentifier:value];
                     [_identifiers addObject:identifier];
                     if ([_uniqueIdentifierID isEqualToString:_attributes[@"id"]]) {
@@ -112,14 +114,14 @@ didStartElement:(NSString *)elementName
                     }
                 }
                 _attributes = nil;
-            } else if ([self is: dc:@"title" equalTo: namespaceURI:elementName]) {
+            } else if ([self is:dc:@"title" equalTo:namespaceURI:elementName]) {
                 NSString *title = [self trimmedCharacters];
                 if (title.length) [_titles addObject:title];
             }
-        } else if ([self is: opf:@"metadata" equalTo: namespaceURI:elementName]) {
+        } else if ([self is:opf:@"metadata" equalTo:namespaceURI:elementName]) {
             _inMetadataTag = NO;
         }
-    } else if ([self is: opf:@"package" equalTo: namespaceURI:elementName]) {
+    } else if ([self is:opf:@"package" equalTo:namespaceURI:elementName]) {
         _inPackageTag = NO;
     }
     

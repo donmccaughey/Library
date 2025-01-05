@@ -1,7 +1,5 @@
 #import "XML.h"
 
-#import "BiMap.h"
-
 
 @implementation XML
 
@@ -11,13 +9,13 @@
 {
     self = [super init];
     if ( ! self) return nil;
+
+    _namespaceMap = [XMLNamespaceMap new];
     
     _parser = [[NSXMLParser alloc] initWithData:xml];
     _parser.delegate = self;
     _parser.shouldProcessNamespaces = YES;
     _parser.shouldReportNamespacePrefixes = YES;
-    
-    _prefixToNamespace = [BiMap new];
     
     if (shouldFindCharacters) _characters = [NSMutableArray new];
     
@@ -31,20 +29,11 @@
 }
 
 
-- (BOOL)is:(NSString *)namespace1 :(NSString *)name1
-   equalTo:(NSString *)namespace2 :(NSString *)name2;
+- (BOOL)is:(NSString *)namespaceURI1 :(NSString *)name1
+   equalTo:(NSString *)namespaceURI2 :(NSString *)name2;
 {
-    return [namespace1 isEqualToString:namespace2]
+    return [namespaceURI1 isEqualToString:namespaceURI2]
         && [name1 isEqualToString:name2];
-}
-
-
-- (NSString *)q:(NSString *)namespace :(NSString *)name;
-{
-    NSString *prefix = [_prefixToNamespace firstForSecond:namespace];
-    if ( ! prefix.length) return name;
-    
-    return [NSString stringWithFormat:@"%@:%@", prefix, name];
 }
 
 
@@ -55,18 +44,31 @@
 }
 
 
+- (NSString *)valueForQualifiedName:(NSString *)namespaceURI :(NSString *)name
+                     fromAttributes:(NSDictionary<NSString *, NSString *> *)attributes;
+{
+    NSSet<NSString *> *qNames = [_namespaceMap qualifiedNamesForAttribute:name
+                                                              inNamespace:namespaceURI];
+    for (NSString *qName in qNames) {
+        NSString *value = attributes[qName];
+        if (value) return value;
+    }
+    return nil;
+}
+
+
 - (void)       parser:(NSXMLParser *)parser
 didStartMappingPrefix:(NSString *)prefix
                 toURI:(NSString *)namespaceURI;
 {
-    [_prefixToNamespace setFirst:prefix forSecond:namespaceURI];
+    [_namespaceMap pushPrefix:prefix forNamespaceURI:namespaceURI];
 }
 
 
 - (void)     parser:(NSXMLParser *)parser
 didEndMappingPrefix:(NSString *)prefix;
 {
-    [_prefixToNamespace removeFirst:prefix];
+    [_namespaceMap popPrefix:prefix];
 }
 
 
