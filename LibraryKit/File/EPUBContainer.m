@@ -43,7 +43,7 @@ isRootfilesTag(NSString *namespaceURI, NSString *elementName)
                                 error:(NSError **)error;
 {
     self = [super initWithData:containerXML
-       andShouldFindCharacters:NO];
+          shouldFindCharacters:NO];
     if ( ! self) return nil;
     
     _rootfiles = [NSMutableArray new];

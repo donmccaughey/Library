@@ -7,7 +7,7 @@
 
 
 - (instancetype)initWithData:(NSData *)xml
-     andShouldFindCharacters:(BOOL)shouldFindCharacters;
+        shouldFindCharacters:(BOOL)shouldFindCharacters;
 {
     self = [super init];
     if ( ! self) return nil;

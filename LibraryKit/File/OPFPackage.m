@@ -55,7 +55,7 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
                                 error:(NSError **)error;
 {
     self = [super initWithData:packageXML
-       andShouldFindCharacters:YES];
+          shouldFindCharacters:YES];
     if ( ! self) return nil;
     
     _identifiers = [NSMutableArray new];
