@@ -19,6 +19,12 @@
 }
 
 
+- (NSError *)error;
+{
+    return _error ? _error : _parser.parserError;
+}
+
+
 - (NSString *)attribute:(NSString *)attribute
           withNamespace:(NSString *)namespace;
 {

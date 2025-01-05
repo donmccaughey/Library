@@ -67,19 +67,14 @@ isTitleTag(NSString *namespaceURI, NSString *elementName)
     _identifiers = [NSMutableArray new];
     _titles = [NSMutableArray new];
 
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:containerXml];
-    parser.delegate = self;
-    parser.shouldProcessNamespaces = YES;
-    parser.shouldReportNamespacePrefixes = YES;
-    [parser parse];
+    _parser = [[NSXMLParser alloc] initWithData:containerXml];
+    _parser.delegate = self;
+    _parser.shouldProcessNamespaces = YES;
+    _parser.shouldReportNamespacePrefixes = YES;
+    [_parser parse];
     
-    if (_error) {
-        if (error) *error = _error;
-        return nil;
-    }
-    
-    if (parser.parserError) {
-        if (error) *error = parser.parserError;
+    if (self.error) {
+        if (error) *error = self.error;
         return nil;
     }
 

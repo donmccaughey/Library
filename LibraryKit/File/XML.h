@@ -11,8 +11,11 @@ NS_ASSUME_NONNULL_BEGIN
 @protected
     NSMutableArray<NSString *> *_characters;
     NSError *_error;
+    NSXMLParser *_parser;
     BiMap<NSString *, NSString *> *_prefixToNamespace;
 }
+
+@property (readonly) NSError *error;
 
 - (instancetype)init NS_UNAVAILABLE;
 
