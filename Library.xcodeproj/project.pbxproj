@@ -139,6 +139,13 @@
 			remoteGlobalIDString = D48DFFE12C179ED300177AD0;
 			remoteInfo = LibraryMac;
 		};
+		D4F7883F2D3F0A5800606A35 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D42DD8EB2D1F3E68000038FE;
+			remoteInfo = minizip;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -252,6 +259,7 @@
 		D4B58CB42D274C0100BABB13 /* Stopwatch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Stopwatch.m; sourceTree = "<group>"; };
 		D4DA2D182D1D0792006B459C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D4E7D0C62C1BE4B700980513 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D4F7883E2D3F077100606A35 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -285,10 +293,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D44EE7002D1FC05D006AC61E /* minizip.framework in Frameworks */,
 				D44EE7082D1FC261006AC61E /* libbz2.tbd in Frameworks */,
 				D44EE70A2D1FC278006AC61E /* libiconv.tbd in Frameworks */,
 				D44EE7092D1FC268006AC61E /* libcompression.tbd in Frameworks */,
+				D44EE7002D1FC05D006AC61E /* minizip.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +404,7 @@
 			children = (
 				D4DA2D182D1D0792006B459C /* README.md */,
 				D469C2A52D290696001AC87B /* TODO.md */,
+				D4F7883E2D3F077100606A35 /* Makefile */,
 				D469C2A12D28ECC1001AC87B /* docs */,
 				D44EE6F52D1FC04A006AC61E /* minizip.xcodeproj */,
 				D48DFFCA2C179E8A00177AD0 /* LibraryKit */,
@@ -603,6 +612,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				D4F788402D3F0A5800606A35 /* PBXTargetDependency */,
 			);
 			name = LibraryKit;
 			productName = LibraryKit;
@@ -963,6 +973,11 @@
 			isa = PBXTargetDependency;
 			target = D48DFFE12C179ED300177AD0 /* LibraryMac */;
 			targetProxy = D48DFFFE2C179ED400177AD0 /* PBXContainerItemProxy */;
+		};
+		D4F788402D3F0A5800606A35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = minizip;
+			targetProxy = D4F7883F2D3F0A5800606A35 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
