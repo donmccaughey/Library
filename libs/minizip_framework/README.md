@@ -1,6 +1,6 @@
 # minizip framework
 
-An [Apple framework][1] bundle for the [minizip-ng][2] library.
+An [Apple framework][1] bundle for the [minizip-ng][2] 4.0.8 library.
 
 [1]: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPFrameworks/Frameworks.html
 [2]: https://github.com/zlib-ng/minizip-ng

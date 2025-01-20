@@ -1,10 +1,10 @@
 diff --git a/dist/mz_os.h b/dist/mz_os.h
-index ad6ea4f..461b957 100644
+index 4db0550..3b94cff 100644
 --- a/dist/mz_os.h
 +++ b/dist/mz_os.h
-@@ -56,7 +56,20 @@ struct dirent {
+@@ -55,7 +55,20 @@ struct dirent {
  };
- typedef void* DIR;
+ typedef void *DIR;
  #else
 +
 +// patch: include dirent.h outside of the extern "C" block to fix Apple `modules-verifier` error:
@@ -13,7 +13,7 @@ index ad6ea4f..461b957 100644
 +}
 +#endif
 +
- #include <dirent.h>
+ #  include <dirent.h>
 +
 +#ifdef __cplusplus
 +extern "C" {
